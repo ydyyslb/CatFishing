@@ -1,0 +1,95 @@
+.w {
+    width: 1170px;
+    margin: 0 auto;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* 声明字体图标 */
+@font-face {
+    font-family: 'icomoon';
+    src: url('../fonts/icomoon.eot?tomleg');
+    src: url('../fonts/icomoon.eot?tomleg#iefix') format('embedded-opentype'),
+        url('../fonts/icomoon.ttf?tomleg') format('truetype'),
+        url('../fonts/icomoon.woff?tomleg') format('woff'),
+        url('../fonts/icomoon.svg?tomleg#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+
+
+
+.icon a::before {
+    content: '\e908';
+    font-family: 'icomoon';
+    color: #47848f;
+    font-size: 40px;
+    margin-right: 10px;
+    vertical-align: bottom;
+}
+
+
+/* 加载动画 */
+/* 隐藏加载屏幕 */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    /* 设置背景色 */
+    z-index: 9999;
+    /* 设置 z-index，确保加载屏幕始终显示在顶部 */
+    opacity: 0;
+    /* 初始时透明度为 0 */
+    pointer-events: none;
+    /* 禁用鼠标事件 */
+    transition: opacity 0.5s ease-in-out;
+    /* 设置透明度过渡动画效果 */
+}
+
+/* 显示加载屏幕 */
+.loading-screen.show {
+    opacity: 0.5;
+    /* 设置透明度为 0.5，即 50% 不透明度 */
+    pointer-events: auto;
+    /* 启用鼠标事件 */
+}
+
+/* 设置加载动画 */
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    /* 设置边框颜色 */
+    border-radius: 50%;
+    /* 设置圆形边框 */
+    border-top: 5px solid #47848f;
+    /* 设置顶部边框颜色 */
+    animation: spin 2s linear infinite;
+    /* 设置旋转动画 */
+    position: absolute;
+    /* 绝对定位，用于居中显示 */
+    top: 50%;
+    /* 居中显示上边距 */
+    left: 50%;
+    /* 居中显示左边距 */
+    transform: translate(-50%, -50%);
+    /* 居中显示 */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    /* 初始角度 */
+    100% {
+        transform: rotate(360deg);
+    }
+
+    /* 结束角度 */
+}

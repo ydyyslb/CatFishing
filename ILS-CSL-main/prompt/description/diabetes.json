@@ -1,0 +1,11 @@
+{
+    "Pregnancies": "This variable indicates the number of pregnancies a person has had, which may affect the risk of developing diabetes.\n0: No pregnancies.\n1+: One or more pregnancies.",
+    "Glucose": "This variable represents the blood glucose levels measured during a medical test.\nLow: Glucose levels below normal range.\nNormal: Glucose levels within normal range.\nHigh: Glucose levels above normal range, indicating possible diabetes.",
+    "BloodPressure": "This variable indicates the blood pressure levels of an individual.\nLow: Blood pressure below the normal range.\nNormal: Blood pressure within the normal range.\nHigh: Blood pressure above the normal range, often linked to diabetes.",
+    "SkinThickness": "This variable represents the thickness of skin folds, used as an indicator of body fat.\nLow: Low skin fold thickness.\nNormal: Average skin fold thickness.\nHigh: High skin fold thickness, potentially indicating obesity.",
+    "Insulin": "This variable indicates the insulin levels in the blood.\nLow: Low insulin levels, possibly suggesting diabetes.\nNormal: Normal insulin levels.\nHigh: High insulin levels, which might indicate insulin resistance.",
+    "BMI": "This variable represents the Body Mass Index (BMI), calculated as weight (kg) divided by height (m^2).\nUnderweight: BMI below 18.5.\nNormal: BMI between 18.5 and 24.9.\nOverweight: BMI between 25 and 29.9.\nObese: BMI 30 or higher.",
+    "DiabetesPedigreeFunction": "This variable represents a calculated score indicating the likelihood of diabetes based on family history.\nLow: Low genetic risk of diabetes.\nMedium: Medium genetic risk of diabetes.\nHigh: High genetic risk of diabetes.",
+    "Age": "This variable represents the age of the individual, which can influence the risk of developing diabetes.\nYoung: Age below 25.\nMiddle-aged: Age between 25 and 50.\nOlder: Age above 50.",
+    "Outcome": "This variable indicates whether the individual has been diagnosed with diabetes.\n0: No diabetes diagnosis.\n1: Diabetes diagnosis."
+}

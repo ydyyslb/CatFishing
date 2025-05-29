@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>题目</title>
+    <link rel="icon" href="./image/logo.ico">
+    <link rel="stylesheet" href="./css/problems.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/score.css">
+</head>
+<body>
+<div id="app">
+    <el-dialog title="提示" :visible.sync="centerDialogVisible" width="30%" center style="margin-top: 10%;">
+        <div v-if="selectedQuestion.isFavorited">
+            <span>您想取消收藏吗？</span>
+        </div>
+        <div v-else="selectedQuestion.isFavorited">
+            <div>选择您想要保存的收藏夹</div>
+            <div v-for="(item,index) in foldersData" :key="index">
+                <el-radio v-model="radio" :label="item.folder.id" class="collect">{{ item.folder.name }}</el-radio>
+            </div>
+
+        </div>
+        <span slot="footer" class="dialog-footer">
+                <el-button @click="centerDialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="toggleFavorite(selectedQuestion)">确认</el-button>
+            </span>
+    </el-dialog>
+    <div class="shell">
+        <div class="shell-main-nav">
+            <div class="logo">
+                <img src="./image/logo_.png" alt="网站图片" style=" height: 40px;  width: 40px; margin-right: 10px;">
+                <span>教导</span>
+            </div>
+
+            <ul>
+                <li><a href="index.html"><i class="el-icon-notebook-2" style="margin-right: 5px;"></i>学习</a></li>
+                <li><a href="info.html"><i class="el-icon-user" style="margin-right: 5px;"></i>用户</a></li>
+                <li><a href="blog.html"><i class="el-icon-pie-chart" style="margin-right: 5px;"></i>博客</a></li>
+                <li><a href="knowledgeGraph.html"><i class="el-icon-data-board" style="margin-right: 5px;"></i>图谱</a></li>
+                <li><a href="about.html"> <i class="el-icon-chat-dot-round" style="margin-right: 5px;"></i>关于</a></li>
+            </ul>
+            <div class="dropdown">
+                <el-dropdown>
+                    <span class="el-dropdown-link">
+                        <a href="info.html">
+                            <div class="block" id="avatar"> <el-avatar :size="50" v-if="user.icon" :src="user.icon"></el-avatar>
+                        <el-avatar :size="50" v-else src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></div>
+                        </a>
+                        <!--<i class="el-icon-arrow-down el-icon--right"></i>-->
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item style="max-width: 185px; overflow: hidden; text-overflow: ellipsis;"> {{ user.nickName
+                            }}</el-dropdown-item>
+                        <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+                        <a href="index.html"><el-dropdown-item>首页</el-dropdown-item></a>
+                        <a href="functionPage.html"><el-dropdown-item>学习</el-dropdown-item></a>
+                        <a href="about.html"><el-dropdown-item>关于</el-dropdown-item></a>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+        </div>
+
+        <div class="shell-header">
+            <h2>回答问题</h2>
+            <button  @click="goBack">返回<span class="iconfont icon-fanhui"></span></button>
+        </div>
+        <div class="shell-main">
+            <div class="shell-main-top">
+                <ul class="problems-code" v-if="questions.length>1">
+                    <li class="code" v-for="(question, index) in questions" :key="index"
+                        :class="{ active: index === currentQuestionIndex, 'selected-background': index === currentQuestionIndex }"
+                        @click="setCurrentQuestionIndex(index)">
+                        {{ question.number }}
+                    </li>
+                </ul>
+                <div class="shell-main-top-right">
+                    <i class="el-icon-timer" style="color: rgb(54, 129, 173,.8)"></i><div class="timer"></div>
+                    <span class="iconfont icon-shoucang"></span>
+                </div>
+            </div>
+
+            <div class="shell-main-content">
+                <transition name="fade">
+                    <!--<div class="problems" :style="{ transform: `translateX(-${currentQuestionIndex * slideOffset}%)` }" >-->
+                    <div class="problems"  :style="{ width: calculateWidth, transform: `translateX(-${currentQuestionIndex * slideOffset}%)` }" >
+                        <!--<div class="prob" v-for="(question, index) in questions" :key="index" :style="{ width: LongQuestion ?   '20%':'20%'   }">-->
+                        <div class="prob" v-for="(question, index) in questions" :key="index" :style="{ width: LongQuestion ? '100%' : prowidth}">
+                            <button class="Collection" :class="{ selected: question.isFavorited }" @click="showDialog(question)">
+                                <i class="el-icon-star-off" ></i>
+                            </button>
+
+                            <el-card shadow="hover">
+                                <div class="prob-top">
+                                    <h2>问题 {{ question.number }}</h2>
+                                    <!-- <div class="grade">难度</div> -->
+                                </div>
+
+                                <div class="prob-content">
+                                    <span>{{ question.content }}</span>
+                                </div>
+                                <div v-if="question.hint">
+                                    <span>{{ question.hint }}</span>
+                                </div>
+                            </el-card>
+
+                            <div v-if="question.image" class="imag">
+                                <el-image :src="question.image"
+                                          style="width: 350px; height: 250px; border-radius: 5px;"></el-image>
+                            </div>
+
+
+
+                            <div class="prob-choice" v-if="question.choices">
+                                <label v-for="(choice, index) in question.choices" :key="index" class="choice-label"
+                                       :class="{ selected: isSelected(question.number, index) }">
+                                    <input type="radio" :name="`question${question.number}`" :value="choice"
+                                           @change="selectChoice(question.number, index)">
+                                    {{ choice }}
+                                </label>
+                            </div>
+
+                            <div class="prob-choice" v-if="SAquestion">
+                                <label>
+                                    <el-input style="max-height: 200px !important;" type="textarea" :autosize="{ minRows: 4, maxRows: 7}"
+                                              placeholder="请输入您的答案" v-model="userAnswers[question.number]"
+                                              @change="saveUserAnswer(question.number, userAnswers[question.number])" minlength="10">
+                                    </el-input>
+                                </label>
+                            </div>
+                            <div class="prob-choice" v-if="LongQuestion">
+                                <label>
+                                    <el-input style="max-height: 200px !important;" type="textarea" :autosize="{ minRows: 4, maxRows: 7}"
+                                              placeholder="请输入您的答案" v-model="userLongAnswers[question.number]"
+                                              @change="saveUserAnswer(question.number, userAnswers[question.number])" minlength="20">
+                                    </el-input>
+                                </label>
+                            </div>
+                            <div class="prob-choice" v-if="LongAnswer">
+                                <label>
+                                    <el-card class="box-card">
+                                        <span style="margin-right: 20px; color: rgba(45, 121, 193);">您获得:</span><span style="font-size: 20px; font-weight: 600;">{{LongGrade}}</span>
+                                        <el-divider></el-divider>
+                                        <span style="margin-bottom: 20px; color: rgba(45, 121, 193);">参考答案:</span>
+                                        <div style="margin-top: 20px; margin-bottom: 20px;">{{LongAnswer}}</div>
+
+                                        <span style="margin-top: 20px; color: rgba(45, 121, 193);">评分依据: </span>
+                                        <div style="margin-top: 20px;">
+                                            <!--1. The function can be realized by software or hardware &nbsp; &nbsp; &nbsp;    <span style="color: red;">(20 points)</span> </br>-->
+                                            <!--2. (1) For example, speech recognition can be implemented in hardware &nbsp; (2)or in software.&nbsp; &nbsp; &nbsp;  <span>(20 points)</span>-->
+                                            <template>
+                                                <el-table
+                                                        :data="tableData"
+                                                        border
+                                                        style="width: 100%">
+                                                    <el-table-column
+                                                            prop="name"
+                                                            label="得分点"
+                                                            width="180">
+                                                    </el-table-column>
+                                                    <el-table-column
+                                                            prop="address"
+                                                            label="答案">
+                                                    </el-table-column>
+                                                    <el-table-column
+                                                            prop="score"
+                                                            label="分数">
+                                                    </el-table-column>
+                                                </el-table>
+                                            </template>
+                                        </div>
+
+                                    </el-card>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </transition>
+
+                <div class="button-left" @click="prevQuestion">&lt;</div>
+                <div class="button-right" @click="nextQuestion">&gt;</div>
+            </div>
+            <div class="shell-bottom">
+
+                <button class="button" v-if="currentQuestionIndex === questions.length - 1 && SAquestion" class="finish"
+                        @click="checkSATextAndOpen()">
+                    <span class="button-content">完成 </span>
+                </button>
+                <button class="button" v-else-if="currentQuestionIndex === questions.length - 1 && !SAquestion && !LongQuestion" class="finish" @click="open">
+                    <span class="button-content">完成 </span>
+                </button>
+                <!-- <button class="button" v-if="currentQuestionIndex === questions.length - 1 && LongQuestion" class="finish"
+                    @click="open(); LongQuestion && checkTextLength()">
+                    <span class="button-content">Finish</span>
+                </button> -->
+                <button class="button" v-else-if="currentQuestionIndex === questions.length - 1 && LongQuestion" class="finish"
+                        @click="checkTextAndOpen()">
+                    <span class="button-content">完成</span>
+                </button>
+
+                <template v-else-if="currentQuestionIndex === 0">
+                    <button class="First_next" @click="nextQuestion">下一题</button>
+                </template>
+                <template v-else>
+                    <button class="last" @click="prevQuestion">上一题</button>
+                    <button class="next" @click="nextQuestion">下一题</button>
+                </template>
+
+            </div>
+        </div>
+    </div>
+    <div tabindex="-1" role="dialog" aria-modal="true" aria-label="Hint" class="el-message-box__wrapper" style="z-index: 2004; background-color: rgb(0, 0, 0,.4);" v-show="dialogVisible" >
+        <!-- 下面是弹窗内容 -->
+        <div class="shell-dialog">
+            <div class="dialog" v-show="dialogVisible">
+                <div class="shell">
+                    <div class="shell-top">
+                        <h2>🎉恭喜🎉</h2>
+                        <button class="shell-top-close" @click = "redirectToFinishPage">
+                            <span class="X"></span>
+                            <span class="Y"></span>
+                            <div class="close">关闭</div>
+                        </button>
+                    </div>
+                    <div class="shell-bottom">
+                        <div class="shell-bottom-grade">
+                            <h2>很棒</h2>
+                        </div>
+                        <div class="shell-bottom-score">
+                            <span>{{test.userScore}}</span>
+                        </div>
+                        <div class="shell-bottom-msg">
+                            <el-card shadow="hover">
+                                <h2>时间</h2>
+                                <span>{{timeConsuming}}</span>
+                            </el-card>
+                            <el-card shadow="hover">
+                                <h2>正确</h2>
+                                <span>{{test.correctNumber}}</span>
+                            </el-card>
+                            <el-card shadow="hover">
+                                <h2>错误</h2>
+                                <span>{{test.wrongNumber}}</span>
+                            </el-card>
+                        </div>
+                        <div class="shell-bottom-finish" @click = "redirectToFinishPage">
+                            <button class="button-finish type1">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="plugins/vue/vue.js"></script>
+<script src="plugins/axios/axios.min.js"></script>
+<link rel="stylesheet" href="./plugins/element-ui/lib/theme-chalk/index.css">
+<script src="./plugins/element-ui/lib/index.js"></script>
+<script src="./js/common.js"></script>
+<script>
+    
+
+    const task = sessionStorage.getItem('task');
+    const grade = sessionStorage.getItem('grade');
+    const subject = sessionStorage.getItem('subject');
+    const topic = sessionStorage.getItem('topic');
+    const category = sessionStorage.getItem('category');
+    const questionCount = sessionStorage.getItem('questionCount');
+    const timeLimit = sessionStorage.getItem('timeLimit');
+
+    new Vue({
+        el:"#app",
+       
+         data() {
+            return {
+                tableData: [{
+          name: 'Score point 1',
+          address: 'The function can be realized by software or hardware',
+          score: '20 points'
+        }, {
+           name: 'Score point 2',
+          address: '(1)For example, speech recognition can be implemented in hardware \n (2)or in software.',
+          score: '20 points'
+        }],
+                user: {},
+                text:[],
+                questions: [],  
+                currentQuestionIndex: 0,
+                radioValue: '1', 
+                selectedChoices: {}, // 用于存储每个问题的选中选项
+                dialogVisible: false,
+                test:{},
+                timeConsuming:'',
+                SAquestion:false,
+                textarea:'',
+                userAnswers:{}, //用于存储简答题的用户答案
+                userLongAnswers: [],
+                buttonSelected:false,
+                centerDialogVisible: false,
+                selectedQuestion:'',
+                radio:'1',
+                foldersData: [],
+                LongQuestion:false,
+                timeConsuming:'',
+                LongGrade:'',
+                LongAnswer:''
+            };
+            
+        },
+     
+        beforeMount() {
+            this.init();
+            this.fetchUserInfo();
+            this.GetQuestion();
+            
+        },
+        // computed: {
+        //     slideOffset() {
+        //         return 100 / this.questions.length; // 计算位移的数量
+        //     }
+        // },
+        computed: {
+            slideOffset() {
+                return 100 / this.questions.length; // 计算位移的数量
+            },
+            prowidth(){
+               const maxWidth = 20; // 设置最大宽度为 20% 防止超出父容器宽度
+               const calculatedWidth = 100 / this.questions.length;
+               return Math.min(calculatedWidth, maxWidth) + '%';
+            },
+             calculateWidth() {
+                // 根据题目数量动态计算宽度
+                if (this.questions.length === 10) {
+                    return '1000%';
+                } else if (this.questions.length === 5) {
+                    return '500%';
+                } else {
+                    // 其他情况，可以根据实际需求设置默认宽度
+                    return '100%';
+                }
+            }
+        },
+        // watch: {
+        // totalQuestions(newValue) {
+        // // 当题目数量变化时更新每道题目的宽度
+        //     if (newValue <= 5) {
+        //       this.slideOffset = '20%';
+        //     } else if (newValue <= 10) {
+        //       this.slideOffset = '20%';
+        //     }
+        //     // 根据需要添加更多的条件
+        //     }
+        // },
+        methods: {
+             goBack() {
+                // 在这里编写返回逻辑，例如返回上一页或执行其他操作
+                window.history.back(); 
+            },
+            checkTextLength() {
+                if (this.userLongAnswers[1] && typeof this.userLongAnswers[1] === 'string') {
+                    const wordCount = this.userLongAnswers[1].trim().split(/\s+/).filter(word => word !== '').length;
+
+                    if (wordCount < 20) {
+                        this.$message({
+                            type: 'warning',
+                            message: 'Answer should be at least 20 words long.',
+                        });
+                        // 根据情况禁用提交按钮
+                    }else{
+                        return true;
+                    }
+                } else {
+                    // 处理非字符串元素的情况
+                    this.$message({
+                        type: 'error',
+                        message: 'Please input your answer!',
+                    });
+                }
+            },
+            checkSATextLength() {
+                  console.log("检查长度");
+                if (this.questions && this.userLongAnswers) {
+                    console.log(this.questions.length)
+                    const userAnswersLength = Object.keys(this.userAnswers).length;
+                    console.log(userAnswersLength)
+                    if (this.questions.length !== userAnswersLength) {
+                        this.$message({
+                            type: 'error',
+                            message: 'Please answer all of the questions！',
+                        });
+                        return;
+                    }
+
+                    for (let i = 0; i < this.questions.length; i++) {
+                        const wordCount = this.userAnswers[this.questions[i].number].trim().split(/\s+/).filter(word => word !== '').length;
+
+                        if (wordCount < 5) {
+                            this.$message({
+                                type: 'warning',
+                                message: `The answer for question ${i+1} should contain at least 5 words。`,
+                            });
+                            // 如果有一个答案不符合要求，可以返回false或者其他标识，根据你的逻辑决定
+                            return false;
+                        }
+                    }
+                    // 所有答案都符合要求时，返回true
+                    return true;
+                } else {
+                    this.$message({
+                        type: 'error',
+                        message: 'Please ensure that both questions and answers have been entered!',
+                    });
+                }
+            },
+            checkTextAndOpen() {
+                if (this.checkTextLength()) {
+                    this.open();
+                }
+            },
+            checkSATextAndOpen() {
+                console.log("检查长度")
+                if (this.checkSATextLength()) {
+                    this.open();
+                }
+            },
+            async logout() {
+                try {
+                    const response = await axios.get('/user/logout');
+                    sessionStorage.removeItem("token");
+                    this.$message.success("success");
+                    window.location.href = '/Login.html';
+                } catch (error) {
+                    this.$message.error(error);
+                    console.error(error);
+                }
+            },
+            showDialog(question) {
+                this.selectedQuestion = question;
+                console.log(this.selectedQuestion)
+                if(!question.isFavorited){
+                    this.getFolder();
+                }
+                this.centerDialogVisible = true; // 显示对话框
+            },
+            getFolder() {
+                axios.get('/user/getfolder')
+                    .then(response => {
+                        const foldersData = response.data;
+                        this.foldersData = foldersData.data
+                        console.log(foldersData.data)             
+                    })
+                    .catch(error => {
+
+                        console.error('Error fetching folder data:', error);
+                    });
+            },
+            init(){
+                if (sessionStorage.getItem('questionType')) {
+
+                    this.SAquestion = true;
+                }else if(sessionStorage.getItem('LongQuestion')){
+                    console.log(sessionStorage.getItem('LongQuestion'))
+                    this.LongQuestion = true;
+                    sessionStorage.removeItem('LongQuestion');
+                }
+            },
+            toggleFavorite(question) {
+                this.centerDialogVisible = false;
+                question.isFavorited = !question.isFavorited;
+                if (question.isFavorited) {
+                    // 发送题目ID给后端
+                    console.log(this.radio)
+                    this.saveFavoriteQuestion(question.id,question.task, this.radio);
+                } else {
+                    // 取消收藏时的逻辑
+                    this.removeFavoriteQuestion(question.id);
+                }
+            },
+            saveFavoriteQuestion(questionId,question_type, favoriteId) {
+                axios.get('/user/saveFavorite', {
+                    params: {
+                        favorite_id: favoriteId,
+                        question_id: questionId,
+                        question_type: question_type,
+                    },
+                })
+                .then(response => {
+                     this.$message({
+                        type: 'success',
+                        message: 'Success'
+                    });
+                })
+                .catch(error => {
+                    console.error('保存收藏题目时出错:', error);
+                });
+            },
+            removeFavoriteQuestion(questionId) {
+                // 向后端发送取消收藏的逻辑
+                // 可以使用 axios.delete 或其他方式发送请求
+            },
+            saveUserAnswer(questionNumber, answer) {
+                this.$set(this.userAnswers, questionNumber, answer);
+                console.log(this.userAnswers)
+            },
+            redirectToFinishPage() {
+                window.location.href = '/Finish.html';
+            },
+            open() {
+                const finishTime = new Date(Date.now());
+                const formattedStartTime = new Date(startTime);
+                
+                clearInterval(intervalId);
+                this.$confirm('Whether or not you want to submit a test', 'Hint', {
+                    confirmButtonText: 'Yes',
+                    cancelButtonText: 'No',
+                    type: 'warning',
+                    center: true
+                }).then(() => {
+                    this.$message({
+                        type: 'info',
+                        message: 'Submiting...',
+                    });                   
+                    if(this.SAquestion){
+                        const postData = {
+                            questionIds: this.questions.map(question => question.id),
+                            userAnswer: this.userAnswers,                        
+                            startTime: formattedStartTime,
+                            finishTime: finishTime
+                        };
+                        axios.post('/test/getSAGrade', postData)
+                            .then(response => {
+                                this.$message({
+                                    type: 'success',
+                                    message: 'Success'
+                                });
+                                this.timeConsuming = calculateTimeConsuming(response.data);
+                                this.test = response.data;
+                                sessionStorage.setItem('testId', response.data.id);
+                                this.dialogVisible = true;
+                            })
+                            .catch(error => {
+                                this.$message.error(error);
+                            });
+
+                    }
+                    else if(this.LongQuestion){
+                         const params = {
+                            userAnswer: this.userLongAnswers.join(','),
+                            startTime: formattedStartTime,
+                            finishTime: finishTime
+                        };
+                        axios.get('/test/getLongGrade', { params: params, timeout: 15000 })
+                            .then(response => {
+                                this.$message({
+                                    type: 'success',
+                                    message: 'Success'
+                                });
+                                
+                                // this.timeConsuming = calculateTimeConsuming(response.data);
+                                this.LongGrade = response.data.grade;
+                                this.LongAnswer = `
+Software and hardware are two completely different forms, with hardware being tangible, the material basis; software is a form of information that cannot be seen or touched. However, they both can be used to implement logical functions, so in terms of logical functionality, hardware and software are equivalent.
+
+Therefore, in a computer system, many functions can be implemented by both hardware and software.
+
+For example, multiplication operation can be realized using dedicated multiplier hardware, where the machine provides a specific multiplication instruction; it can also be implemented using a multiplication subroutine, where instead of providing a multiplication instruction, a multiplication operation is completed by composing an arithmetic operation and shift instructions into a multiplication subroutine.
+`;
+ 
+                            })
+                            .catch(error => {
+                                this.$message.error(error);
+                            });
+                    }
+                    else{
+                         // 使用 axios 发送 POST 请求
+                        const postData = {
+                            selectedChoices: this.selectedChoices,
+                            questionIds: this.questions.map(question => question.id),
+                            task: this.questions.map(question => question.task),
+                            subject: this.questions.map(question => question.subject),
+                            topic: this.questions.map(question => question.topic),
+                            category: this.questions.map(question => question.category),
+                            startTime: formattedStartTime,
+                            finishTime: finishTime
+                        };
+                        axios.post('/test/getGrade', postData)
+                            .then(response => {
+                                this.$message({
+                                    type: 'success',
+                                    message: 'Success'
+                                });
+                                this.timeConsuming = calculateTimeConsuming(response.data);
+                                this.test = response.data;
+                                sessionStorage.setItem('testId', response.data.id);
+                                this.dialogVisible = true;
+                            })
+                            .catch(error => {
+                                this.$message.error(error);
+                            });
+                    }                    
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: 'Cancel successful'
+                    });
+                });
+            },
+            SAanswer(questionNumber, userAnswer) {
+                this.$set(this.userAnswers, questionNumber, userAnswer); 
+            },
+            selectChoice(questionNumber, choiceIndex) {
+                this.$set(this.selectedChoices, questionNumber, choiceIndex);  // Vue.set确保响应性,确保更换选项能够正确监听
+            },
+            isSelected(questionNumber, choiceIndex) {
+                return this.selectedChoices[questionNumber] === choiceIndex;  // 根据问题编号获取对应的选择状态
+            },
+            nextQuestion() {
+                this.currentQuestionIndex = (this.currentQuestionIndex + 1) % this.questions.length;
+            },
+            prevQuestion() {
+                this.currentQuestionIndex = (this.currentQuestionIndex - 1 + this.questions.length) % this.questions.length;
+            },
+            setCurrentQuestionIndex(index) {
+                this.currentQuestionIndex = index;
+            },
+            async submit(){
+                               
+            },
+            async GetImage(item,question){
+                try {
+                    const response = await axios.get('/question/getImage', {
+                        params: {
+                            split: item.split,
+                            id: item.id
+                        },
+                    });
+                    // 将二进制图像数据转换为base64
+                    if(response.success){
+                        const base64String = btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+                        question.image = `data:image/png;base64,${response.data}`;
+                        
+                    }  
+                    
+                } catch (error) {
+                    // 处理错误情况
+                    console.error('Error fetching image:', error);
+                }
+            },
+            async GetQuestion() {
+                
+                if(this.LongQuestion){
+                     let LongQuestion = {
+                        id: 1,
+                        number: 1,
+                        label: `Question 1`,
+                        content: 'Can the same function of a computer system be performed by both hardware and software?',
+                        solution: '',
+                        
+                    };
+                    this.questions[0] = LongQuestion;
+                    return LongQuestion;
+
+                }
+                else{
+                    
+                    const _this = this;
+                    try {
+                        const response = await axios.get('/question/getQuestion', {
+                            params: {
+                                task: task,
+                                grade: grade,
+                                subject: subject,
+                                topic: topic,
+                                category: category,
+                                questionCount: questionCount
+                            },
+                        });
+
+                        if (response.success) {
+
+                            _this.text = response.data;
+                            console.log(response.data);
+                            this.questions = this.text.map((item, index) => {
+                                if (item.number) {
+                                    let question = {
+                                        id: item.id,
+                                        number: index + 1,
+                                        label: `Question ${index + 1}`,
+                                        content: item.question,
+                                        answer: item.answer,
+                                    };
+                                    this.SAquestion = true;
+                                    return question;
+                                } else {
+                                    // 去掉字符串中多余的引号以及外层的方括号
+                                    let choicesString = item.choices.replace(/'/g, '').replace('[', '').replace(']', '');
+                                    // 将字符串分割为数组
+                                    let choicesArray = choicesString.split(',').map(choice => choice.trim());
+
+                                    let question = {
+                                        id: item.id,
+                                        number: index + 1,
+                                        label: `Question ${index + 1}`,
+                                        content: item.question,
+                                        choices: choicesArray,
+                                        solution: item.solution,
+                                        split: item.split,
+                                        image: item.image,
+                                        answer: item.answer,
+                                        subject: item.subject,
+                                        topic: item.topic,
+                                        category: item.category,
+                                        skill: item.skill,
+                                        lecture: item.lecture,
+                                        hint: item.hint,
+                                        task: item.task,
+                                        isFavorited: item.isFavorited
+                                        // level: item.grade
+                                    };
+
+                                    // 如果 image 不为空，则获取图像
+                                    if (item.image === "image.png") {
+                                        // 发送axios请求获取图像数据
+                                        this.GetImage(item, question);
+                                    }
+
+                                    return question;
+                                }
+
+                            });
+
+                            sessionStorage.removeItem('task');
+                            sessionStorage.removeItem('grade');
+                            sessionStorage.removeItem('subject');
+                            sessionStorage.removeItem('topic');
+                            sessionStorage.removeItem('category');
+                            sessionStorage.removeItem('questionCount');
+                            sessionStorage.removeItem('timeLimit');
+                            sessionStorage.removeItem('questionType');
+
+
+                            const task = '';
+                            const grade = '';
+                            const subject = '';
+                            const topic = '';
+                            const category = '';
+                            const questionCount = '';
+                            const timeLimit = '';
+
+                        }
+                        else {
+
+                            throw new Error('Network response was not ok.');
+                        }
+                    } catch (error) {
+
+                        this.$message.error(error);
+                        console.error(error);
+                    }
+                }
+               
+            },
+             
+            async fetchUserInfo() {
+                const _this = this;
+                try {
+                    const response = await axios.get('/user/me');
+                    if (response.success) {
+                        _this.user = response.data;
+                    }
+                    else {
+                        throw new Error('Network response was not ok.');
+                    }
+                } catch (error) {
+
+                    this.$message.error(error);
+                    console.error(error);
+                }
+            },
+        }
+    })
+    
+    // 以下是计时器
+    // 获取显示时间的 div
+    var timerDisplay = document.querySelector('.timer');
+    var elapsedTime = 0;
+    // 开始计时
+    var startTime = Date.now();
+    function calculateTimeConsuming(test) {
+        const timeDifference = new Date(test.finishTime) - new Date(test.startTime);
+        return calculateRecordedTime(timeDifference);
+    }
+    function updateTimer() {
+        // 计算经过的时间
+        var elapsedTime = Date.now() - startTime;
+        var hours = Math.floor(elapsedTime / 3600000);
+        var minutes = Math.floor(elapsedTime / 60000);
+        var seconds = Math.floor((elapsedTime % 60000) / 1000);
+        // 格式化时间，确保显示两位数的分钟和秒
+        var formattedTime = padWithZero(hours) + ':' + padWithZero(minutes) + ':' + padWithZero(seconds);
+        // 将时间显示在页面上
+        timerDisplay.textContent = "Time " + formattedTime;
+    }
+
+    // 在页面加载时立即开始更新计时器
+    updateTimer();
+
+    function calculateRecordedTime(time) {
+        var hours = Math.floor(time / 3600000);
+        var minutes = Math.floor((time % 3600000) / 60000);
+        var seconds = Math.floor((time % 60000) / 1000);
+        return padWithZero(hours) + ':' + padWithZero(minutes) + ':' + padWithZero(seconds);
+    }
+    var intervalId = setInterval(updateTimer, 1000); // 每秒更新一次计时器  
+    // 辅助函数：确保数字小于 10 时前面加 0
+    function padWithZero(number) {
+        if (number < 10) {
+            return '0' + number;
+        }
+        return number;
+    }
+    var inputs = document.querySelectorAll('.prob-choice input[type="radio"]');
+    inputs.forEach(function (input) {
+        input.addEventListener('change', function () {
+            if (this.checked) {
+                this.parentNode.classList.add('selected');
+            } else {
+                this.parentNode.classList.remove('selected');
+            }
+        });
+    });
+
+
+    
+</script>
+
+</html>

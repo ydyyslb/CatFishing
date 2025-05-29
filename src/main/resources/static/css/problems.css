@@ -1,0 +1,570 @@
+@charset "UTF-8";
+
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    outline: none;
+    text-decoration: none;
+}
+
+body {
+
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f7f7;
+}
+body .shell {
+    width: 100%;
+    position: relative;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/*下拉菜单*/
+.el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+}
+
+.el-dropdown {
+    position: absolute !important;
+    margin-left: 96% !important;
+    margin-top: 5px !important;
+}
+
+.el-icon-arrow-down {
+    font-size: 12px;
+    color: transparent;
+}
+
+.el-dropdown-menu {
+    width: 150px !important;
+    margin-top: -10px !important;
+}
+
+/*导航条样式*/
+
+body .main {
+    width: 100%;
+    position: relative;
+    height: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body .shell-main-nav {
+    width: 100%;
+    height: 60px;
+    position: sticky;
+    z-index: 999;
+    top: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 8vh;
+    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6));
+    backdrop-filter: blur(13px);
+}
+body .shell-main-nav .logo {
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    left: 5%;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+
+body .shell-main-nav .logo span {
+    font: 600 28px sans-serif;
+    letter-spacing: 2px;
+    background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+    /* 定义渐变背景 */
+    -webkit-background-clip: text;
+    /* 将背景限定在文字内部，适用于WebKit浏览器 */
+    color: transparent;
+    /* 隐藏文字本身的颜色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    /* 添加文字阴影效果 */
+    transition: transform 0.6s;
+    cursor: pointer;
+}
+
+body .shell-main-nav .logo span:hover {
+    transform: translateY(-3px);
+    /* 当鼠标悬浮时，向上位移3px */
+}
+body .shell-main-nav ul {
+    width: 600px;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    right: 5%;
+}
+
+body .shell-main-nav ul li {
+    width: 110px;
+    text-align: center;
+    position: relative;
+    transition: 0.6s;
+    border-radius: 10px;
+    height: 77%;
+
+}
+
+body .shell-main-nav ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 45px !important;
+    text-align: center;
+    font: 600 16px sans-serif;
+    background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+    /* 定义渐变背景 */
+    -webkit-background-clip: text;
+    /* 将背景限定在文字内部，适用于WebKit浏览器 */
+    color: transparent;
+    /* 隐藏文字本身的颜色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    /* 添加文字阴影效果 */
+    transition: transform 0.6s;
+    cursor: pointer;
+}
+
+
+body .shell-main-nav ul li:hover {
+    background-color: rgba(88, 149, 213, 0.7);
+}
+
+body .shell-main-nav ul li:hover a {
+    color: white;
+    letter-spacing: 2px;
+}
+/* 下面是主体 */
+body .shell .shell-header {
+    position: relative;
+    height: 8vh;
+    width: 90%;
+    /* background-color: rgba(149, 165, 166, .2); */
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    border: rgba(0, 0, 0, 0.1) solid 1px;
+    border-radius: 5px;
+    margin-bottom: 3vh;
+}
+body .shell .shell-header h2 {
+    font-size: 20px;
+    margin-left: 2%;
+}
+.el-image{
+    margin-top: 50px !important;
+    border: transparent !important;
+}
+body .shell .shell-header button {
+    width: 8%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2%;
+    cursor: pointer;
+    font-size: 20px;
+}
+body .shell .shell-header button .iconfont {
+    font-size: 25px;
+    margin-left: 5px;
+}
+body .shell .shell-main {
+    position: relative;
+    height: 90vh;
+    width: 90%;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(13px);
+    align-items: center;
+    display: flex;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    flex-direction: column;
+    /* border: #95a5a6 solid 3px; */
+    border-radius: 5px;
+    margin-bottom: 8vh;
+}
+
+body .shell .shell-main .shell-main-top {
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    width: 100%;
+    height: 10%;
+    /* background-color: #1abc9c; */
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+}
+body .shell .shell-main .shell-main-top .problems-code {
+    height: 100%;
+    width: 30%;
+    position: relative;
+    justify-content: space-evenly;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    transition: all .2s;
+}
+body .shell .shell-main .shell-main-top .problems-code .code {
+    background-color: rgba(155, 181, 204, 0.2);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+    transition: .3s;
+}
+body .shell .shell-main .shell-main-top .problems-code .code:hover{
+    background-color: rgba(155, 181, 204, 0.5);
+}
+body .shell .shell-main .shell-main-top .problems-code .selected-background {
+    background-image: linear-gradient(to right, rgb(66, 181, 253,.4), rgb(36, 134, 185,.4));
+    border: #409EFF 2px solid;
+}
+body .shell .shell-main .shell-main-top .shell-main-top-right {
+    display: flex;
+    width: 15%;
+    height: 100%;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2%;
+    user-select: none;
+}
+body .shell .shell-main .shell-main-top .timer {
+    font-size: 18px;
+    font-weight: 450;
+    color: rgb(54, 129, 173,.8);
+    margin-right: 5%;
+}
+
+body .shell .shell-main .shell-main-top .shell-main-top-right .iconfont {
+    font-size: 30px;
+    color: #f1c40f;
+}
+
+body .shell .shell-main .shell-main-content {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 95%;
+    overflow-x: hidden;
+    margin-bottom: 20px;
+    /* background-color: #e67e22; */
+}
+body .shell .shell-main .shell-main-content .problems {
+    height: 100%;
+    width: 500%;
+    display: flex;
+    position: absolute;
+    left: 0%;
+    transition: .3s;
+}
+body .shell .shell-main .shell-main-content .problems .prob {
+    width: 100%;
+    /* display: flex; */
+    padding: 50px 80px 0 80px;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+body .shell .shell-main .shell-main-content .problems .prob .imag
+{
+    display: flex;
+    flex-direction:column-reverse;
+    flex-wrap: wrap;
+    align-content: center;
+}
+body .shell .shell-main .shell-main-content .problems .prob .prob-top {
+    width: 100%;
+    justify-content: center;
+    position: relative;
+    height: 15%;
+    /* background-color: #f39c12; */
+}
+body .shell .shell-main .shell-main-content .problems .prob .prob-top h2 {
+    font-size: 25px;
+    font-weight: 600;
+    margin-left: 0%;
+}
+body .shell .shell-main .shell-main-content .problems .prob .prob-top .grade {
+    font-size: 5px;
+    font-weight: 400;
+    margin-left: 5%;
+    color: #7f8c8d;
+}
+body .shell .shell-main .shell-main-content .problems .prob .prob-content {
+    display: flex;
+    position: relative;
+    width: 100%;
+    margin-top: 10px;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    /* background-color: #8da1f8; */
+}
+/* 单选框样式 */
+body .shell .shell-main .shell-main-content .problems .prob .prob-choice {
+    display: block;
+    position: relative;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;   
+
+    /* background-color: #8da1f8; */
+}
+body .shell .shell-main .shell-main-content .problems .prob .prob-choice .choice-label:hover{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    background: rgba(189, 189, 189, 0.12);
+    
+}
+.choice-label.selected {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    background: rgba(189, 189, 189, 0.12);
+}
+
+body .shell .shell-main .shell-main-content .problems .prob .prob-choice span {
+    width: 100%;
+    height: 90%;
+}
+body .shell .shell-main .shell-main-content .problems .prob .prob-choice .choice-label{
+    margin-right: 58px;
+    margin-bottom: 10px;     
+    display: block;
+    border: 1px solid rgba(101, 100, 100, 0.12);
+    padding: 7px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: .3s;
+}
+/* 修改滚动条样式 */
+body .shell .shell-main .shell-main-content::-webkit-scrollbar {
+    width: 12px;
+    /* 设置滚动条宽度 */
+}
+
+body .shell .shell-main .shell-main-content::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+    /* 设置滚动条轨道的颜色 */
+}
+
+body .shell .shell-main .shell-main-content::-webkit-scrollbar-thumb {
+    background-color: #aba9a9;
+    border-radius: 6px;    
+}
+
+body .shell .shell-main .shell-main-content::-webkit-scrollbar-thumb:hover {
+    background-color: #6d6c6c;
+}
+
+body .shell .shell-main .shell-main-content .problems .prob .prob-content span {
+    width: 100%;
+    height: 90%;
+}
+body .shell .shell-main .shell-main-content .problems .prob .prob-mid {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 10%;
+    align-items: center;
+}
+body .shell .shell-main .shell-main-content .problems .prob .prob-mid h2 {
+    font-size: 25px;
+    font-weight: 700;
+    margin-left: 5%;
+}
+body .shell .shell-main .shell-main-content .problems .prob .prob-answer {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 60%;
+    align-items: center;
+}
+body .shell .shell-main .shell-main-content .problems .prob .prob-answer textarea {
+    position: relative;
+    width: 50%;
+    height: 70%;
+    margin-left: 5%;
+    background-color: rgba(149, 165, 166, .5);
+    border: #95a5a6 solid 2px;
+    border-radius: 5px;
+    padding: 1%;
+    resize: none; 
+    font-size: 15px;
+    font-weight: bolder;
+    color: #2c3e50;
+}
+
+body .shell .shell-main .shell-main-content .button-left,
+body .shell .shell-main .shell-main-content .button-right {
+    display: flex;
+    position: absolute;
+    background-color: rgba(149, 165, 166, .1);
+    width: auto;
+    height: 20%;
+    font-size: 50px;
+    justify-content: center;
+    align-items: center;
+    top: 40%;
+    cursor: pointer;
+    border-radius: 5px;
+    user-select: none;
+    opacity: 1;
+    transition: .2s;
+}
+
+body .shell .shell-main .shell-main-content .button-left{
+    position: sticky;
+}
+body .shell .shell-main .shell-main-content .button-right{
+    position: sticky;
+    left: 98%;   
+}
+body .shell .shell-main .shell-main-content .button-left:hover{
+    background-color: rgba(149, 165, 166, .2);
+}
+body .shell .shell-main .shell-main-content .button-right:hover{
+    background-color: rgba(149, 165, 166, .2);
+}
+
+
+body .shell .shell-bottom {
+    background: linear-gradient(to right bottom, rgb(218 237 247 / 24%), #c2c2c21a, #86b8ed1a);
+    height: 15%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.button {
+    width: 20%;
+    position: relative;
+    overflow: hidden;
+    height: 3rem;
+    padding: 0 2rem;
+    border-radius: 1.5rem;
+    background: rgb(112, 112, 113,.4);
+    background-size: 400%;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover::before {
+    transform: scaleX(1);
+}
+
+.button-content {
+    position: relative;
+    z-index: 1;
+}
+
+.button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    width: 100%;
+    height: inherit;
+    border-radius: inherit;
+    background: linear-gradient(82.3deg,
+            rgb(93, 196, 233) 10.8%,
+            rgb(58, 98, 168) 94.3%);
+    transition: all 0.475s;
+}
+body .shell .shell-bottom .next,
+body .shell .shell-bottom .last,
+body .shell .shell-bottom .First_next {
+    border-radius: 45px;
+    transition: all 0.3s;
+    cursor: pointer;
+    background: white;
+    font-size: 1.1em;
+    font-weight: 450;
+    font-family: 'Montserrat', sans-serif;
+}
+body .shell .shell-bottom .last,
+body .shell .shell-bottom .next{
+        width: 10%;
+        height: 55%;
+        margin-right: 100px;
+}
+body .shell .shell-bottom .First_next{
+    width: 20%;
+    height: 55%;
+}
+body .shell .shell-bottom .First_next:hover,
+body .shell .shell-bottom .next:hover,
+body .shell .shell-bottom .last:hover{
+    background-image: linear-gradient(to right, rgb(66, 181, 253), #2486b9);
+    color: white;
+    font-size: 1.5em;
+}
+
+
+
+body .shell .shell-bottom .finish:hover {
+    background-color:rgba(52, 152, 219, .5) ;
+}
+
+
+
+/* 收藏按钮 */
+body .shell-main-content .Collection{
+    width: 23px; 
+    height: 23px; 
+    margin-left: 90%; 
+    background: transparent; 
+    position: absolute; 
+    top: 22px;
+}
+body .shell-main-content .Collection i{
+    font-size: 23px;
+    color: gray;
+    transition: .2s;
+}
+
+body .shell-main-content .Collection:hover i {
+    color: rgb(56, 166, 231);
+}
+body .shell-main-content .Collection.selected i {
+    color: rgb(227, 236, 42);
+
+}
+body .collect{
+    display: inline-block !important;
+    font-size: 18px;
+    margin-top: 9px;
+    width: 100%;
+    letter-spacing: 2px;
+    height: 30px;
+    line-height: 30px;
+    transition: .3s;
+}
+body .collect:hover{
+    background-color: rgb(0,0,0,.1);
+}
+
+.el-table thead {
+    color: #333333 !important;
+    font-weight: 500;
+}
+.el-table .cell {
+  white-space: pre-line !important;
+}

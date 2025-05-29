@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        .outer-container{
+            position: relative;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        .inner-container{
+            position: absolute;
+            width: 100%;
+            height: 700px;
+            background-color: rgba(255, 255, 255, 0.7); /* 白色半透明背景 */
+            backdrop-filter: blur(15px); /* 毛玻璃效果，可根据需要调整模糊程度 */
+        }
+
+    </style>
+</head>
+
+<body style="height: 100%; margin: 0">
+<div class="outer-container">
+    <div class="inner-container">
+        <div id="container" style="height: 100%">
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script type="text/javascript">
+    // 覆盖全局 tooltip 样式
+    echarts.registerTheme('custom', {
+        tooltip: {
+            backgroundColor: 'transparent', // 设置背景色为透明
+            borderColor: 'transparent', // 设置边框颜色为透明
+            borderWidth: 0, // 设置边框宽度为0
+            textStyle: {
+                color: '#333', // 设置文本颜色
+                fontSize: 20, // 设置文本字体大小
+            },
+            extraCssText: 'box-shadow: none', // 设置阴影为无
+        }
+    });
+
+    var myChart = echarts.init(document.getElementById('container'), 'custom');
+    var option = {
+        //   graphic: [ // 在图中添加箭头和文本标注
+        //     {
+        //         type: 'group', // 使用group包裹箭头和文本
+        //         left: 10,
+        //         top: 10,
+        //         children: [
+        //             {
+        //                 type: 'line', // 线段类型
+        //                 shape: {
+        //                     x1: 0, // 起点横坐标
+        //                     y1: 0, // 起点纵坐标
+        //                     x2: 100, // 终点横坐标
+        //                     y2: 0 // 终点纵坐标
+        //                 },
+        //                 style: {
+        //                     lineWidth: 2, // 箭头的线宽
+        //                     stroke: '#333' // 箭头的颜色
+        //                 }
+        //             },
+        //             {
+        //                 type: 'text', // 文本的类型
+        //                 style: {
+        //                     text: 'Radar navigation', // 标注内容
+        //                     fill: '#333', // 文字颜色
+        //                     fontSize: 16 // 文字大小
+        //                 },
+        //                 left: 120, // 文本相对于箭头的位置
+        //                 top: -8 // 文本相对于箭头的位置
+        //             }
+        //         ]
+        //     }
+        // ],
+        tooltip: {
+            show: true,
+            formatter: function (params) {
+                return params.data.value; // 显示节点的值
+            }
+        },
+        series: [{
+            type: 'graph',
+            layout: 'force',
+            symbolSize: 90,  // 节点大小
+            roam: true,
+            edgeSymbol: ['circle', 'arrow'],
+            edgeSymbolSize: [4, 10],
+            data: [
+                { 'name': '基本算术运算（加法、减法、乘法、除法）', 'value': '基本算术运算（加法、减法、乘法、除法）' },
+                { 'name': '运算顺序（PEMDAS/BODMAS）', 'value': '运算顺序（PEMDAS/BODMAS）' },
+                { 'name': '分数和小数', 'value': '分数和小数' },
+                { 'name': '指数和根式', 'value': '指数和根式' },
+                { 'name': '解线性方程', 'value': '解线性方程' },
+                { 'name': '绘制线性方程图', 'value': '绘制线性方程图' },
+                { 'name': '解二次方程', 'value': '解二次方程' },
+                { 'name': '因式分解多项式', 'value': '因式分解多项式' },
+                { 'name': '解方程组', 'value': '解方程组' },
+                { 'name': '理解函数', 'value': '理解函数' },
+                { 'name': '三角函数', 'value': '三角函数' },
+                { 'name': '导数和积分', 'value': '导数和积分' }
+            ],
+            links: [
+                { 'source': '基本算术运算（加法、减法、乘法、除法）', 'target': '运算顺序（PEMDAS/BODMAS）', 'value': '在学习运算顺序之前，需要掌握基本算术运算' },
+                { 'source': '运算顺序（PEMDAS/BODMAS）', 'target': '指数和根式', 'value': '在探索指数和根式之前，需要理解运算顺序' },
+                { 'source': '指数和根式', 'target': '分数和小数', 'value': '在深入分数和小数之前，需要理解指数和根式' },
+                { 'source': '分数和小数', 'target': '基本算术运算（加法、减法、乘法、除法）', 'value': '在重新回顾基本算术运算之前，需要理解分数和小数' },
+                { 'source': '基本算术运算（加法、减法、乘法、除法）', 'target': '解线性方程', 'value': '在尝试解线性方程之前，需要学习基本算术' },
+                { 'source': '解线性方程', 'target': '绘制线性方程图', 'value': '在绘制线性方程图之前，需要理解如何解线性方程' },
+                { 'source': '绘制线性方程图', 'target': '解方程组', 'value': '在处理方程组之前，需要掌握绘制线性方程图' },
+                { 'source': '解方程组', 'target': '因式分解多项式', 'value': '在尝试因式分解多项式之前，需要理解方程组' },
+                { 'source': '理解函数', 'target': '三角函数', 'value': '在探索三角函数之前，需要掌握函数基础' },
+                { 'source': '三角函数', 'target': '导数和积分', 'value': '在深入导数和积分之前，需要理解三角函数' },
+                { 'source': '导数和积分', 'target': '基本算术运算（加法、减法、乘法、除法）', 'value': '在重新回顾基本算术运算之前，需要掌握导数和积分' },
+                { 'source': '解方程组', 'target': '解二次方程', 'value': '在解二次方程之前，需要掌握解方程组' }
+            ],
+            label: {
+                show: true, // 显示标签
+                position: 'bottom', // 将标签位置设为下方
+                formatter: function (params) {
+                    return params.data.name.split(' ').slice(0, 2).join(' '); // 只显示前两个单词
+                },
+                fontSize: 20, // 字体大小
+                color: '#282c34', // 字体颜色
+                fontWeight: '500' // 设置字体粗细为粗体
+            },
+
+            tooltip: {
+                show: true,
+                trigger: 'item',
+                formatter: function (params) {
+                    // 自定义提示框内容
+                    var cartoonImage = '<img src="./image/search-2.png" style="width: 120px; height: 120px;">'; // 替换为你的图片URL
+                    var content = '<div style="display:flex; background-color: rgb(66, 181, 253,.7) ; padding: 5px; border-radius: 10px; color: white;">' +
+                        '<div style="position: absolute; top: 50%; transform: translateY(-50%); left: -80px; z-index: 1;">' + cartoonImage + '</div>' + // 使用绝对定位让图片和内容在垂直方向上居中对齐，并向左挪动一定距离
+                        '<div style="position: relative; display: flex; align-items: center;">' +
+                        '<div style="margin-right: 10px; font-size: 20px;">' + params.value + '</div>' + // 调整内容的位置，并增大字体大小
+                        '</div>' +
+                        '<div style="position: relative; height: 50px;">' + // 设置和图片同样的高度
+                        '</div>' +
+                        '</div>';
+
+                    return content;
+                }
+            },
+            force: {
+                repulsion: 5000,
+                edgeLength: 500 // 调整这个值以改变边的长度，增加值以增长边
+            },
+            emphasis: { // 设置节点悬停时的样式
+                label: {
+                    fontWeight: 'bold' // 设置节点悬停时标签加粗
+                }
+            },
+            lineStyle: { // 设置链接线的样式
+                normal: {
+                    opacity: 0.7, // 设置链接线的默认透明度
+                    width: 1.5
+                },
+                emphasis: { // 设置链接线悬停时的样式
+                    width: 3, // 设置链接线悬停时的宽度加粗
+                    opacity: 1 // 设置链接线悬停时的透明度
+                }
+            },
+            itemStyle: {
+                color: {
+                    type: 'linear',
+                    x: 0,
+                    y: 0,
+                    x2: 0,
+                    y2: 1,
+                    colorStops: [{
+                        offset: 0, color: '#E0F5FF' // 开始颜色，红色
+                    }, {
+                        offset: 1, color: ' #2486b9' // 结束颜色，绿色
+                    }],
+                    globalCoord: false // 缺省为 false
+                },
+                borderColor: 'rgb(255, 255, 255)', // 设置节点边框颜色为黑色
+                borderWidth: 2 // 设置节点边框宽度为1
+            },
+        }]
+    };
+    myChart.setOption(option);
+</script>
+</body>
+
+</html>
+

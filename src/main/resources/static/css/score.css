@@ -1,0 +1,281 @@
+
+.shell-dialog{
+    position: fixed;
+    /* top: 0; */
+    right: 50%;
+    bottom: 15%;
+    /* left: 0; */
+}
+.dialog {
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* transform: translate(-50%, -50%); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 255, 255,.9);
+    backdrop-filter: blur(19px);
+    position: relative;
+}
+.dialog .shell {
+    width: 30vw;
+    position: relative;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.dialog .shell .shell-top {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: rgba(0, 0, 0, 0.3) 1px solid;
+}
+.dialog .shell .shell-top h2 {
+    background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: 20px;
+    margin-left: 5%;
+}
+
+
+.dialog .shell .shell-top .shell-top-close {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5%;
+    cursor: pointer;
+    opacity: .7;
+    background: rgba(180, 83, 107, 0.51);
+    border-radius: 5px;
+    transition: background 0.5s;
+}
+
+.dialog .shell .shell-top .X {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 1.5px;
+    background-color: rgb(255, 255, 255);
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.dialog .shell .shell-top .Y {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 1.5px;
+    background-color: #fff;
+    transform: translateX(-50%) rotate(-45deg);
+}
+
+.dialog .shell .shell-top .close {
+    position: absolute;
+    display: flex;
+    padding: 0.8rem 1.5rem;
+    align-items: center;
+    justify-content: center;
+    transform: translateX(-50%);
+    top: -128%;
+    left: 50%;
+    width: 3em;
+    height: 1.7em;
+    font-size: 12px;
+    background-color: rgb(19, 22, 24);
+    color: rgb(187, 229, 236);
+    border: none;
+    border-radius: 3px;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.dialog .shell .shell-top .shell-top-close:hover {
+    background-color: rgb(211, 21, 21);
+}
+
+.dialog .shell .shell-top .shell-top-close:active {
+    background-color: rgb(130, 0, 0);
+}
+
+.dialog .shell .shell-top .shell-top-close:hover>.close {
+    animation: close 0.2s forwards 0.25s;
+}
+
+@keyframes close {
+    100% {
+        opacity: 1;
+    }
+}
+.dialog .shell .shell-bottom {
+    position: relative;
+    width: 100%;
+    height: 90%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.dialog .shell .shell-bottom .shell-bottom-grade {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+
+}
+.dialog .shell .shell-bottom .shell-bottom-grade h2 {
+    color: #2386dd;
+    font-size: 2em;
+    margin-bottom: -10%;
+}
+.dialog .shell .shell-bottom .shell-bottom-score {
+    width: 100%;
+    height: 35%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+.dialog .shell .shell-bottom .shell-bottom-score span {
+    color: #5eaaf8;
+    font-size: 6em;
+}
+.dialog .shell .shell-bottom .shell-bottom-msg {
+    /* background-color: #2d3436; */
+    width: 100%;
+    height: 30%;
+    display: flex;
+    position: relative;
+    align-content: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+}
+.dialog .shell .shell-bottom .shell-bottom-msg div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100%;
+    width: 30%;
+    background-color: transparent;
+    border: transparent;
+}
+.dialog .shell .shell-bottom .shell-bottom-msg div:nth-child(1) h2 {
+    background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+    -webkit-background-clip: text;
+    color: transparent;
+
+}
+.dialog .shell .shell-bottom .shell-bottom-msg div:nth-child(2) h2 {
+    background-image: linear-gradient(to right top, #008B74, #007E78, #007177, #0F6371);
+    -webkit-background-clip: text;
+    color: transparent;
+
+}
+.dialog .shell .shell-bottom .shell-bottom-msg div:nth-child(3) h2 {
+    background-image: linear-gradient(to right top, #CE2323, #C23B00);
+    -webkit-background-clip: text;
+    color: transparent;
+
+}
+.dialog .shell .shell-bottom .shell-bottom-msg div h2 {
+    font-family: "Arial";
+    font-size: 23px;
+    font-weight: 570;
+    margin: 5px;
+}
+.dialog .shell .shell-bottom .shell-bottom-msg div span {
+    color: #7c7e80;
+    font-size: 17px;
+    letter-spacing: 3px;
+
+}
+
+.dialog .shell .shell-bottom .shell-bottom-finish {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.button-finish {
+    height: 50px;
+    width: 150px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+.button-finish:hover {
+    box-shadow: .5px .5px 150px #252525;
+}
+
+.type1::after {
+    content: "Thanks";
+    height: 50px;
+    width: 150px;
+    background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+    color: #fff;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    transform: translateY(50px);
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease-in-out;
+}
+
+.type1::before {
+    content: "Finish";
+    height: 50px;
+    width: 150px;
+    background-color: #fff;
+    background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+    -webkit-background-clip: text;
+    color: transparent;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    transform: translateY(0px) scale(1.2);
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease-in-out;
+}
+
+.type1:hover::after {
+    transform: translateY(0) scale(1.2);
+}
+
+.type1:hover::before {
+    transform: translateY(-50px) scale(0) rotate(120deg);
+}

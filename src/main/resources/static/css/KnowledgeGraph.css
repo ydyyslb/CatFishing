@@ -1,0 +1,506 @@
+    .el-menu-vertical-demo:not(.el-menu--collapse) {
+        width: 180px;
+        /* min-height: 400px; */
+    }
+
+    /*下拉菜单*/
+    .el-dropdown-link {
+        cursor: pointer;
+        color: #409EFF;
+    }
+
+    .el-dropdown {
+        position: absolute !important;
+        margin-left: 96% !important;
+        margin-top: 5px !important;
+    }
+
+    .el-icon-arrow-down {
+        font-size: 12px;
+        color: transparent;
+    }
+
+    .el-dropdown-menu {
+        width: 150px !important;
+        margin-top: -10px !important;
+    }
+
+    body .shell-main-footer {
+        position: relative;
+        width: 94%;
+        background: linear-gradient(to top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6), rgb(255, 255, 255, .4));
+        backdrop-filter: blur(13px);
+        min-height: 32px;
+        padding: 20px 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #ecebeb;
+        margin-top: 23px;
+    }
+
+    .social_icon {
+        display: flex;
+        justify-content: space-around;
+        /* 或者使用 justify-content: space-between; */
+    }
+
+
+    /*导航条样式*/
+    body .main {
+        left: 190px;
+        width: 85%;
+        min-height: 500px;
+        position: relative;
+
+    }
+
+    body .shell-main-nav {
+        width: 100%;
+        height: 60px;
+        position: sticky;
+        z-index: 999;
+        top: 0;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        margin-bottom: 8vh;
+        background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6));
+        backdrop-filter: blur(13px);
+
+    }
+
+    body .shell-main-nav .logo {
+        width: 50px;
+        height: 100%;
+        position: absolute;
+        left: 5%;
+        justify-content: space-between;
+        display: flex;
+        align-items: center;
+    }
+
+    body .shell-main-nav .logo span {
+        font: 600 28px sans-serif;
+        letter-spacing: 2px;
+        background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+        /* 定义渐变背景 */
+        -webkit-background-clip: text;
+        /* 将背景限定在文字内部，适用于WebKit浏览器 */
+        color: transparent;
+        /* 隐藏文字本身的颜色 */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        /* 添加文字阴影效果 */
+        transition: transform 0.6s;
+        cursor: pointer;
+    }
+
+    body .shell-main-nav .logo span:hover {
+        transform: translateY(-3px);
+        /* 当鼠标悬浮时，向上位移3px */
+    }
+
+    body .shell-main-nav ul {
+        width: 600px;
+        height: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        position: absolute;
+        right: 5%;
+    }
+
+body .shell-main-nav ul li {
+    width: 110px;
+    text-align: center;
+    position: relative;
+    transition: 0.6s;
+    border-radius: 10px;
+    height: 77%;
+
+}
+
+body .shell-main-nav ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 45px !important;
+    text-align: center;
+    font: 600 16px sans-serif;
+    background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+    /* 定义渐变背景 */
+    -webkit-background-clip: text;
+    /* 将背景限定在文字内部，适用于WebKit浏览器 */
+    color: transparent;
+    /* 隐藏文字本身的颜色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    /* 添加文字阴影效果 */
+    transition: transform 0.6s;
+    cursor: pointer;
+}
+
+
+body .shell-main-nav ul li:hover {
+    background-color: rgba(88, 149, 213, 0.7);
+}
+
+body .shell-main-nav ul li:hover a {
+    color: white;
+    letter-spacing: 2px;
+}
+
+    .text-container {
+        white-space: pre-line;
+    }
+
+    .sidebar {
+        height: 100vh;
+        width: 0;
+        /* Initially hidden */
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #2c96cc;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 80px;
+        /* Increased space for close button */
+    }
+
+    .sidebar-handle {
+        display: none;
+        /* Hide the handle, using the close button inside the sidebar for toggling */
+    }
+
+    .sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+        transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+        background-color: #1162aa;
+    }
+
+    .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+        cursor: pointer;
+        color: white;
+    }
+
+    .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #3976ab;
+        color: white;
+        border: none;
+        position: fixed;
+        top: 20px;
+        left: 0;
+        width: 35px;
+        height: 35px;
+        border-radius: 0 5px 5px 0;
+        z-index: 3;
+    }
+
+    .main {
+        flex-grow: 1;
+        padding: 20px;
+        margin-left: 35px;
+        transition: margin-left 0.5s;
+        background-color: #fff;
+        border-radius: 10px;
+        margin: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    select,
+    button {
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        outline: none;
+    }
+
+    button {
+        background-color: #3976ab;
+        color: white;
+        cursor: pointer;
+        border: none;
+    }
+
+    button:hover {
+        background-color: #5392fe;
+    }
+
+
+    /* Define CSS styles for each SVG component */
+    /* orange */
+    .orange {
+        position: absolute;
+        left: -148.7px;
+        top: -112.13px;
+        width: 809.55px;
+        height: 812.79px;
+        opacity: 1;
+        background: rgba(242, 201, 76, 0.6);
+        filter: blur(244px);
+    }
+
+    /* blue */
+    .blue {
+        position: absolute;
+        left: 915.31px;
+        top: 246px;
+        width: 814.03px;
+        height: 738.08px;
+        opacity: 1;
+        background: rgba(138, 178, 220, 0.45);
+        filter: blur(244px);
+    }
+
+    /* purple */
+    .purple {
+        position: absolute;
+        left: 399.46px;
+        top: 287.81px;
+        width: 876.09px;
+        height: 1189.97px;
+        opacity: 1;
+        background: rgba(104, 95, 212, 0.25);
+        filter: blur(244px);
+    }
+
+    /* yellow */
+    .yellow {
+        position: absolute;
+        left: 948.34px;
+        top: -510px;
+        width: 838.21px;
+        height: 990.16px;
+        opacity: 1;
+        background: rgba(229, 229, 1, 0.25);
+        filter: blur(244px);
+    }
+
+    .bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.45);
+        height: 100%;
+        backdrop-filter: blur(24px);
+        /* z-index: 10; */
+    }
+
+    /* Styles for the boxes */
+    .box {
+        border: 3px solid white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+        border-radius: 30px;
+        width: 220px;
+        height: 200px;
+        background-color: rgba(255, 255, 255, 0.5);
+        /* Semi-transparent white */
+        backdrop-filter: blur(10px);
+        /* Glass effect */
+        margin-right: 30px;
+        /* 添加过渡效果 */
+        transition: transform .2s ease-in-out;
+    }
+
+    /* 鼠标hover时放大和上滑 */
+    .box:hover {
+        transform: translateY(-5px) scale(1.05);
+    }
+
+    .box-container {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        bottom: 10%;
+        left: 4%;
+    }
+
+    .main-container {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        letter-spacing: 0.3px;
+        line-height: 2;
+        height: 800px;
+    }
+
+    .image-container {
+        position: absolute;
+        z-index: 10;
+        width: 720px;
+        height: 680px;
+        left: 50%;
+        top: 3%;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .box svg {
+        position: absolute;
+        top: 10%;
+        right: 70%;
+    }
+
+    .box .text {
+        margin: 10px;
+        margin-top: 40%;
+        text-align: left;
+        line-height: 1.5;
+        letter-spacing: -0.5px;
+    }
+
+    .introduction-container {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        width: 48%;
+        z-index: 10;
+        right: 47%;
+        top: 6%;
+        line-height: 1.6;
+        letter-spacing: -0.3px;
+    }
+
+    .introduction-container p {
+        font-size: 17px;
+    }
+
+    .introduction-container h1 {
+        color: #5f95c7;
+        margin-bottom: 20px;
+        font-size: 39px;
+    }
+
+    .animated-button {
+        z-index: 10;
+        position: absolute;
+        right: 39%;
+        top: 51%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 16px 36px;
+        border: 4px solid;
+        border-color: transparent;
+        font-size: 16px;
+        background-color: #94c9fb;
+        border-radius: 100px;
+        font-weight: 600;
+        color: white;
+        box-shadow: 0 0 0 2px #ffffff;
+        cursor: pointer;
+        overflow: hidden;
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        width: 200px;
+    }
+
+    .animated-button svg {
+        position: absolute;
+        width: 24px;
+        fill: #3996cf;
+        z-index: 9;
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .animated-button .arr-1 {
+        right: 16px;
+    }
+
+    .animated-button .arr-2 {
+        left: -25%;
+    }
+
+    .animated-button .circle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        background-color: #e7f3fc;
+        border-radius: 50%;
+        opacity: 0;
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .animated-button .text {
+        position: relative;
+        z-index: 1;
+        transform: translateX(-12px);
+        transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .animated-button:hover {
+        box-shadow: 0 0 0 12px transparent;
+        color: #5f95c7;
+        border-radius: 12px;
+    }
+
+    .animated-button:hover .arr-1 {
+        right: -25%;
+    }
+
+    .animated-button:hover .arr-2 {
+        left: 16px;
+    }
+
+    .animated-button:hover .text {
+        transform: translateX(12px);
+    }
+
+    .animated-button:hover svg {
+        fill: #5f95c7;
+    }
+
+    .animated-button:active {
+        scale: 0.95;
+        box-shadow: 0 0 0 4px rgb(134, 147, 143);
+    }
+
+    .animated-button:hover .circle {
+        width: 220px;
+        height: 220px;
+        opacity: 1;
+    }
+
+    #app{
+        /* background-image: radial-gradient(73% 147%, #d8eef2 59%, #74beff 100%),
+                radial-gradient(91% 146%, rgba(179, 232, 255, 0.5) 47%, rgba(134, 209, 226, 0.5) 100%);
+            background-blend-mode: screen; */
+            background-color: #fff;
+                background-image:
+                    linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+                    linear-gradient(#eee .1em, transparent .1em);
+                background-size: 100% 1.2em;
+           
+        }
+    
+    

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客文章编辑器</title>
+    <link rel="stylesheet" href="./plugins/editor/editor.md-master/editor.md-master/css/editormd.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #openEditorButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .modal {
+            /* display: none; */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 5px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: translateX(-50%) translateY(-50%);
+            /* transform: translateY(-50%); */
+            left: 50%;
+            top: 50%;
+            position: relative;
+            max-height: 90%;
+        }
+
+        .modal-header {
+            background-color: #f1f1f1;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .close-button,
+        .fullscreen-button {
+            cursor: pointer;
+            font-size: 24px;
+            transition: .2s;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .close-button:hover {
+            background-color: red;
+            color: white;
+        }
+
+        .fullscreen-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .fullscreen-button {
+            margin-left: 10px;
+            margin-top: -5px;
+        }
+
+        .modal-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        .editor-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-section label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .editor-section input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        #articleContent {
+            height: 400px;
+        }
+
+        .modal-footer {
+            background-color: #f1f1f1;
+            padding: 10px;
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid #ddd;
+        }
+
+        #sendArticleButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 3px;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #sendArticleButton:hover {
+            background-color: #45a049;
+        }
+
+        .fullscreen {
+            width: 100%;
+            height: 100%;
+            max-width: none;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+    <button id="openEditorButton" @click="openEditor">发送博客</button>
+
+    <div class="modal" v-show="modalVisible">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">新文章</span>
+                <div class="header-buttons">
+                    <span class="fullscreen-button" @click="toggleFullscreen">&#x26F6;</span>
+                    <span class="close-button" @click="closeModal">&times;</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="editor-section">
+                    <label for="articleTitle">文章标题</label>
+                    <input type="text" id="articleTitle" placeholder="输入您的文章标题"
+                           v-model="articleTitle">
+                </div>
+                <div class="editor-section">
+                    <label for="articleTopics">文章主题</label>
+                    <input type="text" id="articleTopics" placeholder="请至少选择一个主题"
+                           v-model="articleTopics">
+                </div>
+                <div class="editor-section">
+                    <label for="articleContent">文章内容</label>
+                    <div id="articleContent">
+                        <textarea style="display:none;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="sendArticleButton" @click="sendArticle">发送</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="./plugins/vue/vue.js"></script>
+<script src="./plugins/jquery/jquery.min.js"></script>
+<script src="./plugins/editor/editor.md-master/editor.md-master/editormd.js"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            modalVisible: false,
+            articleTitle: '',
+            articleTopics: ''
+        },
+        methods: {
+            openEditor() {
+                this.modalVisible = true;
+                this.initEditor();
+            },
+            closeModal() {
+                this.modalVisible = false;
+            },
+            toggleFullscreen() {
+                document.querySelector('.modal-content').classList.toggle('fullscreen');
+            },
+            sendArticle() {
+                this.modalVisible = false;
+            },
+            initEditor() {
+                editormd("articleContent", {
+                    width: "100%",
+                    height: 640,
+                    path: "/plugins/editor/editor.md-master/editor.md-master/lib/",
+                    saveHTMLToTextarea: true,
+                    emoji: true,
+                    theme: "default",
+                    previewTheme: "default",
+                    editorTheme: "default",
+                    language: "zh-cn",
+                    tex: true,
+                    flowChart: true,
+                    sequenceDiagram: true,
+                    toolbarIcons: function () {
+                        return editormd.toolbarModes.simple;
+                    }
+                });
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

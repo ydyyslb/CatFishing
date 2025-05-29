@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Asap", sans-serif !important;
+}
+
+
+em,
+i {
+    font-style: normal
+}
+
+
+li {
+    list-style: none
+}
+
+img {
+
+    border: 0;
+    vertical-align: middle
+}
+
+button {
+    cursor: pointer
+}
+
+a {
+    color: #666;
+    text-decoration: none
+}
+
+button,
+input {
+
+    border: 0;
+    outline: none;
+}
+
+
+
+body {
+    -webkit-font-smoothing: antialiased;
+    background-color: rgb(245, 246, 247, .3);
+    /* font: 12px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif; */
+    color: #666
+}
+
+.hide,
+.none {
+    display: none
+}
+
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    zoom: 1;
+
+}
+/* Hide elements with v-cloak directive */
+[v-cloak] {
+    display: none;
+}

@@ -1,0 +1,718 @@
+body .shell-main {
+    width: 100%;
+    height: auto;
+    position: relative;
+    transition: .2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
+    /* background-image: linear-gradient(to top, #f7f7f7,#e3eefe, #e3eefe,#f7f7f7,  #f7f7f7,#e3eefe,#e3eefe) ; */
+    background-image: linear-gradient(to bottom,#deeafd, #e3eefe, #f7f7f7, #e3eefe, #e3eefe,#f7f7f7,#e3eefe,#e3eefe,#f7f7f7,#f7f7f7);
+
+}
+
+/* 下面是导航条样式 */
+
+body .shell-main-nav {
+    width: 100%;
+    height: 60px;
+    position: sticky;
+    z-index: 999;
+    top: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    /* margin-bottom: 10vh; */
+    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6));
+    backdrop-filter: blur(13px);
+
+}
+
+body .shell-main-nav .logo {
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    left: 5%;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+
+body .shell-main-nav .logo span {
+    font: 600 28px sans-serif;
+    letter-spacing: 2px;
+    background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+    /* 定义渐变背景 */
+    -webkit-background-clip: text;
+    /* 将背景限定在文字内部，适用于WebKit浏览器 */
+    color: transparent;
+    /* 隐藏文字本身的颜色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    /* 添加文字阴影效果 */
+    transition: transform 0.6s;
+    cursor: pointer;
+}
+
+body .shell-main-nav .logo span:hover {
+    transform: translateY(-3px);
+    /* 当鼠标悬浮时，向上位移3px */
+}
+
+body .shell-main-nav ul {
+    width: 600px;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    right: 5%;
+}
+
+body .shell-main-nav ul li {
+    width: 130px;
+    text-align: center;
+    position: relative;
+    transition: 0.6s;
+    border-radius: 10px;
+    height: 77%;
+    
+}
+
+body .shell-main-nav ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 45px !important;
+    text-align: center;
+    font: 600 16px sans-serif;
+    background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+    /* 定义渐变背景 */
+    -webkit-background-clip: text;
+    /* 将背景限定在文字内部，适用于WebKit浏览器 */
+    color: transparent;
+    /* 隐藏文字本身的颜色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    /* 添加文字阴影效果 */
+    transition: transform 0.6s;
+    cursor: pointer;
+}
+
+
+body .shell-main-nav ul li:hover{
+    background-color: rgba(88, 149, 213, 0.7);
+}
+body .shell-main-nav ul li:hover a{
+    color: white;
+    letter-spacing: 2px;
+}
+
+ .second-introduce-block{
+    display: flex;
+    width: 100%;
+    height: 800px;
+    flex-direction: row;
+ }
+ /*rectangle 24*/
+.rectangle24 img{
+ left: 0px;
+ top: 0px;
+ width: 270px;
+ height: 368px;
+ opacity: 1;
+ border-radius: 14px;
+ /* float: right; */
+ right: 10px;
+}
+.rectangle24{
+    position: absolute;
+    width: 270px;
+    height: 368px;
+    right: 50%;
+    margin-top: 12%;
+    opacity: 1;
+    border-radius: 14px;
+    background: rgba(43, 43, 57, 0.46);
+}
+ /*pexels-fauxels-3182834*/
+.pexels-fauxels-3182834{
+ left: -8px;
+ top: -40px;
+ width: 281px;
+ height: 422px;
+ opacity: 1;
+ background: url(https://img.js.design/assets/img/620bccc7b2f7cee7fa6591a8.png);
+}
+
+ /*mask group 8*/
+.mask_group_8{
+ left: 0px;
+ top: 0px;
+ width: 270px;
+ height: 368px;
+ opacity: 1;
+}
+
+ /*rectangle 25*/
+.rectangle25{
+    position: absolute;
+    right: 15%;
+    margin-top: 5%;
+    width: 265px;
+    height: 238px;
+    opacity: 1;
+    border-radius: 14px;
+}
+.rectangle25 img {
+    left: 0px;
+    top: 0px;
+    width: 265px;
+    height: 238px;
+    opacity: 1;
+    border-radius: 14px;
+    /* float: right; */
+    right: 10px;
+}
+
+.right-text-block {
+    position: relative;
+    width: 50%;
+    /* right: 0px; */
+    /* left: 37%; */
+    height: 500px;
+    top: 13%;
+}
+.left-text-block {
+    position: relative;
+    width: 50%;
+    /* right: 0px; */
+    /* left: 4%; */
+    height: 500px;
+    top: 13%;
+}
+
+ /*rectangle 26*/
+ .rectangle26 {
+     position: absolute;
+     right: 15%;
+     margin-top: 38%;
+     width: 265px;
+     height: 238px;
+     opacity: 1;
+     border-radius: 14px;
+ }
+
+ .rectangle26 img {
+     left: 0px;
+     top: 0px;
+     width: 265px;
+     height: 238px;
+     opacity: 1;
+     border-radius: 14px;
+     /* float: right; */
+     right: 10px;
+ }
+ .header-small{
+    position: absolute;
+    left: 10%;
+    top: 80px;
+    width: 142px;
+    height: 22px;
+    opacity: 1;
+    /** 文本1 */
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0px;
+    line-height: 21.78px;
+    color: rgba(33, 123, 244, 1);
+    text-align: left;
+    vertical-align: top;
+ }
+ .header-big{
+    /*why join to netbook social network?*/
+    position: absolute;
+    left: 10%;
+    top: 110px;
+    width: 406px;
+    height: 88px;
+    opacity: 1;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 0px;
+    line-height: 43.57px;
+    color: rgba(10, 9, 61, 1);
+    text-align: left;
+    vertical-align: top;
+ }
+ .header-container{
+    /*recent surveys have indicated that small businesses recognise the need they have to connect with consumer.*/
+    position: absolute;
+    left: 10%;
+    top: 246px;
+    width: 706px;
+    height: 59px;
+    opacity: 1;
+    /** 文本1 */
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    line-height: 19.36px;
+    color: rgba(101, 100, 100, 1);
+    text-align: left;
+    vertical-align: top;
+    line-height: 1.5;
+ }
+ .feature-item{
+    position: absolute;
+    top: 340px;
+    left: 10%;
+ }
+.feature-item:nth-child(2) {
+    border: 1px solid transparent;
+    margin-top: 40px;
+}
+.feature-item:nth-child(3) {
+    margin-top: 80px;
+}
+.shell {
+    width: 1000px;
+}
+
+.shell-main-container {
+    /* background-image: linear-gradient(to bottom, #e3eefe,#eff3fe, #f7f7f7) !important; */
+    height: 600px;
+    width: 1500px;
+    top: 0;
+    position: relative;
+}
+
+.image-container {
+    position: absolute;
+    width: 720px;
+    height: 680px;
+    right: 1%;
+    top: 3%;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+}
+
+.main-introduce {
+
+    position: absolute;
+    top: 6%;
+    left: 5%;
+    right: 50%;
+
+}
+
+.main-introduce h1 {
+    font-size: 55px;
+    letter-spacing: 2px;
+    background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.6s;
+    font-weight: bold;
+}
+
+.main-introduce .transition-box {
+    margin-top: 50px;
+    font-size: 18px;
+    color: #333333;
+    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); */
+    /* transition: transform 0.6s; */
+    line-height: 1.6;
+    /* margin-bottom: 30px; */
+}
+
+.cta {
+    top: 20%;
+    position: absolute;
+    margin: auto;
+    padding: 12px 18px;
+    transition: all 0.2s ease;
+    border: none;
+    background: none;
+    cursor: pointer;
+    right: 85%;
+}
+
+.cta:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 50px;
+    background: #76b2e7;
+    width: 70px;
+    height: 70px;
+    transition: all 0.3s ease;
+}
+
+.cta span {
+    position: relative;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #234567;
+
+}
+
+.cta svg {
+    position: relative;
+    top: 0;
+    margin-left: 10px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #234567;
+    stroke-width: 2;
+    transform: translateX(-5px);
+    transition: all 0.3s ease;
+}
+
+.cta:hover:before {
+    width: 100%;
+    background: rgb(82, 145, 209,.7);
+}
+
+.cta:hover svg {
+    transform: translateX(0);
+}
+
+.cta:active {
+    transform: scale(0.95);
+}
+
+/* Styles for the boxes */
+.box {
+    border: 10px solid white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    border-radius: 30px;
+    width: 360px;
+    height: 340px;
+    background-color: rgba(255, 255, 255, 0.5);
+    /* Semi-transparent white */
+    backdrop-filter: blur(10px);
+    /* Glass effect */
+    margin-right: 170px;
+    /* 添加过渡效果 */
+    transition: transform .2s ease-in-out;
+}
+
+.box:nth-child(1) {
+    margin-left: 13%;
+}
+
+/* 鼠标hover时放大和上滑 */
+.box:hover {
+    transform: translateY(-5px) scale(1.05);
+}
+
+.shell-main-product {
+    margin-top: 230px;
+    /* position: relative; */
+    display: flex;
+    flex-direction: row;
+    bottom: 10%;
+
+}
+
+.box:nth-child(1) img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* top: 10%;
+    right: 70%; */
+}
+
+.box:nth-child(2) img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* top: 10%;
+    right: 70%; */
+}
+
+.box:nth-child(3) img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* top: 10%;
+    right: 70%; */
+}
+
+.box .text {
+    /* margin: 10px; */
+    margin-top: 40%;
+    text-align: left;
+    line-height: 1.5;
+    letter-spacing: -0.5px;
+}
+
+.text {
+    width: 490px;
+    margin-left: 8%;
+    position: relative;
+    display: flex;
+    text-align: center;
+    margin-top: 40px;
+    font-size: 17px;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.text h2 {
+    color: #234567;
+}
+
+.text p {
+    padding: 7px;
+    margin-top: 15px;
+    font-size: 18px;
+    color: #606060;
+}
+/* 第三个主页板块 */
+.Introduce-box{
+    
+    border: 1px solid rgb(223, 223, 223);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+    border-radius: 30px;
+    width: 300px;
+    height: 314px;
+    background-color: rgba(255, 255, 255);
+    /* Semi-transparent white */
+    /* backdrop-filter: blur(10px); */
+    /* Glass effect */
+    margin-right: 30px;
+    /* 添加过渡效果 */
+    transition: transform .2s ease-in-out;
+}
+.left-box{
+    position: relative;
+    left: 0;
+    width: 700px;
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+}
+.third-introduce-block{
+    left: 5%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    top: 40px;
+}
+.left-box-bottom{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    width: 800px;
+}
+.left-box-top {
+    display: flex;
+    flex-direction: row;
+    width: 800px;
+}
+.small-icon svg{
+    /* position: absolute; */
+    width: 50px;
+    height: 50px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.Introduce-box:hover{
+    transform: translateY(-5px) scale(1.05);  
+}
+.Introduce-box .head{
+    margin-top: 5px;
+    margin-left: 20px;
+    font-size: 26px;
+    padding-right: 18px;
+}
+.Introduce-box .content-in-box{
+    padding-right: 15px;
+    font-size: 16px;
+    color: #7d7c7c;
+    margin-left: 20px;
+    padding-right: 14px;
+    margin-top: 15px;
+}
+.right-bottom-image img{
+    width: 100%;
+    height: 100%;
+    right: 10px;
+}
+.right-bottom-image{
+    width: 800px;
+    height: 700px;
+    margin-top: 160px;
+}
+.right-top .line{
+    top: 50px;
+    width: 148px;
+    height: 3px;
+    opacity: 1;
+    background: rgba(21, 138, 254, 1);
+    position: absolute;
+}
+/* 第二个按钮 */
+.btn {
+    --color: #3d8bfd;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .5s;
+    border: none;
+    background-color: transparent;
+}
+
+.btn div {
+    letter-spacing: 2px;
+    font-weight: bold;
+    background: var(--color);
+    border-radius: 2rem;
+    color: white;
+    padding: 1rem;
+}
+
+.btn::before {
+    content: '';
+    z-index: -1;
+    background-color: var(--color);
+    border: 2px solid white;
+    border-radius: 2rem;
+    width: 110%;
+    height: 100%;
+    position: absolute;
+    transform: rotate(10deg);
+    transition: .5s;
+    opacity: 0.2;
+}
+
+.btn:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+    transform: scale(1.1);
+}
+
+.btn:hover::before {
+    transform: rotate(0deg);
+    opacity: 1;
+}
+
+.btn svg {
+    transform: translateX(-200%);
+    transition: .5s;
+    width: 0;
+    opacity: 0;
+}
+
+.btn:hover svg {
+    width: 25px;
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+.btn:active {
+    filter: brightness(1.4);
+}
+/* 第二个按钮结束 */
+.el-dropdown{
+    margin-left: 95% !important;
+    top: 5px;
+}
+.card {
+    display: flex;
+    height: 60px;
+    width: 650px;
+}
+
+.card svg {
+    position: absolute;
+    display: flex;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    font-weight: 700;
+    opacity: 1;
+    transition: opacity 0.25s;
+    z-index: 2;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.card .social-link1,
+.card .social-link2,
+.card .social-link3,
+.card .social-link4,
+.card .social-link5 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+    text-decoration: none;
+    transition: 0.25s;
+    border-radius: 50px;
+    margin: 0 30px;
+}
+
+
+.card svg {
+    transform: scale(1);
+}
+
+.card .social-link1:hover {
+    background: #f09433;
+    background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f09433', endColorstr='#bc1888', GradientType=1);
+    animation: bounce_613 0.4s linear;
+}
+
+.card .social-link2:hover {
+    background-color: #242c34;
+    animation: bounce_613 0.4s linear;
+}
+
+.card .social-link3:hover {
+    background-color: #5865f2;
+    animation: bounce_613 0.4s linear;
+}
+
+.card .social-link4:hover {
+    background-color: #0a66c2;
+    animation: bounce_613 0.4s linear;
+}
+
+.card .social-link5:hover {
+    background-color: #ff8000;
+    animation: bounce_613 0.4s linear;
+}
+
+@keyframes bounce_613 {
+    40% {
+        transform: scale(1.4);
+    }
+
+    60% {
+        transform: scale(0.8);
+    }
+
+    80% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

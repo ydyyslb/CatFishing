@@ -1,0 +1,8 @@
+{
+    "A": "This variable represents the age group of the respondent.\nValues:\n- young: Young individuals.\n- adult: Adults.\n- old: Older individuals.",
+    "S": "This variable represents the gender of the respondent.\nValues:\n- M: Male.\n- F: Female.",
+    "E": "This variable indicates the highest level of education attained by the respondent.\nValues:\n- high: High school.\n- uni: University.",
+    "O": "This variable describes the occupational status of the respondent.\nValues:\n- self: Self-employed.\n- emp: Employed.",
+    "R": "This variable indicates the type of residential area the respondent lives in.\nValues:\n- big: Big city.",
+    "T": "This variable describes the primary mode of transportation used by the respondent.\nValues:\n- other: Other modes of transport.\n- train: Train.\n- car: Car."
+}

@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>完成页面</title>
+    <link rel="icon" href="./image/logo.ico">
+    <link rel="stylesheet" href="css/finish.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style>
+        .el-radio__input.is-disabled+span.el-radio__label {
+            color: #3f4143 !important;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+<div class="main" v-cloak>
+    <div class="outercontent" id="app">
+        <div class="shell-main-nav">
+            <a href="index.html">
+                <div class="logo">
+                    <img src="./image/logo_.png" alt="网站标志图" style=" height: 40px;  width: 40px; margin-right: 10px;">
+                    <span>学程导航</span>
+                </div>
+            </a>
+            <ul>
+                <li><a href="index.html"><i class="el-icon-notebook-2" style="margin-right: 5px;"></i>学习</a></li>
+                <li><a href="info.html"><i class="el-icon-user" style="margin-right: 5px;"></i>用户</a></li>
+                <li><a href="blog.html"><i class="el-icon-pie-chart" style="margin-right: 5px;"></i>博客</a></li>
+                <li><a href="knowledgeGraph.html"><i class="el-icon-data-board" style="margin-right: 5px;"></i>知识图谱</a></li>
+                <li><a href="about.html"> <i class="el-icon-chat-dot-round" style="margin-right: 5px;"></i>关于我们</a></li>
+            </ul>
+            <div class="dropdown">
+                <el-dropdown>
+                    <span class="el-dropdown-link">
+                        <a href="info.html">
+                            <div class="block" id="avatar"> <el-avatar :size="50" v-if="user.icon" :src="user.icon"></el-avatar>
+                        <el-avatar :size="50" v-else src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></div>
+                        </a>
+                        <!--<i class="el-icon-arrow-down el-icon--right"></i>-->
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item style="max-width: 185px; overflow: hidden; text-overflow: ellipsis;"> {{ user.nickName
+                            }}</el-dropdown-item>
+                        <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+                        <a href="index.html"><el-dropdown-item>首页</el-dropdown-item></a>
+                        <a href="functionPage.html"><el-dropdown-item>学习</el-dropdown-item></a>
+                        <a href="about.html"><el-dropdown-item>关于我们</el-dropdown-item></a>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+        </div>
+        <div class="analysis w">
+            <div class="upper">
+                <div class="left" id="left">
+                    <div class="score">
+                        <el-card class="box-card" id="score">
+                            <div slot="header" class="clearfix">
+                                <span><i class="el-icon-trophy" style="margin-right: 20px; color: rgb(220, 207, 69); font-size: 20px;"></i>Score</span>
+                            </div>
+                            <el-progress type="dashboard" :percentage="text.userScore" :color="colors" id="dashboard" :format="format"></el-progress>
+                        </el-card>
+                    </div>
+                    <div class="board">
+                        <el-card class="box-card GeneralSituation">
+                            <div slot="header" class="clearfix">
+                                <span>总体情况</span>
+                            </div>
+                            <div class="text item">
+                                <div>
+                                    <el-row :gutter="20">
+
+                                        <el-card shadow="hover" style="width: 100%; margin-top: 20px;">
+                                            <div style="width: 100%; display: inline-block;">
+                                                <div class="title">
+                                                    <i class="el-icon-timer" style="color: #20a0ff; font-size: 20px;"></i>
+                                                    <span>花费时间</span>
+                                                </div>
+                                                <div class="time">
+                                                    <span>{{ getConsumingTime(text.startTime, text.finishTime) }}</span>
+                                                </div>
+                                            </div>
+                                        </el-card>
+
+
+                                    </el-row>
+                                    <el-row :gutter="20">
+                                        <el-col :span="14" id="time">
+                                            <el-card shadow="hover" style="margin-top: 20px; width: 100%;">
+                                                <div id="tip1">正确率</div>
+                                                <el-progress type="circle" :percentage="CorrectPercentage"></el-progress>
+                                            </el-card>
+                                        </el-col>
+                                        <el-col :span="14">
+                                            <el-card shadow="hover" style="width: 50%;margin-top: 20px; ">
+                                                <div id="tip2">完成率</div>
+                                                <el-progress type="circle" :percentage="FinshPercentage"></el-progress>
+                                            </el-card>
+                                        </el-col>
+
+                                    </el-row>
+                                </div>
+                            </div>
+                        </el-card>
+
+                    </div>
+                </div>
+                <div class="question" id="question">
+                    <el-card class="box-card" id="questionboard">
+                        <el-tabs tab-position="left" style="height: 85%;">
+                            <el-tab-pane v-for="(question, questionIndex) in questions" :key="question.number" :label="question.label" icon="el-icon-user">
+                                <div class="questionContent">
+                                    <h3 class="QuestionNumber">第 {{ question.number }} 题</h3>
+                                    <!-- <el-rate v-model="question.level" disabled show-score text-color="#ff9900"  class="rate">
+                                    </el-rate> -->
+                                    <div class="questionTitle">
+                                        {{question.content}}
+                                    </div>
+                                    <div v-if="question.hint">
+                                        <span>{{ question.hint }}</span>
+                                    </div>
+                                    <div v-if="question.image" class="imag">
+                                        <el-image :src="question.image" style="width: 350px; height: 250px; border-radius: 5px;"></el-image>
+                                    </div>
+
+                                    <div style="margin-top: 20px" class="prob-choice" v-if="question.choices">
+                                        <label v-for="(choice, index) in question.choices" :key="index" class="choice-label">
+                                            <el-radio disabled v-model="radio2" :name="`question${question.number}`" :value="choice" border size="medium">{{ choice }}</el-radio>
+                                        </label>
+                                    </div>
+                                    <div class="text item">
+                                        <div>
+                                            <el-row :gutter="20">
+                                                <el-col :span="14">
+                                                    <el-card shadow="hover" style="margin-top: 20px;">
+                                                        <div slot="header" class="clearfix">
+                                                            <span>正确答案</span>
+                                                        </div>
+                                                        <div class="answer" v-if="!SAQuestion">
+                                                            {{question.choices[question.answer]}}
+                                                        </div>
+                                                        <div class="answer" v-if="SAQuestion">
+                                                            {{ question.answer }}
+                                                        </div>
+                                                    </el-card>
+                                                </el-col>
+                                                <el-col :span="14">
+                                                    <el-card shadow="hover" style="margin-top: 20px; ">
+                                                        <div slot="header" class="clearfix">
+                                                            <span>你的答案</span>
+                                                        </div>
+                                                        <div class="answer" v-if="!SAQuestion">
+                                                            {{ question.choices[text.userAnswer.split(',')[question.number - 1]] }}
+                                                        </div>
+                                                        <div class="answer" v-if="SAQuestion">
+                                                            {{text.userAnswer.replace('[', '').replace(']', '').split(',')[question.number - 1]}}
+                                                        </div>
+                                                    </el-card>
+                                                </el-col>
+
+                                            </el-row>
+
+                                        </div>
+                                    </div>
+                                    <el-card class="box-card Knowledge" v-if="text.scoreForEach">
+                                        <div slot="header" class="clearfix">
+                                            <span>本题得分</span>
+                                        </div>
+                                        <div class="resolution">
+                                            {{text.scoreForEach.replace('[', '').replace(']', '').split(',')[question.number - 1]}}
+                                        </div>
+                                    </el-card>
+                                    <!-- <el-card class="box-card Knowledge" v-if="question.solution">
+                                        <div slot="header" class="clearfix">
+                                            <span>Analysis</span>
+                                        </div>
+                                        <div class="resolution">
+                                            {{question.solution}}
+                                        </div>
+                                    </el-card> -->
+                                    <el-card class="box-card" style="margin-top: 30px;" v-if="question.lecture">
+                                        <div slot="header" class="clearfix">
+                                            <span><i class="el-icon-s-opportunity" style="color: rgb(227, 224, 27); margin-right: 10px; font-size: 20px; font-weight: 100;"></i>技能</span>
+                                        </div>
+                                        <div class="tagsInner">
+                                            <span>{{question.lecture}}</span>
+                                        </div>
+                                    </el-card>
+                                    <el-card class="box-card tagsContainer" style="margin-top: 30px;" v-if="question.skill">
+                                        <div slot="header" class="clearfix">
+                                            <span> <i class="el-icon-edit" style="color: #20a0ff; margin-right: 10px; font-size: 20px; font-weight: 100;"></i>知识点</span>
+                                        </div>
+                                        <div class="tagsInner">
+                                            <span class="tag">{{question.skill}}</span>
+                                        </div>
+                                    </el-card>
+                                    <div v-if="!text.scoreForEach">
+                                        <el-card class="box-card" style="margin-top: 30px;" :label="'AI Explain'" >
+                                            <div slot="header" class="clearfix">
+                                            <span><i class="el-icon-chat-line-round"
+                                                     style="color: #20a0ff; margin-right: 10px; font-size: 20px; font-weight: 100;"></i>AI 讲解</span>
+                                                <!-- <template>
+                                                    <el-select v-model="value" placeholder="adjust style" style="margin-left: 70%; width: 100px;">
+                                                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                                                        </el-option>
+                                                    </el-select>
+                                                </template> -->
+                                            </div>
+                                            <div class="text-container" style="white-space: pre-line !important;"  v-loading="explain_loading">
+                                                <div v-if="Explainations[questionIndex]">{{ Explainations[questionIndex] }}</div>
+                                                <div v-else> <el-empty description="出错啦…"></el-empty></div>
+                                            </div>
+                                        </el-card>
+                                    </div>
+
+                                    <div>
+                                        <el-card class="box-card" style="margin-top: 30px;" :label="'题目推荐'">
+                                            <div slot="header" class="clearfix">
+                                                <h5>Recommendation</h5>
+                                            </div>
+                                            <div class="text-container" style="white-space: pre-line !important;">
+                                                <template>
+                                                    <div class="block">
+                                                        <el-carousel height="150px">
+                                                            <el-carousel-item v-for="(item,index) in carouselItems" :key="index">
+                                                                <div class="carousel-item" style="margin-left: 70px; margin-top: 10px; cursor: pointer;">
+                                                                    <div style="margin-top: 10px; display: flex; justify-content: center;">Question</div>
+                                                                    <div style="display: flex; justify-content: center;">{{item.question_content}}</div>
+                                                                    <div style="margin-top: 30px; display: flex; justify-content: center;">
+                                                                        <span class="tag">{{ item.question_grade }}</span>
+                                                                        <span class="tag">{{ item.question_subject }}</span>
+                                                                        <span class="tag">{{ item.question_category }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </el-carousel-item>
+                                                        </el-carousel>
+                                                    </div>
+                                                </template>
+
+                                            </div>
+                                        </el-card>
+                                    </div>
+
+                                </div>
+
+                            </el-tab-pane>
+
+                        </el-tabs>
+                    </el-card>
+                </div>
+            </div>
+            <div class="lower">
+                <div class="chartboard">
+                    <div class="data1">
+                        <div id="barchart"></div>
+                    </div>
+                    <div class="data2">
+                        <div id="linechart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script src="plugins/vue/vue.js"></script>
+<script src="plugins/axios/axios.min.js"></script>
+<link rel="stylesheet" href="./plugins/element-ui/lib/theme-chalk/index.css">
+<script src="./plugins/element-ui/lib/index.js"></script>
+<script src="./node_modules/@antv/g2/dist/g2.min.js"></script>
+<script src="./js/common.js"></script>
+<script>
+    let testId = sessionStorage.getItem('testId');
+    
+    // Function to initialize charts after G2 is loaded
+    function initCharts(data1, data2) {
+        if (typeof G2 === 'undefined') {
+            console.error('G2 library not loaded yet');
+            return;
+        }
+        
+        try {
+            // Check if G2 is an older version (pre-v5)
+            const isLegacyG2 = typeof G2.Chart === 'function' && !G2.Chart.prototype.encode;
+            
+            // Initialize bar chart
+            if (data1 && document.getElementById('barchart')) {
+                if (isLegacyG2) {
+                    // Legacy G2 (version 4.x or earlier)
+                    const chart = new G2.Chart({
+                        container: 'barchart',
+                        height: 450,
+                        width: 650,
+                        title: {
+                            text: '全班成绩分布',
+                        },
+                    });
+                    
+                    chart.data(data1);
+                    chart.interval().position('group*sales');
+                    chart.render();
+                } else {
+                    // G2 version 5.x
+                    const barchart = new G2.Chart({
+                        container: 'barchart',
+                        height: 450,
+                        width: 650,
+                        title: {
+                            text: '全班成绩分布',
+                        },
+                    });
+                    
+                    barchart.data(data1).encode('x', 'group').encode('y', 'sales');
+                    barchart.render();
+                }
+            }
+            
+            // Initialize line chart if data is available
+            if (data2 && data2.length > 0 && document.getElementById('linechart')) {
+                if (isLegacyG2) {
+                    // Legacy G2 (version 4.x or earlier)
+                    const chart = new G2.Chart({
+                        container: 'linechart',
+                        autoFit: true,
+                        height: 450,
+                    });
+                    
+                    chart.data(data2);
+                    chart.scale({
+                        test: {
+                            range: [0, 1],
+                        },
+                        value: {
+                            min: 0,
+                            nice: true,
+                        },
+                    });
+                    
+                    chart.line().position('test*value');
+                    chart.point().position('test*value').style('fill', 'white');
+                    
+                    chart.render();
+                } else {
+                    // G2 version 5.x
+                    const linechart = new G2.Chart({
+                        container: 'linechart',
+                        autoFit: true,
+                        height: 450,
+                        title: {
+                            text: '历次考试成绩',
+                        },
+                    });
+                    
+                    linechart
+                        .data(data2)
+                        .encode('x', 'test')
+                        .encode('y', 'value')
+                        .scale('x', {
+                            range: [0, 1],
+                        })
+                        .scale('y', {
+                            domainMin: 0,
+                            nice: true,
+                        });
+                    
+                    linechart.line().label({
+                        text: 'value',
+                        style: {
+                            dx: -10,
+                            dy: -12,
+                        },
+                    });
+                    
+                    linechart.point().style('fill', 'white').tooltip(false);
+                    linechart.render();
+                }
+            }
+        } catch (error) {
+            console.error('Error initializing charts:', error);
+        }
+    }
+    
+    // Sample data for bar chart
+    const data1 = [
+        { group: '0-30', sales: 158 },
+        { group: '30-60', sales: 252 },
+        { group: '60-70', sales: 331 },
+        { group: '70-80', sales: 370 },
+        { group: '80-90', sales: 478 },
+        { group: '90-100', sales: 278 }
+    ];
+    
+    // Initialize charts when page loads if G2 is already available
+    window.addEventListener('load', function() {
+        if (typeof G2 !== 'undefined') {
+            initCharts(data1, []);
+        }
+    });
+    
+    new Vue({
+        el:"#app",
+        data() {
+            return {
+                explain_loading:true,
+                static_questions: [
+                    {
+                        topic: '生物',
+                        question: '下列哪种生物包含曾经是地衣的物质？',
+                        grade: '十年级',
+                        subject: '生物',
+                        category: '生态系统',
+                        task: '多项选择'
+                    },
+                    {
+                        topic: '化学',
+                        question: '水的化学式是什么？',
+                        grade: '八年级',
+                        subject: '化学',
+                        category: '化合物',
+                        task: '开放式回答'
+                    },
+                    {
+                        topic: '物理',
+                        question: '什么力使行星围绕太阳运行？',
+                        grade: '十二年级',
+                        subject: '物理',
+                        category: '天文学',
+                        task: '多项选择'
+                    }
+                ],
+                carouselItems: [],
+                SAQuestion:false,
+                user: {},
+                text: [],
+                questions: [],
+                value: 3.7,
+                percentage: 10,
+                deadline: new Date("2024-3-16"),
+                choicesArray:[],
+                CorrectPercentage:0,
+                FinshPercentage:0,
+                colors: [
+                    { color: '#f56c6c', percentage: 20 },
+                    { color: '#e6a23c', percentage: 40 },
+                    { color: '#5cb87a', percentage: 60 },
+                    { color: '#1989fa', percentage: 80 },
+                    { color: '#6f7ad3', percentage: 100 }
+                ],
+                radio2: '1',
+                data2:[],
+                Explainations:[],
+                options: [{
+                    value: 'Longer',
+                    label: 'Longer'
+                }, {
+                    value: 'Shorter',
+                    label: 'Shorter'
+                }, {
+                    value: 'More colloquial',
+                    label: 'More colloquial'
+                }, {
+                    value: 'More professional',
+                    label: 'More professional'
+                }],
+                value: ''
+            };
+        },
+
+        beforeMount() {
+            this.fetchUserInfo();
+            this.GetQuestion();
+            this.carouselItems = this.static_questions.map(question => ({
+                question_grade: `${question.grade}`,
+                question_subject:`${question.subject}`,
+                question_category:`${question.category}`,
+                question_content: `${question.question}`
+            }));
+            console.log(this.static_questions);
+
+        },
+        // mounted() {
+        //     this.fetchAIexplain();
+        // },
+        watch: {
+            value(newValue, oldValue) {
+                // 在value值改变时向后端发送请求的逻辑
+                this.explain_loading = true;
+                this.sendRequestToBackend();
+            }
+        },
+        methods: {
+            async logout() {
+                try {
+                    const response = await axios.get('/user/logout');
+                    sessionStorage.removeItem("token");
+                    this.$message.success("退出登录成功!");
+                    window.location.href = '/Login.html';
+                } catch (error) {
+                    this.$message.error(error);
+                    console.error(error);
+                }
+            },
+            async sendRequestToBackend() {
+                try {
+                    const response = await axios.get('/test/optimizeExplain', {
+                        params: {
+                            id: testId,
+                            userFeedback: this.value
+                        },
+                        timeout: 100000
+                    });
+                    if (response.success) {
+                        this.Explainations = response.data;
+                        this.explain_loading = false;
+                    }
+                } catch (error) {
+                    this.explain_loading = false;
+                    this.$message.error(error);
+                    console.error(error);
+                }
+
+
+            },
+            loadChart(data2,text){
+                // 倒序操作
+                const reversedScoreList = text.scoreList.slice().reverse();
+
+                // 添加到data2数组
+                for (let i = 0; i < reversedScoreList.length; i++) {
+                    data2.push({ test: 'Test' + (i + 1), value: reversedScoreList[i] });
+                }
+                
+                // Initialize charts with the updated data
+                initCharts(data1, this.data2);
+            },
+            getConsumingTime(startTime, finishTime) {
+                const startTimeMs = new Date(startTime).getTime();
+                const finishTimeMs = new Date(finishTime).getTime();
+                const diffMs = finishTimeMs - startTimeMs;
+                const hours = Math.floor(diffMs / (1000 * 60 * 60));
+                const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+                return hours + ' : ' + minutes + ' : ' + seconds;
+            },
+            format(percentage) {
+
+                return `${percentage}`;
+            },
+            async GetImage(item, question) {
+                try {
+                    const response = await axios.get('/question/getImage', {
+                        params: {
+                            split: item.split,
+                            id: item.id
+                        },
+                    });
+                    // 将二进制图像数据转换为base64
+                    if (response.success) {
+                        const base64String = btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+                        question.image = `data:image/png;base64,${response.data}`;
+
+                    }
+
+                } catch (error) {
+                    // 处理错误情况
+                    console.error('Error fetching image:', error);
+                }
+            },
+            async fetchAIexplain(){
+                try{
+                    const response = await axios.get('/test/getExplain', {
+                        params: {
+                            id: testId
+                        },
+                        timeout: 55000
+                    });
+                    if(response.success){
+                        this.Explainations = response.data;
+                        console.log(response.data)
+                        this.explain_loading = false;
+                    }
+                } catch (error) {
+
+                    this.$message.error(error);
+                    console.error(error);
+                }
+            },
+            async GetQuestion() {
+
+                try {
+                    const response = await axios.get('/test/getTest', {
+                        params: {
+                            id: testId
+                        },
+                    });
+                    if (response.success) {
+                        this.text = response.data;
+
+                        const totalQuestions = response.data.questions.length;
+                        this.CorrectPercentage = (response.data.correctNumber / totalQuestions) * 100;
+
+                        const answeredQuestions = response.data.userAnswer.split(",").map(Number).filter(item => item !== -1).length; // 已回答问题数为数组中不等于-1的项的数量
+
+                        this.FinshPercentage = (answeredQuestions / totalQuestions) * 100;
+                        this.loadChart(this.data2, response.data);
+
+                        //如果是短答题
+                        if(response.data.task === "short answer question"){
+                            this.SAQuestion = true;
+                            this.questions = this.text.questions.map((item, index) => {
+                                let question = {
+                                    id: item.id,
+                                    number: index + 1,
+                                    label: `Question ${index + 1}`,
+                                    content: item.question,
+                                    answer: item.answer,
+                                };
+                                return question;
+                            })
+                        }else{
+                            //如果是选择题
+                            this.fetchAIexplain();
+                            this.questions = this.text.questions.map((item, index) => {
+                                // 去掉字符串中多余的引号以及外层的方括号
+                                let choicesString = item.choices.replace(/'/g, '').replace('[', '').replace(']', '');
+                                // 将字符串分割为数组
+                                let choicesArray = choicesString.split(',').map(choice => choice.trim());
+                                this.choicesArray = choicesArray;
+                                let question = {
+                                    id: item.id,
+                                    number: index + 1,
+                                    label: `Question ${index + 1}`,
+                                    content: item.question,
+                                    choices: choicesArray,
+                                    solution: item.solution,
+                                    split: item.split,
+                                    image: item.image,
+                                    answer: item.answer,
+                                    subject: item.subject,
+                                    topic: item.topic,
+                                    category: item.category,
+                                    skill: item.skill,
+                                    lecture: item.lecture,
+                                    hint: item.hint,
+                                    task: item.task
+                                    // level: item.grade
+                                };
+
+                                // 如果 image 不为空，则获取图像
+                                if (item.image === "image.png") {
+                                    // 发送axios请求获取图像数据
+                                    this.GetImage(item, question);
+                                }
+
+                                return question;
+                            });
+                        }
+
+
+
+                    }
+                    else {
+
+                        throw new Error('Network response was not ok.');
+                    }
+                } catch (error) {
+
+                    this.$message.error(error);
+                    console.error(error);
+                }
+            },
+            //    async GetQuestion(){
+            //         const _this = this;
+            //         try {
+            //             const response = await axios.post('/question/get');
+            //             if (response.success) {
+            //                 _this.text = response.data;
+            //                 this.questions = this.text.map((item, index) => {
+
+            //                     let levelNumber = parseInt(item.level.replace("Level ", ""));
+            //                     return {
+            //                         number: index + 1,
+            //                         label: `Question ${index + 1}`,
+            //                         content: item.problem,
+            //                         answer: item.solution,
+            //                         level: levelNumber
+            //                     };
+
+            //                 });
+            //             }
+            //             else {
+            //                 throw new Error('Network response was not ok.');
+            //             }
+            //         } catch (error) {
+
+            //             this.$message.error(error);
+            //             console.error(error);
+            //         }
+            //    },
+
+            handleAvatarSuccess(res, file) {
+                const encodedName = encodeURIComponent(response.data.icon);
+                axios.get(`/user/download?name=${encodedName}`)
+                    .then((response) => {
+                        _this.user.icon = response.data;
+                    })
+                    .catch((error) => {
+                        // 处理请求失败
+                        console.error(error);
+                    });
+            },
+
+            async fetchUserInfo() {
+                const _this = this;
+                try {
+                    const response = await axios.get('/user/me');
+                    if (response.success) {
+                        _this.user = response.data;
+                    }
+                    else {
+
+                        throw new Error('Network response was not ok.');
+                    }
+                } catch (error) {
+
+                    this.$message.error(error);
+                    console.error(error);
+                }
+            },
+
+        },
+    })
+</script>
+</body>
+</html>

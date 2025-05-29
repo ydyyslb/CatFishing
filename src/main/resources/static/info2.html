@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>intelligent Guidance System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="./image/logo.ico">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/common.css">
+    
+    
+</head>
+
+<body>
+    <div id="bac" v-cloak>
+        <div class="shell-main-nav">
+            <a href="index.html">
+
+            <div class="logo">
+                <img src="./image/logo_.png" alt="Website Image" style=" height: 40px;  width: 40px; margin-right: 10px;">
+                <span>IALP</span>
+            </div>
+            </a>
+            <ul>
+                <li><a href="index.html"><i class="el-icon-notebook-2" style="margin-right: 5px;"></i>学习</a></li>
+                <li><a href="info.html"><i class="el-icon-user" style="margin-right: 5px;"></i>用户</a></li>
+                <li><a href="functionPage.html"><i class="el-icon-pie-chart" style="margin-right: 5px;"></i>分析</a></li>
+                <li><a href="knowledgeGraph.html"><i class="el-icon-data-board" style="margin-right: 5px;"></i>图表</a></li>
+                <li><a href="about.html"> <i class="el-icon-chat-dot-round" style="margin-right: 5px;"></i>关于</a></li>
+            </ul>
+            <div class="test"></div>
+            <div id="dropdown">
+                <el-dropdown>
+                    <span class="el-dropdown-link">
+                        <a href="info.html">
+                        <div class="block" id="avatar"> <el-avatar :size="50" v-if="user.icon" :src="user.icon"></el-avatar>
+                        <el-avatar :size="50" v-else src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></div>
+                        <!--<i class="el-icon-arrow-down el-icon--right"></i>-->
+                        </a>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item style="max-width: 185px; overflow: hidden; text-overflow: ellipsis;"> {{ user.nickName
+                            }}</el-dropdown-item>
+                        <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+                        <a href="index.html"><el-dropdown-item>主页</el-dropdown-item></a>
+                        <a href="functionPage.html"><el-dropdown-item>学习</el-dropdown-item></a>
+                        <a href="about.html"><el-dropdown-item>关于</el-dropdown-item></a>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+        </div>
+
+        <!--导航栏-->
+        <!--PEN CONTENT-->
+        <div class="content">
+            <!--content title-->
+            <!--menu-->
+            <!--tabs navigation-->
+            <div class="tabs__nav">
+                <ul class="tabs__nav-list">
+                    <li class="tabs__nav-item js-active">用户信息</li>
+                    <li class="tabs__nav-item">收藏夹</li>
+                    <li class="tabs__nav-item">错题本</li>
+                    <li class="tabs__nav-item">历史记录</li>
+                </ul>
+            </div>
+            <!--content inner-->
+            <div class="content__inner">
+
+                <!--tabs-->
+                <div class="tabs">
+
+                    <!--tabs panels-->
+                    <div class="tabs__panels">
+                        <!--single panel6-->
+                        <div class="tabs__panel">
+                            <div class="tabs__panel-card">
+                                <div class="tabs__panel-content" id="panel6">
+                                    <div id="contain">
+                                        <el-button @click="toggleSelection()" id="deselect"
+                                            size="medium">取消选择</el-button>
+                                        <el-button size="medium" type="danger"
+                                            @click="handleDeleteSelection">删除</el-button>
+                                    </div>
+
+                                    <el-table stripe style="width: 100%" ref="multipleTable" tooltip-effect="dark"
+                                        :default-sort="{prop: 'date', order: 'descending'}" :data="tests"
+                                        @selection-change="handleSelectionChange">
+                                        <el-table-column type="selection" width="55">
+                                        </el-table-column>
+                                        <el-table-column type="expand">
+                                            <template slot-scope="props">
+                                                <el-form label-position="left" inline class="demo-table-expand">
+                                                <el-form-item label="Date" :formatter="formatteddate">
+                                                    <span>{{ props.row.recordTime }}</span>
+                                                </el-form-item>
+                                                <el-form-item label="Task">
+                                                    <span>{{ props.row.task }}</span>
+                                                </el-form-item>
+                                                <el-form-item label="Questions">
+                                                    <span>{{ props.row.questions }}</span>
+                                                </el-form-item>
+                                                <el-form-item label="Right Answer">
+                                                    <span>{{ props.row.right_answer }}</span>
+                                                </el-form-item>
+                                                <el-form-item label="User Answer">
+                                                    <span>{{ props.row.user_answer }}</span>
+                                                </el-form-item>
+                                                <el-form-item label="Score">
+                                                    <span>{{ props.row.score }}</span>
+                                                </el-form-item>
+                                                <el-form-item label="Correct Number">
+                                                    <span>{{ props.row.correct_number }}</span>
+                                                </el-form-item>
+                                                <el-form-item label="Wrong Number">
+                                                    <span>{{ props.row.wrong_number }}</span>
+                                                </el-form-item>
+                                                    
+                                                </el-form>
+                                            </template>
+                                        </el-table-column>
+                                        <el-table-column type="index">
+                                        </el-table-column>
+                                        <el-table-column prop="recordTime" label="日期" :formatter="formatteddate"
+                                            sortable>
+                                        </el-table-column>
+                                        <el-table-column prop="questions" label="问题" width="280" :formatter="formatText">
+                                        </el-table-column>
+                                        
+                                        <el-table-column prop="right_answer" label="正确答案" width="180" sortable>
+                                        </el-table-column>
+                                        <el-table-column prop="user_answer" label="我的答案" width="180" sortable>
+                                        </el-table-column>
+                                        <el-table-column prop="score" label="分数" width="180" sortable>
+                                        </el-table-column>
+                                        
+                                        
+                                        <el-table-column prop="correct_number" label="正确数量" width="180" sortable>
+                                        </el-table-column>
+                                        <el-table-column prop="wrong_number" label="错误数量" width="180" sortable>
+                                        </el-table-column>
+                                        
+                                        <el-table-column
+                                            :filters="[{text: 'yes or no', value: 'yes or no'}, {text: 'closed choice', value: 'closed choice'}, {text: 'true or false', value: 'true or false'}, {text: 'short answer question', value: 'short answer question'}]"
+                                            prop="task" label="task" sortable
+                                            >
+                                        </el-table-column>
+                                        <el-table-column align="right">
+                                            <template slot-scope="scope">
+                                                <el-button id="delete" size="mini" type="danger"
+                                                    @click="handleDelete(scope.row)">删除</el-button>
+                                            </template>
+                                        </el-table-column>
+                                    </el-table>
+                                    <el-pagination :page-sizes="[1,2,3,4,5,6,7,8,9,10]" :page-size="pageSize_history"
+                                        layout="total, sizes, prev, pager, next, jumper" :total="counts_history"
+                                        :current-page="page_history" @size-change="handleSizeChange"
+                                        @current-change="handleCurrentChange"
+                                        style=" margin-left: 25% !important; margin-top: 20px !important;"></el-pagination>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        
+
+
+                        <!--single panel3-->
+                        <div class="tabs__panel">
+                            <div class="tabs__panel-card">
+                                <span><i class="el-icon-edit"
+                                        style="margin-right: 20px; font-size: 20px; font-weight: 500; color: rgb(81, 167, 255);"></i><span
+                                        style="margin-right: 20px; font-size: 20px; font-weight: 700; color: rgb(130, 130, 130);">错误问题</span></span>
+
+                            </div>
+                            <div class="tabs__panel-card">
+                                <div class="tabs__panel-content" id="Wrong_Panel">                               
+                                        <div>
+
+                                            <el-tabs v-model="editableTabsValue" tab-position="left" type="border-card" closable @tab-remove="removeTab"
+                                                style="height: 840px; width: 1110px;">
+                                                <el-tab-pane v-for="(item, index) in editableTabs" :key="item.name" :label="item.title" :name="item.name">
+                                                    <template>
+                                                        <div id="contain" style="margin-left: 420px;">
+                                                            <el-button @click="toggleSelection()" id="deselect" size="medium">Deselect</el-button>
+                                                            <el-button size="medium" type="danger" @click="handleDeleteSelection">Delete</el-button>
+                                                        </div>
+                                                        <el-table stripe style="width: 100%" ref="multipleTable" tooltip-effect="dark"
+                                                            :default-sort="{prop: 'date', order: 'descending'}" :data="questionsMap[item.name]"
+                                                            @selection-change="handleSelectionChange">
+                                                            <el-table-column type="selection" width="55">
+                                                            </el-table-column>
+                                                            <el-table-column type="expand">
+                                                                <template slot-scope="props">
+                                                                    <el-form label-position="left" inline class="demo-table-expand">
+                                                                        <el-form-item label="Subject">
+                                                                            <span>{{ props.row.date }}</span>
+                                                                        </el-form-item>
+                                                                        <el-form-item label="Task">
+                                                                            <span>{{ props.row.name }}</span>
+                                                                        </el-form-item>
+                                                                        <el-form-item label="Questions">
+                                                                            <span>{{ props.row.address }}</span>
+                                                                        </el-form-item>
+                                    
+                                                                    </el-form>
+                                                                </template>
+                                                            </el-table-column>
+                                                            <el-table-column type="index">
+                                                            </el-table-column>
+                                    
+                                                            <el-table-column prop="date" label="Subject" width="180" sortable></el-table-column>
+                                                            <el-table-column
+                                                                :filters="[{text: 'yes or no', value: 'yes or no'}, {text: 'closed choice', value: 'closed choice'}, {text: 'true or false', value: 'true or false'}, {text: 'short answer question', value: 'short answer question'}]"
+                                                                prop="name" label="Task" width="180" sortable></el-table-column>
+                                                            <el-table-column prop="address" label="问题" sortable></el-table-column>
+                                    
+                                    
+                                                            <el-table-column align="right">
+                                                                <template slot-scope="scope">
+                                                                    <el-button id="delete" size="mini" type="danger"
+                                                                        @click="handleDelete(scope.row)">删除</el-button>
+                                                                </template>
+                                                            </el-table-column>
+                                    
+                                                        </el-table>
+                                    
+                                                        <div class="block"
+                                                            style="margin-left: 16%; margin-top: 20px; position: fixed !important; bottom: 100px;">
+                                                            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                                                                :current-page="currentPage4" :page-sizes="[100, 200, 300, 400]" :page-size="10"
+                                                                layout="total, sizes, prev, pager, next, jumper" :total="20">
+                                                            </el-pagination>
+                                                        </div>
+                                                    </template>
+                                                </el-tab-pane>
+                                            </el-tabs>
+                                        </div>
+                                
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!--single panel 2 收藏板块-->
+                        <div class="tabs__panel">
+                            <div class="tabs__panel-card">
+                                <div class="tabs__panel-content">
+                                    <span ><i class="el-icon-folder-opened" style="margin-right: 20px; font-size: 20px; font-weight: 500; color: rgb(81, 167, 255);"></i><span style="margin-right: 20px; font-size: 20px; font-weight: 700; color: rgb(130, 130, 130);">收藏夹</span></span>
+                                </div>
+                            </div>
+                            <div class="tabs__panel-card">
+                                <div class="tabs__panel-content">
+                                    <div id="panel2">
+                                       
+                                        <div  id="dialog" class="dialog"  v-show="centerDialogVisible">
+                                            <header id="dialog_header">
+                                                <h4 style="display: inline !important;">
+                                                    <i class="el-icon-folder-opened" style="margin-right: 10px; color: rgb(81, 167, 255);"></i>新建文件夹
+                                                </h4>
+                                                <i class="el-icon-close" style="margin-left: 253px;" @click="closeDialog()"></i>
+                                            </header>
+                                            <div class="dialog_body">
+                                                <el-form :model="form">
+                                                    <el-form-item :label-width="formLabelWidth">
+                                                        <el-input v-model="form.name"  placeholder="Favorite name" autocomplete="off" maxlength="15" show-word-limit></el-input>
+                                                    </el-form-item>
+                                                    <el-form-item :label-width="formLabelWidth">
+                                                        <el-input type="textarea" :rows="2" :autosize="{ minRows: 2, maxRows: 4}" autocomplete="off" placeholder="Enter description for the bookmark." maxlength="100" show-word-limit v-model="form.describe" id="describe">
+                                                        </el-input>
+                                                    </el-form-item>
+                                                </el-form>
+                                                <div slot="footer" class="dialog-footer">
+                                                    <el-button @click="closeDialog()">取消</el-button>
+                                                    <el-button type="primary" @click="confirmAction" :plain="isButtonPlain" :disabled="isButtonDisabled">确认</el-button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div style="margin-bottom: 20px; margin-left: 1000px;">
+                                           
+                                            <el-button size="small" @click="openDialog">
+                                                <i class="el-icon-folder-add"></i> 添加文件夹
+                                            </el-button>
+                                           
+                                        </div>
+                                        <div>
+                                            
+                                            
+                                            <el-tabs v-model="editableTabsValue" tab-position="left" type="border-card" closable @tab-remove="removeTab"
+                                                style="height: 840px;">
+                                                <el-tab-pane v-for="(item, index) in editableTabs" :key="item.name" :label="item.title" :name="item.name">
+                                                    <template>
+                                                        <div id="contain" style="margin-left: 420px;">
+                                                            <el-button @click="toggleSelection()" id="deselect" size="medium">Deselect</el-button>
+                                                            <el-button size="medium" type="danger" @click="handleDeleteSelection">Delete</el-button>
+                                                        </div>
+                                                        <el-table stripe style="width: 100%" ref="multipleTable" tooltip-effect="dark"
+                                                            :default-sort="{prop: 'date', order: 'descending'}" :data="questionsMap[item.name]" @selection-change="handleSelectionChange">
+                                                            <el-table-column type="selection" width="55">
+                                                            </el-table-column>
+                                                            <el-table-column type="expand">
+                                                                <template slot-scope="props">
+                                                                    <el-form label-position="left" inline class="demo-table-expand">
+                                                                        <el-form-item label="Subject">
+                                                                            <span>{{ props.row.date }}</span>
+                                                                        </el-form-item>
+                                                                        <el-form-item label="Task">
+                                                                            <span>{{ props.row.name }}</span>
+                                                                        </el-form-item>
+                                                                        <el-form-item label="Questions">
+                                                                            <span>{{ props.row.address }}</span>
+                                                                        </el-form-item>
+                                                        
+                                                                    </el-form>
+                                                                </template>
+                                                            </el-table-column>
+                                                            <el-table-column type="index">
+                                                            </el-table-column>
+
+                                                            <el-table-column prop="date" label="Subject" width="180" sortable></el-table-column>
+                                                            <el-table-column :filters="[{text: 'yes or no', value: 'yes or no'}, {text: 'closed choice', value: 'closed choice'}, {text: 'true or false', value: 'true or false'}, {text: 'short answer question', value: 'short answer question'}]"
+                                                             prop="name" label="Task" width="180" sortable></el-table-column>
+                                                            <el-table-column prop="address" label="Question" sortable></el-table-column>
+                                                        
+                                                            
+                                                            <el-table-column align="right">
+                                                                <template slot-scope="scope">
+                                                                    <el-button id="delete" size="mini" type="danger" @click="handleDelete(scope.row)">Delete</el-button>
+                                                                </template>
+                                                            </el-table-column>
+
+                                                        </el-table>
+                                            
+                                                        <div class="block" style="margin-left: 16%; margin-top: 20px; position: fixed !important; bottom: 100px;">
+                                                            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4"
+                                                                :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="20">
+                                                            </el-pagination>
+                                                        </div>
+                                                    </template>
+                                                </el-tab-pane>
+                                            </el-tabs>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--single panel 1-->
+                        <div class="tabs__panel" >
+                            <div id="userInfo_Panel">
+                            <div class="tabs__panel-card" id="up">
+
+                                <!-- <el-upload class="avatar-uploader" :action="uploadUrl" :show-file-list="false"  :before-upload="beforeAvatarUpload"
+                                    id="picture" :headers="uploadHeaders">
+                                    <img v-if="user.icon" :src="user.icon" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </el-upload> -->
+                                
+                                <div>
+                                    
+                                    <img v-if="user.icon" :src="user.icon" class="avatar">
+                                    <img v-else src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" class="avatar">
+                                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                                </div>
+                                <div class="tabs__panel-content">
+                                    <h3 id="username">{{user.nickName}}</h3>
+                                    <el-tag size="small" id="occupation"><h5>{{user.occupation}}</h5></el-tag>
+                                </div>
+                            </div>
+                            <div class="tabs__panel-card">
+                                <div class="tabs__panel-content">
+                                    <div  class="w">
+                                        <div v-if="loading">
+                                            <!-- 加载屏幕部分 -->
+                                            <div class="loading-screen">
+                                                <div class="loader"></div>
+                                            </div>
+                                        </div>
+                                        <div v-else>
+                                            <el-descriptions class="margin-top" title="" :column="3" :size="'medium'"
+                                                border>
+                                                <template slot="extra" class="select">
+                                                    <el-button type="primary" size="medium" id="but" v-if="editing"
+                                                        @click="CancelEdit">取消</el-button>
+                                                    <el-button type="primary" size="medium" id="but" v-if="editing"
+                                                        @click="saveUser">保存</el-button>
+                                                    <button class="animated-button" id="but" @click="editing = true">
+                                                        <span>修改</span>
+                                                        <span></span>
+                                                    </button>
+
+                                                </template>
+
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        <i class="el-icon-user"></i>
+                                                        用户名
+                                                    </template>
+                                                    <template v-if="!editing">{{ user.nickName }}</template>
+                                                    <template v-else>
+                                                        <el-input v-model="user.username"
+                                                            placeholder="Please enter your username"></el-input>
+                                                    </template>
+                                                </el-descriptions-item>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        <i class="el-icon-mobile-phone"></i>
+                                                        电话号码
+                                                    </template>
+                                                    <template v-if="!editing">{{ user.phone }}</template>
+                                                    <template v-else>
+                                                        <el-input v-model="user.phoneNumber"
+                                                            placeholder="Please enter your phoneNumber"></el-input>
+                                                    </template>
+                                                </el-descriptions-item>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        <i class="el-icon-location-outline"></i>
+                                                        地址
+                                                    </template>
+                                                    <template v-if="!editing">{{ user.address }}</template>
+                                                    <template v-else>
+                                                        <el-input v-model="user.address"
+                                                            placeholder="Please enter your address"></el-input>
+                                                    </template>
+                                                </el-descriptions-item>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        <i class="el-icon-location-outline"></i>
+                                                        年龄
+                                                    </template>
+                                                    {{ user.age }}
+                                                </el-descriptions-item>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        <i class="el-icon-location-outline"></i>
+                                                        出生日期
+                                                    </template>
+                                                    <template v-if="!editing">{{ formattedBirthdate }}</template>
+                                                    <template v-else>
+                                                        <el-date-picker v-model="user.birthdate" type="date"
+                                                            placeholder="Please enter your birthday">
+                                                        </el-date-picker>
+                                                    </template>
+                                                </el-descriptions-item>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        <i class="el-icon-tickets"></i>
+                                                        性别
+                                                    </template>
+                                                    <template v-if="!editing"><el-tag size="small">{{ user.gender
+                                                            }}</el-tag></template>
+                                                        <template v-else>
+                                                            <el-select v-model="Gender_value" clearable placeholder="Select gender">
+                                                                <el-option v-for="item in Gender_options" :key="item.Gender_value" :label="item.label" :value="item.value">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </template>
+                                                </el-descriptions-item>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        <i class="el-icon-tickets"></i>
+                                                        国家
+                                                    </template>
+                                                     <template v-if="!editing"><el-tag size="small">{{ user.country
+                                                            }}</el-tag></template>
+                                                        <template v-else>
+                                                            <el-select v-model="Country_value" filterable placeholder="Select Country">
+                                                                <el-option v-for="item in Country_options" :key="item.Country_value" :label="item.label" :value="item.value">
+                                                                </el-option>
+                                                            </el-select>
+                                                        </template>
+                                                </el-descriptions-item>
+                                                <el-descriptions-item>
+                                                    <template slot="label">
+                                                        <i class="el-icon-office-building"></i>
+                                                        职业
+                                                    </template>
+                                                    <template v-if="!editing"><el-tag size="small">{{ user.occupation
+                                                            }}</el-tag></template>
+                                                    <template v-else>
+                                                        <el-select v-model="Occupation_value" clearable placeholder="Select occupation">
+                                                            <el-option v-for="item in Occupation_options" :key="item.Occupation_value" :label="item.label" :value="item.value">
+                                                            </el-option>
+                                                        </el-select>
+                                                    </template>
+                                                </el-descriptions-item>
+                                            </el-descriptions>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="tabs__panel-card">
+                                <div class="tabs__panel-content">
+                                    <div id="radar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!--<footer>-->
+        <!--    <ul class="social_icon">-->
+        <!--        <div class="middle">-->
+        <!--            <a href="#" class="bt"><i class="fab fa-github"></i></a>-->
+        <!--            <a href="#" class="bt"><i class="fab fa-twitter"></i></a>-->
+        <!--            <a href="#" class="bt"><i class="fab fa-instagram"></i></a>-->
+        <!--            <a href="#" class="bt"><i class="fab fa-google"></i></a>-->
+        <!--        </div>-->
+        <!--    </ul>-->
+        <!--</footer>-->
+
+
+        <!-- partial -->
+
+        <script src="plugins/vue/vue.js"></script>
+        <script src="plugins/axios/axios.min.js"></script>
+        <link rel="stylesheet" href="./plugins/element-ui/lib/theme-chalk/index.css">
+        <script src="./plugins/element-ui/lib/index.js"></script>
+        <script src="./node_modules/@antv/g2/dist/g2.min.js"></script>
+        <script src="js/script.js"></script>
+        <script src="js/common.js"></script>
+
+        <script>
+            
+            //初始化雷达图
+            const data3 = [
+                { item: 'English', type: 'a', score: 70 },
+                { item: 'Chinese', type: 'b', score: 30 },
+                { item: 'Math', type: 'a', score: 60 },
+                { item: 'Geography', type: 'b', score: 70 },
+                { item: 'History', type: 'a', score: 50 },
+                { item: 'Sport', type: 'b', score: 60 },
+                { item: 'Painting', type: 'a', score: 40 },
+                { item: 'Music', type: 'b', score: 50 },
+                { item: 'Biology', type: 'a', score: 60 },
+                { item: 'polity', type: 'b', score: 70 },
+                { item: 'physics', type: 'a', score: 70 },
+                { item: 'Language', type: 'b', score: 50 },
+                { item: 'Technology', type: 'a', score: 50 },
+
+            ];
+
+            const radar = new G2.Chart({
+                container: 'radar',
+                width: 940,
+                height: 480,
+                autoFit: true,
+                marginLeft: 220,
+
+            });
+
+            radar.coordinate({ type: 'polar' });
+
+            radar
+                .data(data3)
+                .scale('x', { padding: 0.5, align: 0 })
+                .scale('y', { tickCount: 5, domainMin: 0, domainMax: 80 })
+                .axis('x', {
+                    grid: true,
+                    gridStrokeWidth: 1,
+                    tick: false,
+                    gridLineDash: [0, 0],
+                })
+                .axis('y', {
+                    zIndex: 1,
+                    title: false,
+                    gridStrokeWidth: 1,
+                    gridLineDash: [0, 0],
+                    gridAreaFill: (dataum, index, data) => {
+                        return index % 2 === 1 ? 'rgba(0, 0, 0, 0.04)' : '';
+                    },
+                });
+
+            radar
+                .line()
+                .encode('x', 'item')
+                .encode('y', 'score')
+                .encode('color', 'type')
+                .style('lineWidth', 2);
+
+            radar
+                .point()
+                .encode('x', 'item')
+                .encode('y', 'score')
+                .encode('color', 'type')
+                .encode('shape', 'point')
+                .encode('size', 3)
+                .tooltip(null);
+
+            radar.interaction('tooltip', { crosshairsLineDash: [4, 4] });
+
+            radar.render();
+
+        </script>
+
+        <script>
+            const axios = window.axios;
+            
+            new Vue({
+                el: "#dropdown",
+                data(){
+                    return{
+                        user:{},    
+                                          
+                    }
+                },
+                beforeMount() {
+                    this.fetchUserInfo();
+                    this.openFullScreen2(); // Method to open full-screen loading indicator
+                },
+                methods: {
+                    closeFullScreen2() {
+                        // Method to close full-screen loading indicator
+                        const loading = this.$loading({
+                            lock: true,
+                            text: '加载中',
+                            spinner: 'el-icon-loading',
+                            background: 'rgba(0, 0, 0, 0.7)'
+                        });
+                        loading.close();
+                    },
+                    openFullScreen2() {
+                        // Method to open full-screen loading indicator
+                        const loading = this.$loading({
+                            lock: true,
+                            text: '加载中',
+                            spinner: 'el-icon-loading',
+                            background: 'rgba(0, 0, 0, 0.7)'
+                        });
+                    },
+                    async logout(){
+                        try{
+                            const response = await axios.get('/user/logout');
+                            sessionStorage.removeItem("token");
+                            this.$message.success("退出登录成功!");
+                            window.location.href = '/Login.html';
+                        }catch(error){
+                            this.$message.error(error);
+                            console.error(error);
+                        }
+                    },
+                    async fetchUserInfo() {
+                        const _this = this;
+                        try {
+                            const response = await axios.get('/user/me');
+                            if (response.success) {
+                                _this.user = response.data;
+                            }
+                            else {
+
+                                throw new Error('网络连接不是很好.');
+                            }
+                        } catch (error) {
+
+                            this.$message.error(error);
+                            console.error(error);
+                        }
+                        finally {
+                            this.closeFullScreen2();
+                        }
+                    },
+                    
+                   
+
+                    
+                },
+            })
+           
+         
+        </script>
+        <script src="./js/Wrong_Panel.js"></script>
+        <script src="./js/userInfo_Panel.js"></script>
+        <script src="./js/panel2.js"></script>
+        <script src="./js/HistoryPanel.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById('container'));
+    var option = {
+        tooltip: {
+            show: true,
+            formatter: function(params) {
+                return params.data.value; // 显示节点的值
+            }
+        },
+        series: [{
+            type: 'graph',
+            layout: 'force',
+            symbolSize: 70,  // 节点大小
+            roam: true,
+            edgeSymbol: ['circle', 'arrow'],
+            edgeSymbolSize: [4, 10],
+            data: [
+                // ... existing code ...
+                // 注意：这里有大量的节点数据，需要将每个节点的name和value翻译成中文
+                // 例如: {'name': '中世纪日本', 'value': '中世纪日本'},
+                // 您需要将所有英文节点名称翻译成中文
+                {'name': 'Medieval Japan', 'value': 'Medieval Japan'},
+                {'name': 'Thanksgiving', 'value': 'Thanksgiving'},
+                // ... 其余节点数据 ...
+            ],
+            links: [
+                // ... existing code ...
+                // 链接数据保持不变，但需要确保source和target的值
+                // 与翻译后的节点name一致
+            ],
+            label: {
+                show: true, // 显示标签
+                formatter: function(params) {
+                    return params.data.name.split(' ').slice(0, 2).join(' '); // 只显示前两个单词
+                },
+                fontSize: 7  // 字体大小
+            },
+            force: {
+                repulsion: 5000,
+                edgeLength: 500 // 调整这个值以改变边的长度，增加值以增长边
+            }
+        }]
+    };
+
+    // 添加中文标题
+    option.title = {
+        text: '知识关系图',
+        subtext: '主题关联',
+        left: 'center'
+    };
+
+    // 添加中文工具提示
+    option.tooltip = {
+        show: true,
+        formatter: function(params) {
+            return '内容：' + params.data.value; // 中文提示
+        }
+    };
+
+    myChart.setOption(option);
+</script>
+</body>
+</html>

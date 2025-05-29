@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加文章</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <!--Editor.md-->
+    <link rel="stylesheet" href="./plugins/editor/editor.md-master/editor.md-master/css/editormd.css" />
+    <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <form name="mdEditorForm" th:action="@{/article/add}" method="post">
+
+                <div id="article-content">
+                    <textarea name="content" id="content" style="display:none;"> </textarea>
+                </div>
+                <input type="submit" value="提交">
+            </form>
+
+        </div>
+    </div>
+</div>
+</body>
+
+<!--editormd-->
+<script src="./plugins/jquery/jquery.min.js"></script>
+<!-- <script src="./plugins/editor/editor.md-master/editor.md-master/editormd.min.js"></script> -->
+<script src="./plugins/editor/editor.md-master/editor.md-master/editormd.js"></script>
+
+<script type="text/javascript">
+    var path = "/plugins/editor/editor.md-master/editor.md-master/languages/zh-cn";
+    var testEditor;
+
+    //window.onload = function(){ }
+    $(function () {
+        testEditor = editormd("article-content", {
+            placeholder: '本编辑器支持Markdown编辑，左边编写，右边预览',
+            width: "90%",
+            height: 400,
+            syncScrolling: "single",
+            path: "/plugins/editor/editor.md-master/editor.md-master/lib/",
+            saveHTMLToTextarea: true,    // 保存 HTML 到 Textarea
+            emoji: true,
+            theme: "默认 | 暗黑",        // 工具栏主题
+            previewTheme: "默认 | 暗黑",  // 预览主题
+            editorTheme: "默认 | 暗黑",   // 编辑主题
+            tex: true,                   // 科学公式TeX语言支持，默认关闭
+            flowChart: true,             // 流程图支持，默认关闭
+            sequenceDiagram: true,       // 开启时序/序列图支持，默认关闭,
+            /*指定需要显示的功能按钮*/
+            toolbarIcons: function () {
+                // return editormd.toolbarModes.full;
+                return editormd.toolbarModes.simple;
+                // return editormd.toolbarModes.mini;
+                // return editormd.toolbarModes.me;
+            }
+        });
+    });
+</script>
+
+</html>

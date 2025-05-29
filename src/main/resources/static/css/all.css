@@ -1,0 +1,150 @@
+@charset "UTF-8";
+
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    outline: none;
+    text-decoration: none;
+  }
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f7f7;
+    overflow-x: hidden;
+}
+
+body .shell {
+    width: 100%;
+    position: relative;
+    height: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body .shell-main-footer {
+    position: relative;
+    width: 100%;
+    /* background: linear-gradient(to top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6), rgb(255, 255, 255, .4)); */
+    background: linear-gradient(to top, #d7d7d7, #e6e6e6, #e9e9e999, rgb(255, 255, 255, .4));
+    backdrop-filter: blur(13px);
+    min-height: 32px;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ecebeb;
+    margin-top: 23px;
+}
+.social_icon {
+    display: flex;
+    justify-content: space-around;
+    /* 或者使用 justify-content: space-between; */
+}
+/*github按钮显示*/
+.middle {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    text-align: center;
+}
+
+.bt {
+    display: inline-block;
+    width: 60px;
+    height: 45px;
+    background: transparent;
+    margin-left: 40px;
+    border-radius: 25%;
+    overflow: hidden;
+    position: relative;
+    transition: 0.3s linear;
+}
+
+.bt i {
+    line-height: 45px;
+    font-size: 26px;
+    transition: 0.3s linear;
+}
+
+.bt:nth-child(1) i {
+    color: #3b5998;
+}
+
+.bt:nth-child(2) i {
+    color: #1da1f2;
+}
+
+.bt:nth-child(3) i {
+    color: #c32aa3;
+}
+
+.bt:nth-child(4) i {
+    color: #db4437;
+}
+
+.bt:hover {
+    transform: scale(1.1);
+}
+
+.bt:hover i {
+    transform: scale(1.2);
+    color: #fff;
+}
+
+.bt:before {
+    content: "";
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    transform: rotate(45deg);
+    left: -110%;
+    top: 90%;
+}
+
+.bt:nth-child(1)::before {
+    background: #3b5998;
+}
+
+.bt:nth-child(2)::before {
+    background: #1da1f2;
+}
+
+.bt:nth-child(3)::before {
+    background: #c32aa3;
+}
+
+.bt:nth-child(4)::before {
+    background: #db4437;
+}
+
+.bt:hover::before {
+    animation: aaa 0.7s 1;
+    top: -10%;
+    left: -10%;
+}
+
+@keyframes aaa {
+    0% {
+        left: -110%;
+        top: 90%;
+    }
+
+    50% {
+        left: 10%;
+        top: -30%;
+    }
+
+    100% {
+        left: -10%;
+        top: -10%;
+    }
+}
+
+/*结束*/

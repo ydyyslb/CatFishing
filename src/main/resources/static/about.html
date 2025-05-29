@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于页面</title>
+    <link rel="icon" href="./image/logo.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/icon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet">
+    <style>
+        #bac{
+            height: 750px;
+        }
+        .content{
+            max-width: 80%;
+            margin: 100px auto;
+            border-radius: 10px;
+            backdrop-filter: blur(15px);
+            height: 500px;
+            background-color: white;
+           box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+        }
+        .title{
+             display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-content: center;
+            justify-content: flex-start;
+
+        }
+        .el-form-item {
+            margin-bottom: 22px;
+            margin-top: 40px;
+            display: flex;
+            width: 50%;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+        .el-form-item__content{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="bac" v-cloak>
+        <div class="shell-main-nav">
+            <a href="index.html">
+                <div class="logo">
+                    <img src="./image/logo_.png" alt="Website Image" style=" height: 40px;  width: 40px; margin-right: 10px;">
+                    <span>IALP</span>
+                </div>
+            </a>
+            <ul>
+                <li><a href="index.html"><i class="el-icon-notebook-2"  style="margin-right: 5px;"></i>学习</a></li>
+                <li><a href="info.html"><i class="el-icon-user" style="margin-right: 5px;"></i>用户</a></li>
+                <li><a href="blog.html"><i class="el-icon-pie-chart" style="margin-right: 5px;"></i>博客</a></li>
+                <li><a href="knowledgeGraph.html"><i class="el-icon-data-board" style="margin-right: 5px;"></i>知识图谱</a></li>
+                <li><a href="about.html"> <i class="el-icon-chat-dot-round" style="margin-right: 5px;"></i>关于我们</a></li>
+            </ul>
+            <div class="dropdown">
+                <el-dropdown>
+                    <span class="el-dropdown-link">
+                        <a href="info.html">
+                            <div class="block" id="avatar"> <el-avatar :size="50" v-if="user.icon" :src="user.icon"></el-avatar>
+                        <el-avatar :size="50" v-else src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></div>
+                        </a>
+                        <!--<i class="el-icon-arrow-down el-icon--right"></i>-->
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item style="max-width: 185px; overflow: hidden; text-overflow: ellipsis;"> {{ user.nickName }}</el-dropdown-item>
+                        <el-dropdown-item divided @click="logout">登出</el-dropdown-item>
+                        <a href="index.html"><el-dropdown-item>首页</el-dropdown-item></a>
+                        <a href="functionPage.html"><el-dropdown-item>学习</el-dropdown-item></a>
+                        <a href="about.html"><el-dropdown-item>关于我们</el-dropdown-item></a>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+
+        </div>
+
+
+            <!--tabs-->
+        <div class="content">
+            <div class="title">
+                <h3 style="margin-top: 30px; font-size: 24px; color: rgb(41, 146, 158);">给我们你的建议！</h3>
+            </div>
+
+                <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
+                    <el-form-item prop="email" label="邮箱" :rules="[ { required: true, message: '请输入您的邮箱', trigger: 'blur' }, { type: 'email', message: '请输入正确的邮箱', trigger: ['blur', 'change'] } ]">
+                        <el-input v-model="dynamicValidateForm.email"></el-input>
+                    </el-form-item>
+                    <el-form-item prop="rate" label="评分">
+                        <div class="block">
+                            <el-rate v-model="value2" :colors="colors">
+                            </el-rate>
+                        </div>
+                    </el-form-item>
+                    <el-form-item prop="textarea" label="建议" required>
+                        <el-input type="textarea" :rows="2" placeholder="给我们你的建议！" v-model="dynamicValidateForm.textarea">
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item style="margin-left: 920px !important;">
+                        <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
+                        <el-button @click="resetForm('dynamicValidateForm')" style="margin-left: 40px;">重置</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
+
+
+    <!--<footer>-->
+    <!--    <ul class="social_icon">-->
+    <!--        <div class="middle">-->
+    <!--            <a href="#" class="bt"><i class="fab fa-github"></i></a>-->
+    <!--            <a href="#" class="bt"><i class="fab fa-twitter"></i></a>-->
+    <!--            <a href="#" class="bt"><i class="fab fa-instagram"></i></a>-->
+    <!--            <a href="#" class="bt"><i class="fab fa-google"></i></a>-->
+    <!--        </div>-->
+    <!--    </ul>-->
+    <!--</footer>-->
+    <!-- partial -->
+
+    <script src="plugins/vue/vue.js"></script>
+    <script src="plugins/axios/axios.min.js"></script>
+    <link rel="stylesheet" href="./plugins/element-ui/lib/theme-chalk/index.css">
+    <script src="./plugins/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/@antv/g2/dist/g2.min.js"></script>
+    <script src="./js/common.js"></script>
+    <script>
+        new Vue({
+            el: "#bac",
+            data() {
+                return {
+                    dynamicValidateForm: {
+                        
+                        email: '',
+                        rate:'',
+                        textarea:''
+                    },
+                    value2: null,
+                    colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
+                    user:{}
+                    
+                }
+            },
+             mounted() {
+                this.fetchUserInfo();
+            },
+            methods: {
+                async logout() {
+                    try {
+                        const response = await axios.get('/user/logout');
+                        sessionStorage.removeItem("token");
+                        this.$message.success("退出登录成功！");
+                        window.location.href = '/Login.html';
+                    } catch (error) {
+                        this.$message.error(error);
+                        console.error(error);
+                    }
+                },
+                submitForm(formName) {
+                    this.$refs[formName].validate((valid) => {
+                        if (valid) {
+                            this.$message.success("感谢您的建议！");
+                        } else {
+                            console.log('error submit!!');
+                            return false;
+                        }
+                    });
+                },
+                resetForm(formName) {
+                    this.$refs[formName].resetFields();
+                },
+                removeDomain(item) {
+                    var index = this.dynamicValidateForm.domains.indexOf(item)
+                    if (index !== -1) {
+                        this.dynamicValidateForm.domains.splice(index, 1)
+                    }
+                },
+                addDomain() {
+                    this.dynamicValidateForm.domains.push({
+                        value: '',
+                        key: Date.now()
+                    });
+                },
+                async fetchUserInfo() {
+                    const _this = this;
+                    try {
+                        const response = await axios.get('/user/me');
+                        if (response.success) {
+                            _this.user = response.data;
+                        }
+                        else {
+
+                            throw new Error('Network response was not ok.');
+                        }
+                    } catch (error) {
+
+                        this.$message.error(error);
+                        console.error(error);
+                }
+            }
+            }
+            
+        });
+    </script>
+    <!--script 控制-->
+    <script src="js/script.js"></script>
+    <script src="js/common.js"></script>
+
+
+</body>
+
+</html>

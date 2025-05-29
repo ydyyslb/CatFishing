@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>选择页面</title>
+    <link rel="icon" href="./image/logo.ico">
+    <link rel="stylesheet" href="./css/selectPage.css">
+    <link rel="stylesheet" href="./css/all.css">
+</head>
+<style>
+    .el-card__body, .el-main{
+        height: 530px !important;
+    }
+    .el-button.is-round{
+
+        margin-left: 50%;
+        transform: translateX(-50%);
+        margin-top: 20px;
+        height: 50px;
+        width: 400px;
+    }
+</style>
+<body>
+
+<div >
+    <div id="app">
+        <div class="shell-main-nav" >
+            <a href="index.html">
+                <div class="logo">
+                    <img src="./image/logo_.png" alt="网站图片" style=" height: 40px;  width: 40px; margin-right: 10px;">
+                    <span>IALP</span>
+                </div>
+            </a>
+            <ul>
+                <li><a href="functionPage.html">学习</a></li>
+                <li><a href="info.html">用户</a></li>
+                <li><a href="blog.html">博客</a></li>
+                <li><a href="knowledgeGraph.html">图谱</a></li>
+                <li><a href="about.html">关于</a></li>
+                <div class="nav-box"></div>
+            </ul>
+            <div id="dropdown">
+                <el-dropdown>
+                    <span class="el-dropdown-link">
+                        <a href="info.html" style="cursor: pointer;">
+                            <div class="block" id="avatar"> <el-avatar :size="50" v-if="user.icon" :src="user.icon"></el-avatar>
+                            <el-avatar :size="50" v-else src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar></div>
+                        </a>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item style="max-width: 185px; overflow: hidden; text-overflow: ellipsis;"> {{ user.nickName
+                            }}</el-dropdown-item>
+                        <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+                        <a href="index.html"><el-dropdown-item>首页</el-dropdown-item></a>
+                        <a href="functionPage.html"><el-dropdown-item>学习</el-dropdown-item></a>
+                        <a href="about.html"><el-dropdown-item>关于</el-dropdown-item></a>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+        </div>
+
+        <div class="content" style="display: flex; width: 100%; justify-content: center;">
+            <div class="question-recommend" style="width: 90%;">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span style="font-weight: 600; font-size: 20px; margin-left: 30px;">选择题目</span>
+                        <template>
+                            <el-select v-model="value1" multiple placeholder="选择年级" filterable style="margin-left: 50px;">
+                                <el-option v-for="item in grade" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+
+                            <el-select v-model="value2" multiple collapse-tags style="margin-left: 20px;" filterable
+                                       placeholder="选择科目">
+                                <el-option v-for="item in subject" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+
+                            <el-select v-model="value3" multiple collapse-tags style="margin-left: 20px;" filterable
+                                       placeholder="选择任务">
+                                <el-option v-for="item in task" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+
+                            <el-select v-model="value4" multiple collapse-tags style="margin-left: 20px;" filterable
+                                       placeholder="选择主题">
+                                <el-option v-for="item in topic" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+
+                            <el-select v-model="value5" multiple collapse-tags style="margin-left: 20px;" filterable
+                                       placeholder="选择类别">
+                                <el-option v-for="item in category" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </template>
+
+                    </div>
+                    <div class="main-questions" style="display: flex; overflow-y: auto; flex-wrap: wrap; margin-left: 20px;"
+                         v-loading="question_loading">
+                        <el-empty description="没有找到相关题目" v-if=" questions.length === 0"></el-empty>
+                        <!-- <section class="question-list"></section> -->
+                        <div v-for="question in questions">
+                            <div class="card" style="margin: 15px;">
+                                <p class="card-title"
+                                   style="max-height: 100px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                                    {{question.question}}</p>
+                                <p class="card-body"
+                                   style="max-height: 100px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;"
+                                   v-if="question.hint">{{ question.hint }}</p>
+                                <p class="footer"><el-tag size="mini"><span class="by-name"> {{ question.grade }}</span></el-tag>
+                                    <el-tag size="mini"><span>{{question.task}}</span></el-tag> <el-tag
+                                            size="mini"><span>{{question.topic}}</span></el-tag> <el-tag
+                                            size="mini"><span>{{question.subject}}</span></el-tag> <el-tag
+                                            size="mini"><span>{{question.category}}</span></el-tag></p>
+                            </div>
+                        </div>
+                    </div>
+                </el-card>
+            </div>
+
+
+            <el-dialog title="请选择题目数量" :visible.sync="centerDialogVisible" width="30%" center>
+                <template>
+                    <el-input-number v-model="num" :step="5" :max="10" :min="5" step-strictly style="margin-left: 50%; transform: translateX(-50%);"></el-input-number>
+                </template>
+                <span slot="footer" class="dialog-footer">
+                    <el-button @click="centerDialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="submit">提交</el-button>
+                </span>
+            </el-dialog>
+        </div>
+        <el-popover placement="top-start" width="300" trigger="hover" content="请先选择题目类型。">
+            <el-button type="primary" slot="reference" @click="centerDialogVisible = true" round :disabled="isSubmitDisabled">开始!</el-button>
+        </el-popover>
+    </div>
+    <div class="shell-main-footer">
+        <ul class="social_icon">
+            <div class="middle">
+                <a href="#" class="bt"><i class="fab fa-github"></i></a>
+                <a href="#" class="bt"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="bt"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="bt"><i class="fab fa-google"></i></a>
+            </div>
+        </ul>
+    </div>
+
+
+
+</div>
+
+<script src="plugins/vue/vue.js"></script>
+<script src="plugins/axios/axios.min.js"></script>
+<link rel="stylesheet" href="./plugins/element-ui/lib/theme-chalk/index.css">
+<script src="./plugins/element-ui/lib/index.js"></script>
+<script src="./js/selectPage.js"></script>
+<script src="./js/common.js"></script>
+<script>
+    new Vue({
+        el:"#app",
+        data(){
+            return{
+                num: 5,
+                centerDialogVisible: false,
+                user:{},
+                task: [],
+                subject: [],
+                category: [],
+                topic: [],
+                grade: [],
+                value1: [],
+                value2: [],
+                value3: [],
+                value4: [],
+                value5: [],
+                questions: [],
+                question_loading: true,
+            }
+        },
+        computed: {
+            isSubmitDisabled() {
+                return this.value1.length === 0 || this.value2.length === 0 || this.value3.length === 0 || this.value4.length === 0 || this.value5.length === 0;
+            }
+        },
+        beforeMount() {
+            this.fetchUserInfo();
+            this.updateOptions();
+        },
+        mounted() {
+            this.fetchUserInfo();
+
+            this.updateQuestion();
+        },
+        watch: {
+            value1(newValue) {
+
+                this.updateOptions();
+                this.updateQuestion();
+            },
+            value2(newValue) {
+                this.updateOptions();
+                this.updateQuestion();
+            },
+            value3(newValue) {
+                this.updateOptions();
+                this.updateQuestion();
+            },
+            value4(newValue) {
+                this.updateOptions();
+                this.updateQuestion();
+            },
+            value5(newValue) {
+                this.updateOptions();
+                this.updateQuestion();
+            },
+        },
+
+        methods: {
+            submit(){
+                this.centerDialogVisible = false
+                sessionStorage.setItem('task',this.value3);
+                sessionStorage.setItem('grade',this.value1);
+                sessionStorage.setItem('subject', this.value2);
+                sessionStorage.setItem('topic',this.value4);
+                sessionStorage.setItem('category',this.value5);
+                sessionStorage.setItem('questionCount',this.num);
+                window.location.href = '/problems.html';
+            },
+            delayedQuestionLoading() {
+                this.question_loading = false;
+            },
+            async updateQuestion() {
+                this.question_loading = true;
+                const params = {};
+                if (!this.value1.length) params.grade = "All";
+                else params.grade = this.value1.join();
+
+                if (!this.value2.length) params.subject = "All";
+                else params.subject = this.value2.join();
+
+                if (!this.value3.length) params.task = "All";
+                else params.task = this.value3.join();
+
+                if (!this.value4.length) params.topic = "All";
+                else params.topic = this.value4.join();
+
+                if (!this.value5.length) params.category = "All";
+                else params.category = this.value5.join();
+                try {
+                    const response = await axios.get('/question/getQuestionByLabel', {
+                        params: params
+                    });
+
+                    if (response.success) {
+
+                        this.questions = response.data;
+                        console.log(response.data)
+                        this.delayedQuestionLoading();
+
+                    }
+                    else {
+
+                        throw new Error('网络响应异常。');
+                    }
+
+                } catch (error) {
+
+                    this.$message.error(error);
+                    console.error(error);
+                }
+            },
+            async updateOptions() {
+                this.question_loading = true;
+                // Send selected values to the backend for filtering
+                try {
+                    const params = {};
+                    if (!this.value1.length) params.grade = "All";
+                    else params.grade = this.value1.join();
+
+                    if (!this.value2.length) params.subject = "All";
+                    else params.subject = this.value2.join();
+
+                    if (!this.value3.length) params.task = "All";
+                    else params.task = this.value3.join();
+
+                    if (!this.value4.length) params.topic = "All";
+                    else params.topic = this.value4.join();
+
+                    if (!this.value5.length) params.category = "All";
+                    else params.category = this.value5.join();
+
+                    const response = await axios.get('/question/getOption', {
+                        params: params
+                    });
+
+                    const optionData = response.data;
+
+                    console.log(optionData)
+                    // Update frontend options based on backend data
+                    this.grade = optionData.grade.map(item => ({
+                        value: item,
+                        label: item
+                    }));
+                    this.subject = optionData.subject.map(item => ({
+                        value: item,
+                        label: item
+                    }));
+                    this.task = optionData.task.map(item => ({
+                        value: item,
+                        label: item
+                    }));
+                    this.category = optionData.category.map(item => ({
+                        value: item,
+                        label: item
+                    }));
+                    this.topic = optionData.topic.map(item => ({
+                        value: item,
+                        label: item
+                    }));
+                    this.question_loading = false;
+                } catch (error) {
+                    this.$message.error(error);
+                    console.error(error);
+                }
+            },
+            async logout() {
+                try {
+                    const response = await axios.get('/user/logout');
+                    sessionStorage.removeItem("token");
+                    this.$message.success("成功退出登录！");
+                    window.location.href = '/Login.html';
+                } catch (error) {
+                    this.$message.error(error);
+                    console.error(error);
+                }
+            },
+            async fetchUserInfo() {
+                const _this = this;
+                try {
+                    const response = await axios.get('/user/me');
+                    if (response.success) {
+                        _this.user = response.data;
+                    }
+                    else {
+
+                        throw new Error('网络响应异常。');
+                    }
+                } catch (error) {
+
+                    this.$message.error(error);
+                    console.error(error);
+                }
+            },
+        },
+    })
+</script>
+</body>
+</html>

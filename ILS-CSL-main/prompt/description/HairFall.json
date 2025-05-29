@@ -1,0 +1,15 @@
+{
+  "Id": "Identifier: A unique identifier for each record.",
+  "Genetics": "Genetics: Indicates whether there is a family history of baldness (1: Yes / 0: No).",
+  "Hormonal Changes": "Hormonal Changes: Indicates whether the individual has experienced hormonal changes.",
+  "Medical Conditions": "Medical Conditions: Refers to past or existing conditions that may lead to hair loss, such as Alopecia Areata (斑秃), Androgenetic Alopecia (雄激素型秃发), Dermatitis (皮炎), Dermatosis (皮肤病), Eczema (湿疹), Psoriasis (银屑病), Ringworm (癣), Scalp Infection (头皮感染), Seborrheic Dermatitis (皮脂溢出性皮炎), and Thyroid Problems (甲状腺问题).",
+  "Medications & Treatments": "Medications & Treatments: Refers to the history of medications or treatments that may cause hair loss, including Accutane (治疗痤疮的药物), Antibiotics (抗生素), Antidepressants (抗抑郁药), Antifungal Cream (杀菌霜), Blood Pressure Medication (降血压药), Chemotherapy (化疗), Heart Medication (心脏药物), Immunomodulators (免疫调节剂), Rogaine (生发素), and Steroids (类固醇).",
+  "Nutritional Deficiencies": "Nutritional Deficiencies: Indicates deficiencies in nutrients that can lead to hair loss, such as Biotin Deficiency (生物素缺乏), Iron Deficiency (铁缺乏), Magnesium Deficiency (镁缺乏), Omega-3 Fatty Acids (Ω-3脂肪酸), Protein Deficiency (蛋白质缺乏), Selenium Deficiency (硒缺乏), Vitamin A Deficiency (维生素A缺乏), Vitamin D Deficiency (维生素D缺乏), Vitamin E Deficiency (维生素E缺乏), and Zinc Deficiency (锌缺乏).",
+  "Stress": "Stress: Represents the level of stress experienced by the individual, categorized as Low (低), Moderate (中), or High (高).",
+  "Age": "Age: The age of the individual.",
+  "Poor Hair Care Habits": "Poor Hair Care Habits: Indicates whether the individual has habits that may contribute to hair loss due to improper hair care.",
+  "Environmental Factors": "Environmental Factors: Indicates whether the individual is exposed to environmental factors that might lead to hair loss.",
+  "Smoking": "Smoking: Indicates whether the individual is a smoker.",
+  "Weight Loss": "Weight Loss: Indicates whether the individual has experienced significant weight loss.",
+  "Hair Loss": "Hair Loss: Indicates whether the individual is experiencing hair loss."
+}

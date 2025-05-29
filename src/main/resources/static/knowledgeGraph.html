@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识图谱</title>
+    <link rel="icon" href="./image/logo.ico">
+    <link rel="stylesheet" href="./css/base.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/KnowledgeGraph.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/icon.css">
+
+</head>
+
+<body>
+<div id="app" style="height: 1000px;">
+    <div class="shell-main-nav">
+        <a href="index.html">
+            <div class="logo">
+                <img src="./image/logo_.png" alt="Website Image"
+                     style=" height: 40px;  width: 40px; margin-right: 10px;">
+                <span>IALP</span>
+            </div>
+        </a>
+        <ul>
+            <li><a href="index.html"><i class="el-icon-notebook-2" style="margin-right: 5px;"></i>学习</a></li>
+            <li><a href="info.html"><i class="el-icon-user" style="margin-right: 5px;"></i>用户</a></li>
+            <li><a href="blog.html"><i class="el-icon-pie-chart" style="margin-right: 5px;"></i>博客</a></li>
+            <li><a href="knowledgeGraph.html"><i class="el-icon-data-board" style="margin-right: 5px;"></i>知识图谱</a></li>
+            <li><a href="about.html"> <i class="el-icon-chat-dot-round" style="margin-right: 5px;"></i>关于我们</a></li>
+        </ul>
+        <div class="dropdown">
+            <el-dropdown>
+                <span class="el-dropdown-link">
+                    <a href="info.html">
+                        <div class="block" id="avatar">
+                            <el-avatar :size="50" v-if="user.icon" :src="user.icon"></el-avatar>
+                            <el-avatar :size="50" v-else src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+                        </div>
+                    </a>
+                    <i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item style="max-width: 185px; overflow: hidden; text-overflow: ellipsis;"> {{
+                            user.nickName
+                        }}</el-dropdown-item>
+                    <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+                    <a href="index.html"><el-dropdown-item>首页</el-dropdown-item></a>
+                    <a href="functionPage.html"><el-dropdown-item>学习</el-dropdown-item></a>
+                    <a href="about.html"><el-dropdown-item>关于</el-dropdown-item></a>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="bar" style="position: fixed; top: 120px; z-index: 100; left: 20px;">
+            <button @click="toggleMenu" class="menu-toggle-btn"
+                    style="margin-bottom: 10px; width: 60px; height: 40px;"><i class="el-icon-menu"></i></button>
+            <el-menu :default-active="'0'" class="el-menu-vertical-demo" :collapse="isCollapsed" @open="handleOpen"
+                     @close="handleClose" class="tabs__nav">
+                <el-menu-item index="0" @click="showMain">
+                    <i class="el-icon-s-home"></i>
+                    <span slot="title">介绍</span>
+                </el-menu-item>
+                <el-menu-item index="1" @click="showAllSkills">
+                    <i class="el-icon-magic-stick"></i>
+                    <span slot="title">所有技能</span>
+                </el-menu-item>
+                <el-menu-item index="2" @click="showQuerySkill">
+                    <i class="el-icon-document"></i>
+                    <span slot="title">查询技能</span>
+                </el-menu-item>
+                <el-menu-item index="3" @click="showKeywordSearch">
+                    <i class="el-icon-s-opportunity"></i>
+                    <span slot="title">关键词搜索</span>
+                </el-menu-item>
+            </el-menu>
+        </div>
+        <div class="main-container main" v-show="main_panel">
+
+            <div class="orange">
+                <!-- Your orange SVG component -->
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                     width="1297.548583984375" height="1300.78955078125"
+                     viewBox="0 0 1297.548583984375 1300.78955078125" fill="none">
+                    <!-- SVG content -->
+                </svg>
+            </div>
+
+            <div class="blue">
+                <!-- Your blue SVG component -->
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                     width="1290.57080078125" height="1238.9326171875" viewBox="0 0 1290.57080078125 1238.9326171875"
+                     fill="none">
+                    <!-- SVG content -->
+                </svg>
+            </div>
+
+            <div class="purple">
+                <!-- Your purple SVG component -->
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                     width="1505.36083984375" height="1559.85302734375"
+                     viewBox="0 0 1505.36083984375 1559.85302734375" fill="none">
+                    <!-- SVG content -->
+                </svg>
+            </div>
+
+            <div class="yellow">
+                <!-- Your yellow SVG component -->
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                     width="1359.477294921875" height="1449.361328125" viewBox="0 0 1359.477294921875 1449.361328125"
+                     fill="none">
+                    <!-- SVG content -->
+                </svg>
+            </div>
+            <div class="bg"></div>
+            <div class="introduction-container">
+                <h1>知识图谱</h1>
+                <div class="introduction">
+                    <p> 欢迎来到我们的知识图谱网页！<br />这是您发现各种技能之间复杂关系和互连知识网络的门户。通过我们用户友好的界面，
+                        您可以根据提供的技能动态创建图谱。此外，您还可以输入关键词并生成呈现相关信息的图谱。
+                        要访问一系列选项，只需从侧边栏选择"查询技能"。
+                        踏上旅程，深入了解不同技能之间的相互联系，拓宽您的知识视野。<br />加入我们，开启这令人兴奋的知识探索之旅！</p>
+                </div>
+            </div>
+            <button class="animated-button" @click="showAllSkills">
+                <svg xmlns="http://www.w3.org/2000/svg" class="arr-2" viewBox="0 0 24 24">
+                    <path
+                            d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
+                    </path>
+                </svg>
+                <span class="text">进 入</span>
+                <span class="circle"></span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="arr-1" viewBox="0 0 24 24">
+                    <path
+                            d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z">
+                    </path>
+                </svg>
+            </button>
+            <div class="box-container">
+                <!-- Place each SVG component within a div with corresponding class -->
+                <div class="box">
+
+                    <div class="text">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                             width="48.39300537109375" height="49.75892639160156"
+                             viewBox="0 0 48.39300537109375 49.75892639160156" fill="none">
+                            <path
+                                    d="M47.393 31.2305L47.393 23.9542C47.393 13.7212 39.0977 5.42583 28.8647 5.42583C18.6315 5.42583 10.3362 13.7212 10.3362 23.9542L10.3362 31.2305C10.3362 41.4636 18.6315 49.7589 28.8647 49.7589C39.0977 49.7589 47.393 41.4636 47.393 31.2305Z"
+                                    fill="#F7DA77">
+                            </path>
+                            <path stroke="rgba(28, 28, 28, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round" d="M30.2297 1.00059L30.5555 1.00059">
+                            </path>
+                            <path stroke="rgba(28, 28, 28, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round"
+                                  d="M5.36938 24.6364L5.36938 24.2468L5.36938 21.9552L5.36938 7.66893C5.36938 3.98571 8.35507 1 12.0383 1L27.5198 1">
+                            </path>
+                            <path stroke="rgba(28, 28, 28, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round"
+                                  d="M33.8893 1.00084L35.491 1.00084C39.1743 1.00084 42.1599 3.98655 42.1599 7.66977L42.1599 38.4736C42.1599 42.1568 39.1743 45.1425 35.491 45.1425L12.0383 45.1425C8.35507 45.1425 5.36938 42.1568 5.36938 38.4736L5.36938 35.2216L5.36938 27.6145">
+                            </path>
+                            <path
+                                    d="M38.0335 17.7395L30.9384 24.8338C30.8959 24.8772 30.8252 24.8772 30.7819 24.8338L23.5609 17.6128C23.4341 17.4869 23.2878 17.3916 23.1322 17.3278C23.0148 17.281 22.8923 17.2513 22.7681 17.2394C22.7264 17.2351 22.6847 17.2334 22.6439 17.2334C22.6022 17.2334 22.5605 17.2351 22.5188 17.2394C22.478 17.2428 22.4363 17.2487 22.3956 17.2572C22.3139 17.2725 22.2331 17.2964 22.1548 17.3278C21.9992 17.3916 21.8529 17.4869 21.7261 17.6128L8.68428 30.6546C8.17726 31.1616 8.17726 31.9833 8.68428 32.4894L11.2974 35.1026C11.8477 35.6529 12.7392 35.6529 13.2896 35.1026L22.5648 25.8273C22.6082 25.7839 22.6788 25.7839 22.7222 25.8273L29.8947 32.9998L29.9432 33.0474C30.4493 33.5544 31.271 33.5544 31.7779 33.0474L42.638 22.1875C43.1449 21.6813 43.1449 20.8596 42.638 20.3527L40.0248 17.7395C39.4753 17.19 38.583 17.19 38.0335 17.7395Z"
+                                    fill="#9ADBF7">
+                            </path>
+                            <path
+                                    d="M30.9384 24.8338C30.8959 24.8772 30.8252 24.8772 30.7819 24.8338L23.5609 17.6128C23.4341 17.4869 23.2878 17.3916 23.1322 17.3278C23.0148 17.281 22.8923 17.2513 22.7681 17.2394C22.7264 17.2351 22.6847 17.2334 22.6439 17.2334C22.6022 17.2334 22.5605 17.2351 22.5188 17.2394C22.478 17.2428 22.4363 17.2487 22.3956 17.2572C22.3139 17.2725 22.2331 17.2964 22.1548 17.3278C21.9992 17.3916 21.8529 17.4869 21.7261 17.6128L8.68428 30.6546C8.17726 31.1616 8.17726 31.9833 8.68428 32.4894L11.2974 35.1026C11.8477 35.6529 12.7392 35.6529 13.2896 35.1026L22.5648 25.8273C22.6082 25.7839 22.6788 25.7839 22.7222 25.8273L29.8947 32.9998L29.9432 33.0474C30.4493 33.5544 31.271 33.5544 31.7779 33.0474L42.638 22.1875C43.1449 21.6813 43.1449 20.8596 42.638 20.3527L40.0248 17.7395C39.4753 17.19 38.583 17.19 38.0335 17.7395L30.9384 24.8338Z"
+                                    stroke="rgba(28, 28, 28, 1)" stroke-width="2" stroke-linejoin="round"
+                                    stroke-linecap="round">
+                            </path>
+                            <path
+                                    d="M36.5985 16.0229L44.2763 23.7007C45.4264 24.8508 47.393 24.0359 47.393 22.4086L47.393 14.7317C47.393 13.7228 46.5756 12.9054 45.5675 12.9054L37.8898 12.9054C36.2625 12.9054 35.4476 14.872 36.5985 16.0229Z"
+                                    fill="#9ADBF7">
+                            </path>
+                            <path
+                                    d="M36.5985 16.0229L44.2763 23.7007C45.4264 24.8508 47.393 24.0359 47.393 22.4086L47.393 14.7317C47.393 13.7228 46.5756 12.9054 45.5675 12.9054L37.8898 12.9054C36.2625 12.9054 35.4476 14.872 36.5985 16.0229Z"
+                                    stroke="rgba(28, 28, 28, 1)" stroke-width="2" stroke-linejoin="round"
+                                    stroke-linecap="round">
+                            </path>
+                            <path
+                                    d="M40.4748 14.1329C40.1899 14.1329 39.9585 14.3642 39.9585 14.65C39.9585 14.9359 40.1899 15.1672 40.4748 15.1672C40.7606 15.1672 40.9921 14.9359 40.9921 14.65C40.9921 14.3642 40.7606 14.1329 40.4748 14.1329Z"
+                                    fill="#FFFFFF">
+                            </path>
+                            <path stroke="rgba(255, 255, 255, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round" d="M26.0287 22.5653L29.3674 19.7038">
+                            </path>
+                            <path stroke="rgba(255, 255, 255, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round" d="M24.5887 27.2096L26.2687 25.7703">
+                            </path>
+                            <path stroke="rgba(255, 255, 255, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round" d="M41.9005 14.6501L44.5561 14.6501">
+                            </path>
+                            <path stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round" d="M14.8209 10.7748L22.508 10.7748">
+                            </path>
+                            <path stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round" d="M12.3234 16.0429L15.4724 16.0429">
+                            </path>
+                            <ellipse cx="22.75118899345398" cy="36.46150064468384"
+                                     transform="rotate(-0.5404634753075379 20.64501953125 34.35533142089844)"
+                                     rx="2.1061694622039795" ry="2.1061692237854004" stroke="rgba(253, 141, 121, 1)"
+                                     stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+                            </ellipse>
+                            <path stroke="rgba(253, 141, 121, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round" d="M30.5788 9.88805L33.8894 9.88805">
+                            </path>
+                            <path stroke="rgba(253, 141, 121, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round" d="M32.2341 8.23264L32.2341 11.5433">
+                            </path>
+                            <path stroke="rgba(253, 141, 121, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round" d="M1 5.92225L7.58813 5.92225">
+                            </path>
+                            <path stroke="rgba(253, 141, 121, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round" d="M4.29407 2.62818L4.29407 9.21631">
+                            </path>
+                            <path stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linejoin="round"
+                                  stroke-linecap="round" d="M11.9311 10.7748L11.9311 10.7748">
+                            </path>
+                        </svg>
+
+                        <p>
+                            它可以根据您提供的技能动态生成图谱。
+                        </p>
+                    </div>
+                </div>
+                <div class="box">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         width="51.306640625" height="50.037109375" viewBox="0 0 51.306640625 50.037109375"
+                         fill="none">
+                        <path
+                                d="M45.4177 31.5087L45.4177 24.2324C45.4177 13.9993 37.1223 5.70398 26.8893 5.70398C16.6562 5.70398 8.36084 13.9993 8.36084 24.2324L8.36084 31.5087C8.36084 41.7417 16.6562 50.0371 26.8893 50.0371C37.1223 50.0371 45.4177 41.7417 45.4177 31.5087Z"
+                                fill="#9FDDC6">
+                        </path>
+                        <path stroke="rgba(28, 28, 28, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round"
+                              d="M5.21924 34.8448L5.21924 34.6636L5.21924 32.1016L5.21924 7.82375C5.21924 4.05546 8.27472 1 12.043 1L18.2381 1">
+                        </path>
+                        <path stroke="rgba(28, 28, 28, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round"
+                              d="M21.3115 1L23.0289 1L24.2444 1L25.5637 1L36.0401 1C39.8084 1 42.8639 4.05546 42.8639 7.82375L42.8639 39.343C42.8639 43.1112 39.8084 46.1667 36.0401 46.1667L12.043 46.1667C8.27472 46.1667 5.21924 43.1112 5.21924 39.343L5.21924 37.8935">
+                        </path>
+                        <path
+                                d="M17.1904 35.0906C16.3858 38.9201 18.8382 42.6765 22.6677 43.4812L36.9676 46.4865C40.7971 47.2911 44.5535 44.8388 45.3582 41.0101L50.3829 17.1006C51.1876 13.2711 48.7353 9.51471 44.9057 8.71001L30.6058 5.70473C26.7763 4.90004 23.0198 7.3524 22.2152 11.1819L17.1904 35.0906Z"
+                                fill="#FFECCB">
+                        </path>
+                        <path fill="rgba(28, 28, 28, 1)"
+                              d="M16.4673 33.6675L20.9801 12.1942C22.0399 7.15155 26.9869 3.92276 32.0296 4.98253L43.8944 7.47605C48.9365 8.53568 52.1649 13.4821 51.1052 18.5241L46.5924 39.9975C45.5326 45.0402 40.5856 48.269 35.5429 47.2093L23.6782 44.7158C18.6361 43.6561 15.4076 38.7097 16.4673 33.6675ZM18.4245 34.0789C17.5921 38.04 20.1284 41.9261 24.0895 42.7586L35.9542 45.252C39.9159 46.0846 43.8025 43.548 44.6351 39.5862L49.148 18.1128C49.9804 14.1517 47.4442 10.2658 43.4831 9.43329L31.6183 6.93977C27.6565 6.10718 23.77 8.64384 22.9374 12.6056L18.4245 34.0789Z">
+                        </path>
+                        <path
+                                d="M26.0383 37.8076C26.2331 37.8076 26.4287 37.7404 26.5878 37.606L39.8695 26.359C40.1239 26.1446 40.2293 25.801 40.14 25.4811C40.0498 25.1613 39.7828 24.9223 39.4544 24.8704L35.9915 24.3174L41.5325 16.0604C41.7689 15.7082 41.7094 15.2353 41.393 14.952C41.2322 14.8083 41.0298 14.736 40.8264 14.736C40.6308 14.736 40.4352 14.8032 40.277 14.9376L26.9953 26.1846C26.7409 26.3989 26.6354 26.7426 26.7248 27.0624C26.8149 27.3823 27.082 27.6213 27.4104 27.6732L30.8732 28.2261L25.3314 36.4831C25.0958 36.8353 25.1545 37.3083 25.4709 37.5915C25.6325 37.7353 25.835 37.8076 26.0383 37.8076Z"
+                                fill="#F7DA77">
+                        </path>
+                        <path
+                                d="M39.7199 14.2944L26.445 25.5355C25.938 25.965 25.7271 26.6507 25.9057 27.2912C26.0843 27.9308 26.6202 28.4089 27.276 28.5135L29.4256 28.8563L24.6255 36.0093C24.1525 36.7136 24.2716 37.6595 24.9045 38.2252C25.2269 38.5135 25.6326 38.6581 26.0384 38.6581C26.4288 38.6581 26.8201 38.5246 27.1374 38.2549L40.42 27.0079C40.9269 26.5783 41.1379 25.8927 40.9592 25.2522C40.7806 24.6125 40.2447 24.1345 39.5889 24.0299L37.4393 23.6871L42.2029 16.5886C42.4088 16.307 42.5304 15.9608 42.5304 15.5865C42.5304 14.6466 41.7708 13.8853 40.8308 13.8853L40.8172 13.8853C40.3979 13.8878 40.0151 14.0409 39.7199 14.2944ZM27.5451 26.8336L32.3213 27.5957L26.0386 36.9569L39.3203 25.7099L34.544 24.9477L40.8268 15.5866L27.5451 26.8336Z"
+                                fill-rule="evenodd" fill="#000000">
+                        </path>
+                        <path stroke="rgba(255, 255, 255, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round" d="M37.5703 20.999L35.0567 22.9648">
+                        </path>
+                        <path stroke="rgba(255, 255, 255, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round" d="M38.6245 24.0392L33.9681 27.3762">
+                        </path>
+                        <path stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round" d="M13.0298 13.0914L18.4891 13.0914">
+                        </path>
+                        <path stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round" d="M13.0298 19.1689L16.252 19.1689">
+                        </path>
+                        <path
+                                d="M10.3674 31.3776C9.17734 31.3776 8.21191 32.3422 8.21191 33.5322C8.21191 34.7222 9.17734 35.6868 10.3674 35.6868C11.5574 35.6868 12.522 34.7222 12.522 33.5322C12.522 32.3422 11.5574 31.3776 10.3674 31.3776Z"
+                                stroke="rgba(253, 141, 121, 1)" stroke-width="2" stroke-linejoin="round"
+                                stroke-linecap="round">
+                        </path>
+                        <path stroke="rgba(247, 218, 119, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round" d="M1 7.27917L7.78888 7.27917">
+                        </path>
+                        <path stroke="rgba(247, 218, 119, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round" d="M4.39453 3.88489L4.39453 10.6738">
+                        </path>
+                        <path stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round" d="M10.0737 13.0914L10.0737 13.0914">
+                        </path>
+                    </svg>
+                    <div class="text">
+                        <p>
+                            它可以根据您提供的技能动态生成图谱。
+                        </p>
+                    </div>
+                </div>
+                <div class="box">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                         width="47.63671875" height="50.14208984375" viewBox="0 0 47.63671875 50.14208984375"
+                         fill="none">
+                        <path
+                                d="M46.9216 31.2473L46.9216 23.8271C46.9216 13.3916 38.4622 4.93213 28.0267 4.93213C17.5903 4.93213 9.13086 13.3916 9.13086 23.8271L9.13086 31.2473C9.13086 41.6828 17.5903 50.1423 28.0267 50.1423C38.4622 50.1423 46.9216 41.6828 46.9216 31.2473Z"
+                                fill="#9ADBF7">
+                        </path>
+                        <path stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round" d="M6.00586 38.7676L6.00586 38.7676">
+                        </path>
+                        <path stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linecap="round"
+                              d="M1.00049 29.3607L1.00049 7.80087C1.00049 4.06039 4.06088 1 7.80136 1L27.9177 1">
+                        </path>
+                        <path stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linecap="round"
+                              d="M1 34.4727L1 32.8791">
+                        </path>
+                        <path stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linecap="round"
+                              d="M31.1481 1L32.51 1C36.2505 1 39.3109 4.06039 39.3109 7.80087L39.3109 16.0834L39.3109 35.9421L39.3109 39.8734C39.3109 43.6138 36.2505 46.6742 32.51 46.6742L7.80136 46.6742C4.06088 46.6742 1.00049 43.6138 1.00049 39.8734L1.00049 38.436">
+                        </path>
+                        <path
+                                d="M46.0459 34.2971L32.426 20.6772C31.6383 19.8895 30.3614 19.8895 29.5746 20.6772C28.787 21.4639 28.787 22.7408 29.5746 23.5285L43.1946 37.1484C43.9814 37.9361 45.2583 37.9361 46.0459 37.1484C46.8336 36.3608 46.8336 35.0839 46.0459 34.2971Z"
+                                fill="#F7DA77">
+                        </path>
+                        <path
+                                d="M46.0459 34.2971L32.426 20.6772C31.6383 19.8895 30.3614 19.8895 29.5746 20.6772C28.787 21.4639 28.787 22.7408 29.5746 23.5285L43.1946 37.1484C43.9814 37.9361 45.2583 37.9361 46.0459 37.1484C46.8336 36.3608 46.8336 35.0839 46.0459 34.2971Z"
+                                stroke="rgba(0, 0, 0, 1)" stroke-width="2">
+                        </path>
+                        <path
+                                d="M24.6143 27.2482C18.5855 27.2482 13.6982 22.3609 13.6982 16.3321C13.6982 10.3041 18.5855 5.41602 24.6143 5.41602C30.6432 5.41602 35.5304 10.3041 35.5304 16.3321C35.5304 22.3609 30.6432 27.2482 24.6143 27.2482ZM24.6141 10.0732C28.0709 10.0732 30.8737 12.8751 30.8737 16.3319C30.8737 19.7887 28.0709 22.5915 24.6141 22.5915C21.1573 22.5915 18.3545 19.7887 18.3545 16.3319C18.3545 12.8751 21.1573 10.0732 24.6141 10.0732Z"
+                                fill-rule="evenodd" fill="#F7DA77">
+                        </path>
+                        <path
+                                d="M24.6143 4.41602C31.1954 4.41602 36.5304 9.75103 36.5304 16.3321C36.5304 22.9132 31.1954 28.2482 24.6143 28.2482C18.0333 28.2482 12.6982 22.9132 12.6982 16.3321C12.6982 9.75103 18.0333 4.41602 24.6143 4.41602ZM24.6143 6.41602C19.1378 6.41602 14.6982 10.8556 14.6982 16.3321C14.6982 21.8086 19.1378 26.2482 24.6143 26.2482C30.0909 26.2482 34.5304 21.8086 34.5304 16.3321C34.5304 10.8556 30.0908 6.41602 24.6143 6.41602ZM24.6141 23.5915C20.6048 23.5915 17.3545 20.3413 17.3545 16.3319C17.3545 12.3226 20.6048 9.07322 24.6141 9.07322C28.623 9.07322 31.8737 12.323 31.8737 16.3319C31.8737 20.3413 28.6235 23.5915 24.6141 23.5915ZM24.6141 21.5915C27.5189 21.5915 29.8737 19.2367 29.8737 16.3319C29.8737 13.4276 27.5184 11.0732 24.6141 11.0732C21.7093 11.0732 19.3545 13.4271 19.3545 16.3319C19.3545 19.2367 21.7093 21.5915 24.6141 21.5915Z"
+                                fill-rule="evenodd" fill="#000000">
+                        </path>
+                        <path stroke="rgba(255, 255, 255, 1)" stroke-width="2" stroke-linecap="round"
+                              d="M26.9858 7.75488C26.9858 7.75488 28.8682 7.90495 29.8866 9.23477">
+                        </path>
+                        <path
+                                d="M25.9052 7.16421C25.7517 6.87882 25.3969 6.77212 25.1115 6.92566C24.8261 7.0792 24.7194 7.43399 24.8729 7.71939C25.0265 8.00478 25.3813 8.11148 25.6666 7.95794C25.952 7.8044 26.0587 7.44961 25.9052 7.16421Z"
+                                fill="#FFFFFF">
+                        </path>
+                        <path stroke="rgba(255, 255, 255, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round" d="M17.3608 20.4771L21.0242 17.3377">
+                        </path>
+                        <path stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linecap="round"
+                              d="M8.68408 38.7676L23.0874 38.7676">
+                        </path>
+                        <path stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linecap="round"
+                              d="M8.68408 33.4678L15.0894 33.4678">
+                        </path>
+                        <path stroke="rgba(253, 141, 121, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round" d="M1 9.73047L6.66968 9.73047">
+                        </path>
+                        <path stroke="rgba(253, 141, 121, 1)" stroke-width="2" stroke-linejoin="round"
+                              stroke-linecap="round" d="M3.83496 6.896L3.83496 12.5657">
+                        </path>
+                        <path
+                                d="M7.39676 22.8555C6.13286 22.8555 5.1084 23.8791 5.1084 25.143C5.1084 26.4068 6.13286 27.4304 7.39676 27.4304C8.65977 27.4304 9.68425 26.4068 9.68425 25.143C9.68425 23.8791 8.65977 22.8555 7.39676 22.8555Z"
+                                stroke="rgba(0, 0, 0, 1)" stroke-width="2" stroke-linejoin="round"
+                                stroke-linecap="round">
+                        </path>
+                        <path
+                                d="M29.7887 33.0552C28.8154 33.0552 28.0269 33.8437 28.0269 34.817C28.0269 35.7911 28.8154 36.5805 29.7887 36.5805C30.7619 36.5805 31.5513 35.7911 31.5513 34.817C31.5513 33.8437 30.7619 33.0552 29.7887 33.0552Z"
+                                stroke="rgba(253, 141, 121, 1)" stroke-width="2" stroke-linejoin="round"
+                                stroke-linecap="round">
+                        </path>
+                    </svg>
+                    <div class="text">
+                        <p>
+                            您可以输入关键词来生成显示相关信息的图谱。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="./image/graph.png" alt="知识图谱">
+            </div>
+        </div>
+        <!-- <div v-show="showPanel1" class="tabs__panel1 main" style=" background-image: linear-gradient(to bottom, rgba(221, 238, 253, 0.6),rgba(226, 241, 255, 0.4), rgba(226, 241, 255, 0.5),white);"> -->
+        <div v-show="showPanel1" class="tabs__panel1 main" style="
+            background-color: rgba(242, 239, 239, 0.7);
+            border-radius: 15px;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1), -2px -2px 3px rgba(255, 255, 255, 1);
+        ">
+            <div class="big-bac">
+                <div class="small-bac">
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                        <h2 style="color: #5f95c7; font-size: 30px;">所有技能</h2>
+                        <p>浏览完整的技能图谱。</p>
+                    </div>
+                    <div style="position: relative;">
+                        <div id="mainContent" style="border-radius: 10px; margin-top: 20px;">
+                            <!-- The iframe will be inserted here upon form submission -->
+
+                        </div>
+                        <img src="./image/分组 7.png"
+                             style="position: absolute; width: 320px; height: 160px; bottom: 0; left: -7px; z-index: 1;">
+                        <img src="./image/分组 8.png"
+                             style="position: absolute; width: 360px; height: 200px; bottom: 0; right: -7px; z-index: 1;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div v-show="showPanel2" class="tabs__panel2 main">
+
+            <div style="display: flex; flex-direction: column;align-items: center;">
+                <h2 style="color: #5f95c7;">查询技能</h2>
+                <p>选择一个技能来查询知识图谱。</p>
+            </div>
+            <template>
+                <el-select v-model="selectedSkill" filterable placeholder="选择技能"
+                           style="width: 50%; margin-left: 20%; margin-top: 20px;">
+                    <el-option v-for="item in skill_options" :key="item.value" :label="item.label"
+                               :value="item.value">
+                    </el-option>
+                </el-select>
+            </template>
+            <el-button type="primary" @click="submitSkill"
+                       style="margin-left: 10px; margin-top: 20px;">提交</el-button>
+            <div id="iframeContainer" style="margin-top: 20px; ">
+                <!-- The iframe will be inserted here upon form submission -->
+            </div>
+
+
+        </div>
+        <div v-show="showPanel3" class="tabs__panel3 main">
+            <div class="content" style="display: flex; flex-direction: column;align-items: center;">
+                <h2 style="color: #5f95c7;">关键词搜索</h2>
+                <p>输入关键词生成知识图谱。</p>
+            </div>
+
+            <el-input placeholder="输入关键词" v-model="keyword" clearable
+                      style="width: 50%; margin-left: 20%; margin-top: 20px;">
+            </el-input>
+            <el-button type="primary" @click="submitKeyWord" style="margin-left: 10px;">搜索</el-button>
+
+            <div id="resultsContainer" style="margin-top: 20px; margin-left: 50%; transform: translateX(-50%);">
+                <!-- Results will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<script src="plugins/vue/vue.js"></script>
+<script src="plugins/axios/axios.min.js"></script>
+<script src="./js/common.js"></script>
+<link rel="stylesheet" href="./plugins/element-ui/lib/theme-chalk/index.css">
+<script src="./plugins/element-ui/lib/index.js"></script>
+<script src="./js/knolwdgeGraph.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                keyword: '',
+                skill_options: [],
+                selectedSkill: '',
+                user: {
+                    icon: '',  // 确保user对象有icon属性
+                    nickName: ''
+                },
+                main_panel: true,
+                isCollapsed: false,
+                showPanel1: false,
+                showPanel2: false,
+                showPanel3: false,
+            }
+        },
+        mounted() {
+            this.fetchUserInfo();
+            this.initOptions();
+        },
+        methods: {
+            submitKeyWord() {
+                const keyword = this.keyword;
+                this.fetchAndRenderKeywordGraph();
+            },
+            async fetchAndRenderKeywordGraph() {
+                try {
+                    const response = await axios.post("/user/generate-keyword-graph", { keyword: this.keyword });
+                    const graphHtml = response.data;
+
+
+                    const iframe = document.createElement("iframe");
+                    iframe.srcdoc = graphHtml;
+                    iframe.frameBorder = "0";
+                    iframe.style.width = "100%";
+                    iframe.style.height = "800px";
+
+                    const iframeContainer = document.getElementById("resultsContainer");
+                    iframeContainer.innerHTML = ""; // Clear previous content
+                    iframeContainer.appendChild(iframe);
+
+
+
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                }
+            },
+            async fetchAndRenderGraph() {
+                try {
+                    const response = await axios.post("/user/generate-graph", { skillName: this.selectedSkill });
+                    const graphHtml = response.data;
+
+
+                    const iframe = document.createElement("iframe");
+                    iframe.srcdoc = graphHtml;
+                    iframe.frameBorder = "0";
+                    iframe.style.width = "100%";
+                    iframe.style.height = "800px";
+
+                    const iframeContainer = document.getElementById("iframeContainer");
+                    iframeContainer.innerHTML = ""; // Clear previous content
+                    iframeContainer.appendChild(iframe);
+
+
+
+
+
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                }
+
+            },
+            submitSkill() {
+
+                const selectedSkill = this.selectedSkill;
+                this.fetchAndRenderGraph();
+
+            },
+            async initOptions() {
+                try {
+                    const response = await axios.get('/question/getskill');
+                    if (response.success) {
+                        this.skill_options = response.data.map(item => ({ value: item.skill, label: item.skill }));
+                    }
+                    else {
+                        throw new Error('Network response was not ok.');
+                    }
+                } catch (error) {
+                    this.$message.error(error);
+                    console.error(error);
+                }
+            },
+            showMain() {
+                this.main_panel = true;
+                this.showPanel1 = false;
+                this.showPanel2 = false;
+                this.showPanel3 = false;
+            },
+            showAllSkills() {
+                // 确保使用Vue的数据属性来控制面板状态
+                this.main_panel = false;
+                this.showPanel1 = true;
+                this.showPanel2 = false;
+                this.showPanel3 = false;
+
+                // 使用Vue模板字符串来更新HTML
+                const mainContent = document.getElementById("mainContent");
+                mainContent.innerHTML = `
+
+                <div>
+                    <iframe src="./skills_graph copy.html" frameborder="0" style="width: 100%; height: 700px; overflow: hidden;"></iframe>
+                </div>
+                `;
+
+            },
+
+
+            showQuerySkill() {
+                this.main_panel = false;
+                this.showPanel1 = false;
+                this.showPanel2 = true;
+                this.showPanel3 = false;
+            },
+            showKeywordSearch() {
+                this.main_panel = false;
+                this.showPanel1 = false;
+                this.showPanel2 = false;
+                this.showPanel3 = true;
+            },
+
+
+            toggleMenu() {
+                this.isCollapsed = !this.isCollapsed;
+            },
+
+            handleOpen(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            handleClose(key, keyPath) {
+                console.log(key, keyPath);
+            },
+            async fetchUserInfo() {
+                try {
+                    const response = await axios.get('/user/me');
+                    if (response.data && response.data.success) {
+                        this.user = response.data.data;
+                    } else {
+                        throw new Error('Network response was not ok.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching user info:', error);
+                }
+            },
+        },
+    })
+
+
+</script>
+
+</body>
+
+</html>

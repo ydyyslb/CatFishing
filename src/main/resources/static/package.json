@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@antv/g2": "^5.1.15-beta.4",
+    "editor.md": "^1.5.0",
+    "element-ui": "^2.15.14",
+    "marked": "^13.0.0"
+  }
+}

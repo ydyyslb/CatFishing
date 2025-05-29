@@ -1,0 +1,525 @@
+@charset "UTF-8";
+*{
+    padding: 0;
+    margin: 0;
+}
+
+/* 基础重置 */
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f4f8;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+}
+
+body .shell-main-footer{
+    width: auto !important;
+}
+/* 头部样式 */
+body .shell-main-nav {
+    width: 100%;
+    height: 60px;
+    position: sticky;
+    z-index: 999;
+    top: 0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 8vh;
+    background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6));
+    backdrop-filter: blur(13px);
+
+}
+body #dropdown{
+    margin-left: 95% !important;
+    padding :5px;
+}
+body .shell-main-nav .logo {
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    left: 5%;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
+
+body .shell-main-nav .logo span {
+    font: 600 28px sans-serif;
+    letter-spacing: 2px;
+    background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+    /* 定义渐变背景 */
+    -webkit-background-clip: text;
+    /* 将背景限定在文字内部，适用于WebKit浏览器 */
+    color: transparent;
+    /* 隐藏文字本身的颜色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    /* 添加文字阴影效果 */
+    transition: transform 0.6s;
+    cursor: pointer;
+}
+
+body .shell-main-nav .logo span:hover {
+    transform: translateY(-3px);
+    /* 当鼠标悬浮时，向上位移3px */
+}
+
+body .shell-main-nav ul {
+    width: 600px;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    right: 5%;
+}
+
+body .shell-main-nav ul li {
+    width: 110px;
+    text-align: center;
+    position: relative;
+    transition: 0.6s;
+    border-radius: 10px;
+    height: 77%;
+
+}
+
+body .shell-main-nav ul li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 45px !important;
+    text-align: center;
+    font: 600 16px sans-serif;
+    background-image: linear-gradient(to right top, #87c7ff, #66A9F0, #448dd2, #1772b4);
+    /* 定义渐变背景 */
+    -webkit-background-clip: text;
+    /* 将背景限定在文字内部，适用于WebKit浏览器 */
+    color: transparent;
+    /* 隐藏文字本身的颜色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    /* 添加文字阴影效果 */
+    transition: transform 0.6s;
+    cursor: pointer;
+}
+
+
+body .shell-main-nav ul li:hover {
+    background-color: rgba(88, 149, 213, 0.7);
+}
+
+body .shell-main-nav ul li:hover a {
+    color: white;
+    letter-spacing: 2px;
+}
+
+nav{
+    display: flex;
+    align-items: center;
+    width: 150px;
+    justify-content: space-between;
+
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #a0c4ff;
+}
+
+/* 主要内容样式 */
+.search-filter {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-direction: column;
+    align-items: center;
+}
+.search {
+    display: flex;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    position: relative;
+}
+
+.search-filter input,
+.search-filter button {
+    padding: 10px;
+    border: 2px solid #0056b3;
+    border-radius: 20px; /* 圆角设计 */
+    outline: none;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+}
+
+
+.search-filter input:focus {
+    border-color: #a0c4ff;
+}
+
+.search-filter button {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+.search-filter button:hover {
+    background-color: #005ecb;
+    transform: scale(1.05); /* 轻微放大 */
+}
+
+/* 下面是五个菜单的样式 */
+.select-container {
+    display: flex;
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+}
+
+.select-menu {
+    width: 200px;
+    margin-bottom: 10px;
+    margin: 40px;
+    cursor: pointer;
+    position: relative;
+}
+
+.select {
+    width: 100%;
+    background-color: #5a8bbe;
+    padding: 20px;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.select span {
+    margin-right: 10px;
+}
+
+.options-list {
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    background-color: #f9f9f9;
+    border-radius: 7px;
+    margin-top: 4px;
+    padding: 0 20px;
+    max-height: 180px;
+    overflow-y: auto;
+    transition: 0.4s;
+    opacity: 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.option {
+    padding: 8px 0;
+    font-weight: 500;
+    font-size: 14px;
+    transition: .3s;
+}
+
+.option:hover{
+    color: #00a8ff;
+}
+
+.select-menu.open .options-list {
+    display: block;
+}
+
+.fa-chevron-down {
+    font-size: 12px;
+}
+
+.options-list.active {
+    opacity: 1;
+}
+.options-list::-webkit-scrollbar{
+    width: 4px;
+    background-color: none;
+}
+.options-list::-webkit-scrollbar-thumb{
+    background-color: #00a8ff;
+    border-radius: 7px;
+}
+
+
+/* 其他样式保持不变 */
+.main-questions{
+    position: relative;
+    /* max-height: 500px;
+    overflow-y: auto; */
+}
+
+.question-list {
+    margin: 0 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px 0;
+    max-height: 500px;
+    overflow-y: auto;
+    position: relative;
+}
+
+.main-questions::before,
+.main-questions::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 20px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.main-questions::before {
+    top: 0;
+    background: linear-gradient(to bottom, rgba(240, 244, 248, 1), rgba(255,255,255,0));
+}
+
+.main-questions::after {
+    bottom: 0;
+    background: linear-gradient(to top, rgba(240, 244, 248, 1), rgba(255,255,255,0));
+}
+
+@media screen and (max-width: 768px) {
+    .question-list {
+        grid-template-columns: repeat(2, 1fr); /* 在较小屏幕上改为每行两列 */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .question-list {
+        grid-template-columns: 1fr; /* 在更小的屏幕上，每行一个题目 */
+    }
+}
+
+
+.question-item {
+    background-color: #ffffff;
+    border-radius: 15px; /* 圆角设计 */
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* 轻微阴影 */
+    transition: transform 0.3s ease;
+}
+
+.question-item:hover {
+    transform: translateY(-5px); /* 鼠标悬浮时上移 */
+}
+
+/* footer {
+    background-color: #333;
+    color: #ffffff;
+    width: 100%;
+    position: relative;
+    height: 100px;
+    transform: translateY(100px);
+    display: flex;
+    justify-content: center;
+    letter-spacing: 2px;
+    align-items: center;
+    text-align: center;
+} */
+
+.start-learning {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#start-learning-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+/* 弹窗基本样式 */
+.modal {
+    display: none; /* 默认隐藏 */
+    position: fixed; /* 固定定位 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明背景 */
+    z-index: 2; /* 确保在顶层 */
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Modal Content Improvements */
+.customization-options {
+    background: #f9f9f9; /* 更亮的背景色 */
+    padding: 30px;
+    border-radius: 10px; /* 更大的圆角 */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* 更深的阴影 */
+    font-family: 'Roboto', sans-serif;
+    text-align: center; /* 确保文本和按钮居中 */
+    transition: .2s;
+}
+
+
+.customization-options:hover{
+    transform: scale(1.03); /* Subtle scale effect */
+}
+.customization-options h4 {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+.customization-options label {
+    display: block;
+    margin: 20px auto 10px; /* 增加顶部外边距，并自动调整左右外边距以居中 */
+    color: #666;
+    text-align: left; /* 标签文字左对齐 */
+    max-width: 300px; /* 限制最大宽度 */
+}
+
+.customization-options input[type="number"] {
+    width: calc(100% - 20px); /* 减去padding的宽度 */
+    padding: 10px;
+    margin: 0 auto 20px; /* 居中显示 */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: block; /* 确保能应用margin auto居中 */
+}
+
+
+/* Button Styles */
+.customization-options button {
+    background-color: #007bff; /* 蓝色背景 */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 20px; /* 更圆的按钮 */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    display: inline-block; /* 允许使用margin auto */
+    margin: 20px auto; /* 水平居中按钮 */
+    text-align: center; /* 文本居中 */
+    width: auto; /* 自动根据内容调整宽度 */
+}
+
+.customization-options button:hover {
+    background-color: #0056b3;
+}
+
+/* 关闭按钮样式调整 */
+.close-btn {
+    float: right;
+    font-size: 28px;
+    color: #757575; /* 深灰色，提高对比度 */
+    background-color: #eeeeee; /* 轻灰色背景 */
+    border-radius: 50%; /* 圆形 */
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.close-btn:hover {
+    color: #424242; /* 鼠标悬停时更深的灰色 */
+    background-color: #e0e0e0; /* 鼠标悬停时背景色变化 */
+}
+.customization-options button, #start-learning-btn {
+    display: block; /* 转换为块级元素 */
+    margin: 0 auto; /* 自动左右边距实现居中 */
+    background-color: #0056b3;
+    color: white;
+    padding: 15px 30px; /* 增加内边距以适应更大的文字 */
+    font-size: 20px; /* 增大字体大小使“Start”更加突出 */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.customization-options button:hover, #start-learning-btn:hover {
+    background-color: #007bff;
+}
+/* 卡片样式 */
+
+.question-recommend .main-questions .card {
+    padding: 20px;
+    width: 280px;
+    min-height: 200px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 5px 5px 6px #dadada,
+        -5px -5px 6px #f6f6f6;
+    transition: 0.4s;
+}
+
+.question-recommend .main-questions .card:hover {
+    translate: 0 -10px;
+}
+
+.question-recommend .main-questions .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    /* color: #3aa5ba; */
+    color: rgb(58, 83, 109);
+    margin: 15px 0 0 10px;
+}
+
+.question-recommend .main-questions .card-image {
+    min-height: 170px;
+    background-color: #c9c9c9;
+    border-radius: 15px;
+    box-shadow: inset 8px 8px 10px #c3c3c3,
+        inset -8px -8px 10px #cfcfcf;
+}
+
+.question-recommend .main-questions .card-body {
+    margin: 13px 0 0 10px;
+    color: rgb(31, 31, 31, .6);
+    font-size: 15px;
+}
+
+.question-recommend .main-questions .footer {
+    max-height: 100px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    float: right;
+    margin: 8px 0 0 8px;
+    font-size: 13px;
+    color: #636363;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.question-recommend .main-questions .footer span {
+    margin: 3px;
+
+
+}
+
+.question-recommend .main-questions .by-name {
+    font-weight: 700;
+}
